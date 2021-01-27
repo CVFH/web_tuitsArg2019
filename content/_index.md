@@ -6,6 +6,7 @@ title: Home
 {{<warning>}}
 AVISO: ESTE SITIO ESTA EN CONSTRUCCION
 {{< /warning >}}
+
 Bienvenidos a [**TuitsArg2019**](/about/): mi proyecto final para la materia [MétodosCiPol](https://tuqmano.github.io/MetodosCiPol/), _Herramientas Cuantitativas para el Análisis Político_. 
 
 Se trata de un proyecto que analiza los tuits para la campaña de 2019.

@@ -13,6 +13,7 @@ Antes de comenzar, abrimos algunas librerías.
 
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse) # trabajaremos en el paradigma "tidy"
+library(rtweet) # para leer datos desde Twitter
 library(readxl) # para leer datos desde excel
 library(gt) # para formatear tablas
 ```
@@ -40,11 +41,11 @@ datos_base %>%
     title = "Datos Utilizados",
     subtitle = "TuitsArg2019") %>% 
   gt::tab_style(
-    style=  cell_fill(color = "#defcdf", alpha = 0.5),
+    style=  cell_fill(color = "#00BFFF", alpha = 0.5),
     locations = cells_title(groups = c("title", "subtitle"))) %>% 
   gt::tab_style(
     style= cell_text(
-  color = "#444763",
+  color = "#0EBFE9",
   align = "center",
   v_align = "middle",
   weight = "lighter"),
@@ -54,11 +55,72 @@ datos_base %>%
 
 ## Datos Electorales
 
-Para "explorar la popularidad" _["sección correspondiente"](/explorando_popularidad/)_ de los candidatos, debimos colectar datos sobre los resultados electorales. 
+Para "explorar la popularidad" de los candidatos (como veremos en la [sección correspondiente](/explorando_popularidad/)), debimos colectar datos sobre los resultados electorales. 
+
+Para eso desarrollamos [este script](https://github.com/CVFH/Tuits_arg_2019/blob/master/preparacion_datos_electorales.R) que explicamos en [este post](/preparacion_datos_electorales/). El código define una función que parte de enlaces de wikipedia y/o de la Dirección Nacional Electoral argentina, y devuelve una tabla de datos _tidy_.
+
+Por ejemplo, partiendo del enlace: 
+[https://es.wikipedia.org/wiki/Elecciones_presidenciales_de_Argentina_de_2019](https://es.wikipedia.org/wiki/Elecciones_presidenciales_de_Argentina_de_2019)
+
+Que contiene la siguiente tabla:
+
+![]("tabla.JPG")
+
+Extrajimos de esta manera los datos:
 
 ```{r, message=FALSE, warning=FALSE}
+
+# Primero, llamamos al script que diseñamos
 source("preparacion_datos_electorales.R", encoding = "UTF-8")
+
+# Llamamos a una función para obtener los datos presidenciales, 
+# asignando el parámetro correspondiente ("presid")
 votos_presid <- traerDatosElectorales("presid")
 
+# Tenemos nuestros datos!
+
+votos_presid %>% 
+  gt() %>% 
+  gt::tab_header(
+    title = "Datos Utilizados",
+    subtitle = "TuitsArg2019") %>% 
+  gt::tab_style(
+    style=  cell_fill(color = "#00BFFF", alpha = 0.5),
+    locations = cells_title(groups = c("title", "subtitle"))) %>% 
+  gt::tab_style(
+    style= cell_text(
+  color = "#0EBFE9",
+  align = "center",
+  v_align = "middle",
+  weight = "lighter"),
+  locations = cells_body())
+
 ```
+
+
+## Datos de tuiter
+
+Una vez identificadas las cuentas de nuestro interés, nos ocupamos de traer los datos de los tuits emitidos con _rtweet_. 
+
+Por ejemplo, para [@alferdez](https://twitter.com/alferdez?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor), utilizamos el comando
+`tuits_alferdez <- get_timeline("alferdez")`. Con esto, obtenemos una tabla (aprox) como la siguiente: 
+
+```{r, eval = TRUE, echo = FALSE}
+tuits_alferdez <- read_xlsx("alferdez.xlsx")
+```
+
+
+```{r, message=FALSE, warning=FALSE}
+
+head(tuits_alferdez)
+
+```
+
+El default de `get_timeline` trae los últimos 100 tuits. Como máximo, las normas de Twitter permiten extraer 3.200 tuits. Dado que este límite implica que la fecha de los tuits que obtenemos con el llamado va cambiando con el tiempo, nosotros optamos por guardar estas bases de datos en archivos .csv, a los que se puede acceder desde [este enlace a nuestro repositorio de Git](https://github.com/CVFH/Tuits_arg_2019/tree/master/Data).
+
+Por este mismo motivo es que desarrollamos una funcion que agrega y emprolija estos datos en [este script](https://github.com/CVFH/Tuits_arg_2019/blob/master/preparacion_datos_tuits.R) que explicamos en [este post](/preparacion_datos_tuits/), de manera similar a como hicimos con los datos electorales.
+
+## A trabajar!
+
+Una vez obtenidas nuestras tablas electorales y los datos de Twitter, podemos jugar, explorar, ensayar un análisis, algo que haremos en los posts que siguen.
 
