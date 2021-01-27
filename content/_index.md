@@ -3,16 +3,20 @@ date: "2017-06-26T18:27:58+01:00"
 title: Home
 ---
 
-**AVISO: ESTE SITIO ESTA EN CONSTRUCCION**
-
-Bienvenidos a [**TuitsArg2019**](/about/): mi proyecto final para la materia [MetCiPol](https://tuqmano.github.io/MetodosCiPol/), "Herramientas Cuantitativas para el Análisis Político". 
+{{<warning>}}
+AVISO: ESTE SITIO ESTA EN CONSTRUCCION
+{{< /warning >}}
+Bienvenidos a [**TuitsArg2019**](/about/): mi proyecto final para la materia [MétodosCiPol](https://tuqmano.github.io/MetodosCiPol/), _"_Herramientas Cuantitativas para el Análisis Político_. 
 
 Se trata de un proyecto que analiza los tuits para la campaña de 2019.
 
 Proponemos un recorrido que recorre los siguientes posts:
 
+Primero, la "materia prima", o la preparación de nuestro trabajo, que consta de dos partes.
+
 {{< ticks >}}
-* [Materia Prima](/post/materia_prima/). Aquí analizamos...
+* [Funciones](/post/preparacion_funciones/). Aquí exponemos...
+* [Datos](/post/preparacion_funciones/). Mostramos brevemente..
 * [Explorando Popularidad](/post/explorando_popularidad/). Nuestra primera exploración...
 * [Explorando Palabras](/post/explorando_palabras/). En este post vemos....
 * [Explorando Temas](/post/explorando_temas/). Por último examinamos.. 
