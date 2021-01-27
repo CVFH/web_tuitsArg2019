@@ -15,7 +15,7 @@ enableEmoji = true
   quality = 99
 
 [params]
-  description = "Aplicación de herramientas de análisis a los tuits de la campaña electoral argentina de 2019."
+  description = "        Aplicación de herramientas de análisis a los tuits de la campaña electoral argentina de 2019."
   footer = "Creado por Carolina Franco con [Hugo](https://gohugo.io/). El tema es de [Cupper](https://github.com/zwbetz-gh/cupper-hugo-theme). Servido con [Netlify](https://www.netlify.com/)."
   dateFormat = "Jan 2, 2006"
   codePenUser = "someUser"

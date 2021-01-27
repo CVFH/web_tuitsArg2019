@@ -26,7 +26,7 @@ Nuestras funciones constituyen una respuesta ad hoc a los desafíos implicados p
 
 A los fines de la claridad en la lectura, simplemente nombraremos y describiremos cada función. Incorporaremos los enlaces a los scripts correspondientes para quien quiera interiorizarse con su operatoria. 
 
-## Funciones para scrappear y formatear tablas con datos electorales.
+##Funciones para scrappear y formatear tablas con datos electorales
 
 La primera parte de nuestro análisis, la **["exploración de la popularidad"](/explorando_popularidad/)** requería el manejo de resultados electorales de las elecciones argentinas de 2019 en las provincias, y a nivel nacional. A la fecha de ejecución de nuestro proyecto, el modo más accesible y sistemático de obtener estos datos era a través de wikipedia. Por eso, desarrollamos una serie de funciones para scrappear y formatear la información contenida en las páginas para cada distrito. Luego pudimos aplicarlas a la extracción del mismo tipo de datos (resultados electorales) de la [página oficial del goberno argentino, la  Dirección Nacional Electoral](https://www.argentina.gob.ar/interior/dine/resultados-y-estadisticas/elecciones-2019).
 
@@ -73,7 +73,7 @@ Sobre la base de las anteriores, armamos dos funciones para la extracción y sis
 Para conocer el detalle de estas funciones, dejamos aquí el  [:arrow_right: script](https://github.com/CVFH/Tuits_arg_2019/blob/master/Modules/tablasElectorales.R) correspondiente.
 {{< /expandable >}}
 
-## Funciones para trabajar con bases de datos de tuits
+##Funciones para trabajar con bases de datos de tuits
 
 Las funciones a continuación fueron centrales para la manipulación de los datos que nos conciernen: bases de datos de tuits, emitidas por candidatos a cargos políticos.
 
