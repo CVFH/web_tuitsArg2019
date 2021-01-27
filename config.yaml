@@ -1,7 +1,7 @@
-baseURL: /
+baseURL: https://tuitsarg2019.netlify.app/
 languageCode: en-us
 defaultContentLanguage: en
-title: aeb_TuitsArg2019
+title: web_TuitsArg2019
 theme: cupper-hugo-theme
 #googleAnalytics: UA-123456789-1
 #disqusShortname: yourdiscussshortname

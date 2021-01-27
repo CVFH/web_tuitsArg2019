@@ -1,5 +1,5 @@
 theme = "cupper-hugo-theme"
-baseURL = "/"
+baseURL = "https://tuitsarg2019.netlify.app/"
 languageCode = "en-us"
 defaultContentLanguage = "en"
 title = "TuitsArg2019"
@@ -8,8 +8,8 @@ enableEmoji = true
 [taxonomies]
   tag = "tags"
 
-[permalinks]
-  post = "/:filename/"
+#[permalinks]
+#  post = "/:filename/"
 
 [imaging]
   quality = 99
@@ -17,7 +17,6 @@ enableEmoji = true
 [params]
   description = "Aplicación de herramientas de análisis a los tuits de la campaña electoral argentina de 2019."
   footer = "Creado por Carolina Franco con [Hugo](https://gohugo.io/). El tema es de [Cupper](https://github.com/zwbetz-gh/cupper-hugo-theme). Servido con [Netlify](https://www.netlify.com/)."
-  # For more date formats see https://gohugo.io/functions/format/
   dateFormat = "Jan 2, 2006"
   codePenUser = "someUser"
 
