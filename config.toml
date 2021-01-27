@@ -2,3 +2,4 @@ theme = "cupper-hugo-theme"
 baseURL = "/"
 languageCode = "es"
 title = "TuitsArg2019"
+enableEmoji = true
