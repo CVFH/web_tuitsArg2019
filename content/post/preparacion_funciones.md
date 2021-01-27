@@ -16,7 +16,7 @@ Las funciones son fragmentos de código que nos permiten replicar tareas de form
 
 Si bien algunas de éstas servirán al análisis que presentarmemos más adelante, elegimos comenzar por aquí ya que su principal aplicación es en el manejo y preparación de los datos. Como veremos en [el post correspondiente](/preparacion_datos/), nuestro proyecto ha hecho uso de bases de datos múltiples y dispersas. Su adecuado nos requería repetir una gran cantidad de operaciones, por lo que decidimos sistematizar las funciones que presentaremos a continuación... y, de allí en adelante, fuimos desarrollando algunas funciones adicionales. 
 
-Comenzaremos presentando [funciones para scrappear y formatear]() tablas con datos electorales, seguiremos con las [funciones para trabajar con bases de datos de tuits](). Un conjunto de estas está destinado a la descarga y limpieza de datos, otro al análisis del texto contenido en estos tuits. Finalmente, desarrollamos un par de funciones para hacer más simple el ploteo de gráficos. 
+Comenzaremos presentando [funciones para scrappear y formatear](#Funciones-para-scrappear-y-formatear-tablas-con-datos-electorales) tablas con datos electorales, seguiremos con las [funciones para trabajar con bases de datos de tuits](#Funciones-para-trabajar-con-bases-de-datos-de-tuits). Un conjunto de estas está destinado a la descarga y limpieza de datos, otro al análisis del texto contenido en estos tuits. Finalmente, desarrollamos un par de funciones para hacer más simple el ploteo de gráficos. 
 
 {{< warning >}}
 
@@ -60,7 +60,7 @@ _Se trata de funciones que emprolijan las particularidades del set de datos con 
  
 {{< /ticks >}}
 
-#### Funciones "agregadas""
+#### Funciones "agregadas"
 
 Sobre la base de las anteriores, armamos dos funciones para la extracción y sistematización de datos electorales desde páginas web:
 
