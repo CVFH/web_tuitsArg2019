@@ -44,6 +44,7 @@ Para leer datos de la web:
 {{< /ticks >}}
 
 Para formatear las tablas extraídas en el punto anterior:
+
 _Se trata de funciones que emprolijan las particularidades del set de datos con el que trabajamos consideramos; a saber, tablas con datos de resultados electorales para las elecciones argentinas de 2019, scrappeadas desde wikipedia. Cada una de ellas recibe el resultado de aplicar la función anterior. Consideramos que los nombres son suficientemente informativos._
 
 {{< ticks >}}
@@ -59,7 +60,7 @@ _Se trata de funciones que emprolijan las particularidades del set de datos con 
  
 {{< /ticks >}}
 
-#### Funciones más complejas
+#### Funciones "agregadas""
 
 Sobre la base de las anteriores, armamos dos funciones para la extracción y sistematización de datos electorales desde páginas web:
 
@@ -68,13 +69,46 @@ Sobre la base de las anteriores, armamos dos funciones para la extracción y sis
 * `procesar_datos_wiki`: agrega las funciones de formateo y limpieza de los datos, de modo de quedarnos con una tabla "tidy" y adecuada a nuestros fines.
 {{< /ticks >}}
 
-{{< expandable label="Más? :mag:"  level="2"  >}}
+{{< expandable label="¿Querés saber cómo funcionan? "  level="2"  >}}
 Para conocer el detalle de estas funciones, dejamos aquí el  [:arrow_right: script](https://github.com/CVFH/Tuits_arg_2019/blob/master/Modules/tablasElectorales.R) correspondiente.
 {{< /expandable >}}
 
 ## Funciones para trabajar con bases de datos de tuits
 
+Las funciones a continuación fueron centrales para la manipulación de los datos que nos conciernen: bases de datos de tuits, emitidas por candidatos a cargos políticos.
+
+De nuevo, su gramática se sustenta en el paquete tidyverse, _[tidyverse](https://www.tidyverse.org/)_. Por su parte, para el análisis de texto hemos sacado provecho de _[tidytext](https://www.tidyverse.org/)_.[^1]
+
+De nuevo, también, su desarrollo y presentación va de lo más simple a lo más complejo: introduciremos algunas funciones que llamamos "de base", que constituyen los bloques para las funciones más complejas.
+
+#### Funciones de base
+
+Para leer datos de la web:
+
+{{< ticks >}}
+* `determinarTuitsCampaña`: recibe un df con tuits (del que se espera que haya una columna que consigne la fecha de su emisión) y dos parámetros: la fecha de inicio y la de fin de la campaña. Crea una variable que indica si el tuit fue emitido o no durante la campaña.
+* `seleccionarTextoTuits`: recibe un df con tuits y, opcionalmente, un parámetro para seleccionar columnas. Formatea la columna que contiene el texto del tuit a tipo _character_ y acota el data frame a las columnas seleccionads.
+* `transformarEnlacesTwitter`: recibe un df con tuits y transforma ciertos caracteres del texto de los tuits, a los fines de identificarlos facilmente a la hora de analizar el texto. En concreto, busca los enlaces, los hashtags ("#") y las menciones (@).
+
+{{< /ticks >}}
+
+#### Funciones "agregadas"
+
+{{< ticks >}}
+* `tokenizarTextoTuits`: recibe un df con tuits y devuelve su texto **"tokenizado"** (esto es, transformado de manera tidy en unidades mínimas constituyentes, a los fines de su análisis). De manera optativa, filtra los tuits emitidos durante una campaña electoral, y se deshace de los tuits que sean RTs, es decir, que no hayan sido redactados por el emisor de interés (en nuestro caso, los candidatos). La opción por defecto es tokenizar "palabras", pero alternativamente se puede optar por la opción "_n_gramas" o "tweets" del paquete _tidytext_.
+* `limpiarTokens`: recibe un df con tuits "tokenizados" y ofrece distintas opciones para "limpiarlos": extraer ciertas palabras muy utilizadas e "insignificantes" (para lo que nos valemos del paquete [stopwords](https://www.rdocumentation.org/packages/stopwords)), y deshacernos de palabras demasiado cortas, enlaces, mentios y/o hasthags.
+
+{{< /ticks >}}
+
+{{< expandable label="¿Cómo fueron hechas? "  level="2"  >}}
+Para conocer el detalle de estas funciones :mag:, seguir  [:arrow_right: este enlace](https://github.com/CVFH/Tuits_arg_2019/blob/master/Modules/tuitsCandidatos.R) correspondiente.
+{{< /expandable >}}
+
+
 ## Otras funciones
 
+Adicionalmente hemos simplificado algunas tareas con el desarrollo de funciones. Destacamos en particular dos que alivianan el ploteo de gráficos (y estandarizan su formato): `plotPoint` y `plotPointText` y `formatPlot`. 
+Las tres se sustentan en la gramática de [ggplot](https://ggplot2.tidyverse.org/). 
+Pueden explorar :mag: el código [aquí](https://github.com/CVFH/Tuits_arg_2019/blob/master/Modules/funcionesGraficos.R).
 
-
+[^1] Hemos leido y recomendamos [este libro](https://www.tidytextmining.com/)
