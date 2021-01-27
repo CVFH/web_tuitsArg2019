@@ -9,7 +9,7 @@ enableEmoji = true
   tag = "tags"
 
 [permalinks]
-  post = "/:filename/"
+  post = "/:slug/"
 
 [imaging]
   quality = 99
