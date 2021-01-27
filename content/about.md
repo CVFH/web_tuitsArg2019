@@ -13,7 +13,7 @@ Nuestra propuesta es "explorar" una base de datos con tuits de candidatos a Gobe
 
 {{< warning >}}
 
-Tenga en cuenta nuestro lector que el objetivo de este trabajo es **poner en práctica herramientas**, antes que llevar a cabo una investigación rigurosa en términos científicos. Desde ya, eso no quita que hayamos encarado el desafío con la mayor seriedad posible
+Tenga en cuenta nuestro lector que el objetivo de este trabajo es poner en práctica herramientas, antes que llevar a cabo una investigación rigurosa en términos científicos. Desde ya, eso no quita que hayamos encarado el desafío con la mayor seriedad posible
 
 {{< /warning >}}
 
