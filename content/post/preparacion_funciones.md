@@ -38,15 +38,15 @@ Nuestras funciones se apoyan en los paquetes core de  _[tidyverse](https://www.t
 
 Para leer datos de la web:
 
-{{</* ticks */>}}
+{{< ticks >}}
 * `arbolTablas`: recibe un url, lee el código html y se queda con los nodos "tabla"
 * `extraerTabla`: recibe un _data frame_ (df) con el árbol de tablas de una página web y un parámetro numérico que indica la tabla con la que deseamos quedarnos.
-{{</* /ticks */>}}
+{{< /ticks >}}
 
 Para formatear las tablas extraídas en el punto anterior:
 _Se trata de funciones que emprolijan las particularidades del set de datos con el que trabajamos consideramos; a saber, tablas con datos de resultados electorales para las elecciones argentinas de 2019, scrappeadas desde wikipedia. Cada una de ellas recibe el resultado de aplicar la función anterior. Consideramos que los nombres son suficientemente informativos._
 
-{{</* ticks */>}}
+{{< ticks >}}
 
 * `borrarPrimeraFila`
 * `reducirAnchoTabla`: borra columnas inutilizadas.
@@ -57,20 +57,20 @@ _Se trata de funciones que emprolijan las particularidades del set de datos con 
 * `agregarColumnas`: agrega datos de futuro interés: calcula y añade un ranking con el puesto obtenido por cada candidato en la respectiva elección y, optativamente, el nombre del distrito en cuestión. 
 
  
-{{</* /ticks */>}}
+{{< /ticks >}}
 
 #### Funciones más complejas
 
 Sobre la base de las anteriores, armamos dos funciones para la extracción y sistematización de datos electorales desde páginas web:
 
-{{</* ticks */>}}
+{{< ticks >}}
 * `extraer_datos_wiki`: agrega las primeras funciones, para leer datos de la web y obtener una tabla con resultados electorales. 
 * `procesar_datos_wiki`: agrega las funciones de formateo y limpieza de los datos, de modo de quedarnos con una tabla "tidy" y adecuada a nuestros fines.
-{{</* /ticks */>}}
+{{< /ticks >}}
 
-{{</* expandable label="Más? :mag:"  level="2" */>}}
+{{< expandable label="Más? :mag:"  level="2"  >}}
 Para conocer el detalle de estas funciones, dejamos aquí el :arrow_right: [script](https://github.com/CVFH/Tuits_arg_2019/blob/master/Modules/tablasElectorales.R) correspondiente.
-{{</* /expandable */>}}
+{{< /expandable >}}
 
 ### Funciones para trabajar con bases de datos de tuits
 
