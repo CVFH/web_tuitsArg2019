@@ -2,7 +2,7 @@
 title: preparacion_datos
 author: ~
 date: '2021-01-27'
-slug: preparacion-datos
+slug: preparacion_datos
 categories: []
 tags: []
 ---
