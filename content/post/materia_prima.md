@@ -1,8 +1,8 @@
 ---
-date: "2020-06-17T22:01:14-05:00"
+date: "2020-01-26"
 tags:
-- issue
-title: Multiple Expandable Test
+- preparacion
+title: Preparación
 enableEmoki: true
 ---
 
@@ -14,18 +14,12 @@ Testing out GitHub issue https://github.com/zwbetz-gh/cupper-hugo-theme/issues/3
 Same inner text.
 {{< /expandable >}}
 
-```{r cool-plot, fig.cap='A cool plot.'}
+
 {{<code numbered="true">}}
-[[[plot(cars, pch = 20)]]]  # not really cool
-{{</code>}}
-aver <- "value" # asi asignamos valores
-```
-
-
 ```{r cool-plot, fig.cap='A cool plot.'}
-plot(cars, pch = 20)  # not really cool
+plot(cars, pch = 20)  [[[# not]]] really cool
 ```
-
+{{</code>}}
 
 {{< expandable label="Preparando Datos" level="2" >}}
 Same inner text.
