@@ -29,7 +29,7 @@ A los fines de la claridad en la lectura, simplemente nombraremos y describiremo
 <a name="uno"></a> 
 ## Funciones para scrappear y formatear tablas con datos electorales
 
-La primera parte de nuestro análisis, la **["exploración de la popularidad"](/explorando_popularidad/)** requería el manejo de resultados electorales de las elecciones argentinas de 2019 en las provincias, y a nivel nacional. A la fecha de ejecución de nuestro proyecto, el modo más accesible y sistemático de obtener estos datos era a través de wikipedia. Por eso, desarrollamos una serie de funciones para scrappear y formatear la información contenida en las páginas para cada distrito. Luego pudimos aplicarlas a la extracción del mismo tipo de datos (resultados electorales) de la [página oficial del goberno argentino, la  Dirección Nacional Electoral](https://www.argentina.gob.ar/interior/dine/resultados-y-estadisticas/elecciones-2019).
+La primera parte de nuestro análisis, la _["exploración de la popularidad"](/explorando_popularidad/)_ requería el manejo de resultados electorales de las elecciones argentinas de 2019 en las provincias, y a nivel nacional. A la fecha de ejecución de nuestro proyecto, el modo más accesible y sistemático de obtener estos datos era a través de wikipedia. Por eso, desarrollamos una serie de funciones para scrappear y formatear la información contenida en las páginas para cada distrito. Luego pudimos aplicarlas a la extracción del mismo tipo de datos (resultados electorales) de la [página oficial del goberno argentino, la  Dirección Nacional Electoral](https://www.argentina.gob.ar/interior/dine/resultados-y-estadisticas/elecciones-2019).
 
 Procedimos en dos pasos: primero desarrollamos ciertas funciones ["de base"](), que luego agregamos en [funciones más complejas](), para hacer la extracción y manejo de estos datos más automática. 
 
@@ -75,11 +75,10 @@ Para conocer el detalle de estas funciones, dejamos aquí el  [:arrow_right: scr
 {{< /expandable >}}
 
 ## Funciones para trabajar con bases de datos de tuits
-<a name="dos"> "" </a> 
 
 Las funciones a continuación fueron centrales para la manipulación de los datos que nos conciernen: bases de datos de tuits, emitidas por candidatos a cargos políticos.
 
-De nuevo, su gramática se sustenta en el paquete tidyverse, _[tidyverse](https://www.tidyverse.org/)_. Por su parte, para el análisis de texto hemos sacado provecho de _[tidytext](https://www.tidyverse.org/)_.[^1]
+De nuevo, su gramática se sustenta en el paquete tidyverse, _[tidyverse](https://www.tidyverse.org/)_. Por su parte, para el análisis de texto hemos sacado provecho de _[tidytext](https://www.tidyverse.org/)_.^[[Hemos leido y recomendamos [este libro](https://www.tidytextmining.com/)]]
 
 De nuevo, también, su desarrollo y presentación va de lo más simple a lo más complejo: introduciremos algunas funciones que llamamos "de base", que constituyen los bloques para las funciones más complejas.
 
@@ -113,4 +112,4 @@ Adicionalmente hemos simplificado algunas tareas con el desarrollo de funciones.
 Las tres se sustentan en la gramática de [ggplot](https://ggplot2.tidyverse.org/). 
 Pueden [explorar :mag: el código aquí](https://github.com/CVFH/Tuits_arg_2019/blob/master/Modules/funcionesGraficos.R).
 
-[^1] Hemos leido y recomendamos [este libro](https://www.tidytextmining.com/)
+
