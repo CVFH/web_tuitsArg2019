@@ -1,4 +1,4 @@
-baseURL: https://tuitsarg2019.netlify.app/
+baseURL: /
 languageCode: en-us
 defaultContentLanguage: en
 title: aeb_TuitsArg2019
@@ -40,18 +40,9 @@ menu:
     - name: Home
       url: /
       weight: 1
-    - name: Blog
-      url: /post/
-      weight: 2
-    - name: Tags
-      url: /tags/
-      weight: 3
     - name: About
       url: /about/
-      weight: 4
-    - name: RSS
-      url: /index.xml
-      weight: 5
+      weight: 2
 
 markup:
   defaultMarkdownHandler: goldmark
