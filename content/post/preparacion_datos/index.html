@@ -1,0 +1,592 @@
+---
+title: preparacion_datos
+author: ~
+date: '2021-01-27'
+slug: preparacion-datos
+categories: []
+tags: []
+---
+
+<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections/anchor-sections.js"></script>
+
+
+<p>En este post mostraremos los datos que utilizamos, e introduciremos dos subsecciones que permiten seguir los pasos que hicimos para obtenerlos.</p>
+<p>Antes de comenzar, abrimos algunas librerías.</p>
+<pre class="r"><code>library(tidyverse) # trabajaremos en el paradigma &quot;tidy&quot;
+library(readxl) # para leer datos desde excel
+library(gt) # para formatear tablas</code></pre>
+<div id="nuestra-base" class="section level2">
+<h2>Nuestra base</h2>
+<p>Comencemos por presentar sintéticamente los datos elejidos para trabajar.
+Como dijimos, nos interesaba explorar el desempeño y los discursos de los candidatos al poder ejecutivo en las elecciones argentinas de 2019 -un país federal, que incluye cargos ejecutivos electivos a diversos niveles.
+En este marco, y dado nuestro fin experimental y exploratorio, decidimos quedarnos con los siguientes datos:</p>
+<ol style="list-style-type: decimal">
+<li>De los candidatos a la Presidencia (6 candidatos en total)</li>
+<li>De candidatos a Gobernador conforme al siguiente recorte:
+<ul>
+<li>Seleccionamos 4 provincias que oficiaron elecciones “simultáneas” (al mismo tiempo que en el nivel nacional), y 4 provincias que realizaron elecciones “desdobladas”, (antes que en el nivel nacional) pero en una única fecha.</li>
+<li>Nos quedamos con los candidatos que llegaron al primer y segundo puesto.</li>
+</ul></li>
+</ol>
+<p>Nuestra base quedó conformada de la siguiente manera:</p>
+<pre class="r"><code>datos_base &lt;- read_xlsx(&quot;datos_base.xlsx&quot;)
+
+datos_base %&gt;% 
+  gt() %&gt;% 
+  gt::tab_header(
+    title = &quot;Datos Utilizados&quot;,
+    subtitle = &quot;TuitsArg2019&quot;) %&gt;% 
+  gt::tab_style(
+    style=  cell_fill(color = &quot;#defcdf&quot;, alpha = 0.5),
+    locations = cells_title(groups = c(&quot;title&quot;, &quot;subtitle&quot;))) %&gt;% 
+  gt::tab_style(
+    style= cell_text(
+  color = &quot;#444763&quot;,
+  align = &quot;center&quot;,
+  v_align = &quot;middle&quot;,
+  weight = &quot;lighter&quot;),
+  locations = cells_body())</code></pre>
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#khslfxmikv .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#khslfxmikv .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#khslfxmikv .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#khslfxmikv .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#khslfxmikv .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#khslfxmikv .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#khslfxmikv .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#khslfxmikv .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#khslfxmikv .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#khslfxmikv .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#khslfxmikv .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#khslfxmikv .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#khslfxmikv .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#khslfxmikv .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#khslfxmikv .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#khslfxmikv .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#khslfxmikv .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#khslfxmikv .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#khslfxmikv .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#khslfxmikv .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#khslfxmikv .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#khslfxmikv .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#khslfxmikv .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#khslfxmikv .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#khslfxmikv .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#khslfxmikv .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#khslfxmikv .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#khslfxmikv .gt_left {
+  text-align: left;
+}
+
+#khslfxmikv .gt_center {
+  text-align: center;
+}
+
+#khslfxmikv .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#khslfxmikv .gt_font_normal {
+  font-weight: normal;
+}
+
+#khslfxmikv .gt_font_bold {
+  font-weight: bold;
+}
+
+#khslfxmikv .gt_font_italic {
+  font-style: italic;
+}
+
+#khslfxmikv .gt_super {
+  font-size: 65%;
+}
+
+#khslfxmikv .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="khslfxmikv" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  <thead class="gt_header">
+    <tr>
+      <th colspan="6" class="gt_heading gt_title gt_font_normal" style="background-color: rgba(222,252,223,0.5);">Datos Utilizados</th>
+    </tr>
+    <tr>
+      <th colspan="6" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>TuitsArg2019</th>
+    </tr>
+  </thead>
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Candidato</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">screen_name</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Distrito</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">tipo_fecha</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">...5</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Cargo</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Alberto Fernández</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">alferdez</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Nación</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Simultanea</td>
+      <td class="gt_row gt_center" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Presidente</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Mauricio Macri</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">mauriciomacri</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Nación</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Simultanea</td>
+      <td class="gt_row gt_center" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Presidente</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Roberto Lavagna</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">RLavagna</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Nación</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Simultanea</td>
+      <td class="gt_row gt_center" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Presidente</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Nicolás del Caño</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NicolasdelCano</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Nación</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Simultanea</td>
+      <td class="gt_row gt_center" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Presidente</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Juan José Gómez Centurión</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">juanjomalvinas</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Nación</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Simultanea</td>
+      <td class="gt_row gt_center" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Presidente</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">José Luis Espert</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">jlespert</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Nación</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Simultanea</td>
+      <td class="gt_row gt_center" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Presidente</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Gildo Insfrán</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">insfran_gildo</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Formosa</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Desdoblada</td>
+      <td class="gt_row gt_center" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Adrián Floro Bogado</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">adrianbogadoOK</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Formosa</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Desdoblada</td>
+      <td class="gt_row gt_center" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Alberto Rodríguez Saá</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">alberto_rsaa</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">San Luis</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Desdoblada</td>
+      <td class="gt_row gt_center" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Claudio Poggi</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">claudiojpoggi</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">San Luis</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Desdoblada</td>
+      <td class="gt_row gt_center" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Omar Perotti</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">omarperotti</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Santa Fe</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Desdoblada</td>
+      <td class="gt_row gt_center" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Antonio Bonfatti</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">AntonioBonfatti</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Santa Fe</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Desdoblada</td>
+      <td class="gt_row gt_center" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Gustavo Melella</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">gustavomelella</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Tierra del Fuego</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Desdoblada</td>
+      <td class="gt_row gt_center" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Rosana Bertone</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">RosanaBertone</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Tierra del Fuego</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Desdoblada</td>
+      <td class="gt_row gt_center" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Axel Kicillof</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Kicillofok</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Buenos Aires</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Simultanea</td>
+      <td class="gt_row gt_center" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">María Eugenia Vidal</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">mariuvidal</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Buenos Aires</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Simultanea</td>
+      <td class="gt_row gt_center" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Horacio Rodríguez Larreta</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">horaciorlarreta</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">CABA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Simultanea</td>
+      <td class="gt_row gt_center" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Matías Lammens</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">MatiasLammens</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">CABA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Simultanea</td>
+      <td class="gt_row gt_center" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Raúl Jalil</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">RaulJalil_ok</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Catamarca</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Simultanea</td>
+      <td class="gt_row gt_center" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Roberto Gómez</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Catamarca</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Simultanea</td>
+      <td class="gt_row gt_center" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Ricardo Quintela</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">QuintelaRicardo</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">La Rioja</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Simultanea</td>
+      <td class="gt_row gt_center" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Julio Martínez</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">JulioMartinezLR</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">La Rioja</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Simultanea</td>
+      <td class="gt_row gt_center" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #444763; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador</td>
+    </tr>
+  </tbody>
+  
+  
+</table></div>
+</div>
+<div id="datos-electorales" class="section level2">
+<h2>Datos Electorales</h2>
+<p>Para “explorar la popularidad” <em><a href="/explorando_popularidad/">“sección correspondiente”</a></em> de los candidatos, debimos colectar datos sobre los resultados electorales.</p>
+<pre class="r"><code>source(&quot;preparacion_datos_electorales.R&quot;, encoding = &quot;UTF-8&quot;)
+votos_presid &lt;- traerDatosElectorales(&quot;presid&quot;)</code></pre>
+</div>

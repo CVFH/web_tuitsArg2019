@@ -1,0 +1,64 @@
+---
+title: preparacion_datos
+author: ~
+date: '2021-01-27'
+slug: preparacion-datos
+categories: []
+tags: []
+---
+
+En este post mostraremos los datos que utilizamos, e introduciremos dos subsecciones que permiten seguir los pasos que hicimos para obtenerlos.
+
+Antes de comenzar, abrimos algunas librerías.
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse) # trabajaremos en el paradigma "tidy"
+library(readxl) # para leer datos desde excel
+library(gt) # para formatear tablas
+```
+
+
+## Nuestra base
+
+Comencemos por presentar sintéticamente los datos elejidos para trabajar. 
+Como dijimos, nos interesaba explorar el desempeño y los discursos de los candidatos al poder ejecutivo en las elecciones argentinas de 2019 -un país federal, que incluye cargos ejecutivos electivos a diversos niveles. 
+En este marco, y dado nuestro fin experimental y exploratorio, decidimos quedarnos con los siguientes datos: 
+
+1. De los candidatos a la Presidencia (6 candidatos en total)
+2. De candidatos a Gobernador conforme al siguiente recorte:
+    + Seleccionamos 4 provincias que oficiaron elecciones "simultáneas" (al mismo tiempo que en el nivel nacional), y 4 provincias que realizaron elecciones "desdobladas", (antes que en el nivel nacional) pero en una única fecha. 
+    + Nos quedamos con los candidatos que llegaron al primer y segundo puesto. 
+    
+Nuestra base quedó conformada de la siguiente manera:
+
+```{r, message=FALSE, warning=FALSE}
+datos_base <- read_xlsx("datos_base.xlsx")
+
+datos_base %>% 
+  gt() %>% 
+  gt::tab_header(
+    title = "Datos Utilizados",
+    subtitle = "TuitsArg2019") %>% 
+  gt::tab_style(
+    style=  cell_fill(color = "#defcdf", alpha = 0.5),
+    locations = cells_title(groups = c("title", "subtitle"))) %>% 
+  gt::tab_style(
+    style= cell_text(
+  color = "#444763",
+  align = "center",
+  v_align = "middle",
+  weight = "lighter"),
+  locations = cells_body())
+```
+
+
+## Datos Electorales
+
+Para "explorar la popularidad" _["sección correspondiente"](/explorando_popularidad/)_ de los candidatos, debimos colectar datos sobre los resultados electorales. 
+
+```{r, message=FALSE, warning=FALSE}
+source("preparacion_datos_electorales.R", encoding = "UTF-8")
+votos_presid <- traerDatosElectorales("presid")
+
+```
+
