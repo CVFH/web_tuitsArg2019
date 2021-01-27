@@ -3,3 +3,11 @@ baseURL = "/"
 languageCode = "es"
 title = "TuitsArg2019"
 enableEmoji = true
+
+[[menu.main]]
+    name = "Blog"
+    url = "/blog/"
+
+[[menu.main]]
+    name = "About"
+    url = "/about/"
