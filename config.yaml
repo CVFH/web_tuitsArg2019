@@ -20,7 +20,6 @@ params:
   description: Aplicación de herramientas de análisis a los tuits de la campaña electoral argentina de 2019.
   homeMetaContent: An accessibility-friendly Hugo theme, ported from the original Cupper project.
   footer: Creado por Carolina Franco con [Hugo](https://gohugo.io/). El tema es de [Cupper](https://github.com/zwbetz-gh/cupper-hugo-theme). Servido con [Netlify](https://www.netlify.com/).
-  # For more date formats see https://gohugo.io/functions/format/
   dateFormat: Jan 2, 2006
   codePenUser: someUser
   katex: true

@@ -16,7 +16,7 @@ Las funciones son fragmentos de código que nos permiten replicar tareas de form
 
 Si bien algunas de éstas servirán al análisis que presentarmemos más adelante, elegimos comenzar por aquí ya que su principal aplicación es en el manejo y preparación de los datos. Como veremos en [el post correspondiente](/preparacion_datos/), nuestro proyecto ha hecho uso de bases de datos múltiples y dispersas. Su adecuado nos requería repetir una gran cantidad de operaciones, por lo que decidimos sistematizar las funciones que presentaremos a continuación... y, de allí en adelante, fuimos desarrollando algunas funciones adicionales. 
 
-Comenzaremos presentando [funciones para scrappear y formatear](#Funciones-para-scrappear-y-formatear-tablas-con-datos-electorales) tablas con datos electorales, seguiremos con las [funciones para trabajar con bases de datos de tuits](#Funciones-para-trabajar-con-bases-de-datos-de-tuits). Un conjunto de estas está destinado a la descarga y limpieza de datos, otro al análisis del texto contenido en estos tuits. Finalmente, desarrollamos un par de funciones para hacer más simple el ploteo de gráficos. 
+Comenzaremos presentando [funciones para scrappear y formatear](#uno) tablas con datos electorales, seguiremos con las [funciones para trabajar con bases de datos de tuits](#dos). Un conjunto de estas está destinado a la descarga y limpieza de datos, otro al análisis del texto contenido en estos tuits. Finalmente, desarrollamos un par de funciones para hacer más simple el ploteo de gráficos. 
 
 {{< warning >}}
 
@@ -26,6 +26,7 @@ Nuestras funciones constituyen una respuesta ad hoc a los desafíos implicados p
 
 A los fines de la claridad en la lectura, simplemente nombraremos y describiremos cada función. Incorporaremos los enlaces a los scripts correspondientes para quien quiera interiorizarse con su operatoria. 
 
+<a name="uno"></a> 
 ##Funciones para scrappear y formatear tablas con datos electorales
 
 La primera parte de nuestro análisis, la **["exploración de la popularidad"](/explorando_popularidad/)** requería el manejo de resultados electorales de las elecciones argentinas de 2019 en las provincias, y a nivel nacional. A la fecha de ejecución de nuestro proyecto, el modo más accesible y sistemático de obtener estos datos era a través de wikipedia. Por eso, desarrollamos una serie de funciones para scrappear y formatear la información contenida en las páginas para cada distrito. Luego pudimos aplicarlas a la extracción del mismo tipo de datos (resultados electorales) de la [página oficial del goberno argentino, la  Dirección Nacional Electoral](https://www.argentina.gob.ar/interior/dine/resultados-y-estadisticas/elecciones-2019).
@@ -73,6 +74,7 @@ Sobre la base de las anteriores, armamos dos funciones para la extracción y sis
 Para conocer el detalle de estas funciones, dejamos aquí el  [:arrow_right: script](https://github.com/CVFH/Tuits_arg_2019/blob/master/Modules/tablasElectorales.R) correspondiente.
 {{< /expandable >}}
 
+<a name="dos"></a> 
 ##Funciones para trabajar con bases de datos de tuits
 
 Las funciones a continuación fueron centrales para la manipulación de los datos que nos conciernen: bases de datos de tuits, emitidas por candidatos a cargos políticos.
@@ -95,7 +97,7 @@ Para leer datos de la web:
 #### Funciones "agregadas"
 
 {{< ticks >}}
-* `tokenizarTextoTuits`: recibe un df con tuits y devuelve su texto **"tokenizado"** (esto es, transformado de manera tidy en unidades mínimas constituyentes, a los fines de su análisis). De manera optativa, filtra los tuits emitidos durante una campaña electoral, y se deshace de los tuits que sean RTs, es decir, que no hayan sido redactados por el emisor de interés (en nuestro caso, los candidatos). La opción por defecto es tokenizar "palabras", pero alternativamente se puede optar por la opción "_n_gramas" o "tweets" del paquete _tidytext_.
+* `tokenizarTextoTuits`: recibe un df con tuits y devuelve su texto **"tokenizado"** (esto es, transformado de manera tidy en unidades mínimas constituyentes, a los fines de su análisis). De manera optativa, filtra los tuits emitidos durante una campaña electoral, y se deshace de los tuits que sean RTs, es decir, que no hayan sido redactados por el emisor de interés (en nuestro caso, los candidatos). La opción por defecto es tokenizar "palabras", pero alternativamente se puede optar por la opción "ngramas" o "tweets" del paquete _tidytext_.
 * `limpiarTokens`: recibe un df con tuits "tokenizados" y ofrece distintas opciones para "limpiarlos": extraer ciertas palabras muy utilizadas e "insignificantes" (para lo que nos valemos del paquete [stopwords](https://www.rdocumentation.org/packages/stopwords)), y deshacernos de palabras demasiado cortas, enlaces, mentios y/o hasthags.
 
 {{< /ticks >}}
@@ -109,6 +111,6 @@ Para conocer el detalle de estas funciones :mag:, seguir  [:arrow_right: este en
 
 Adicionalmente hemos simplificado algunas tareas con el desarrollo de funciones. Destacamos en particular dos que alivianan el ploteo de gráficos (y estandarizan su formato): `plotPoint` y `plotPointText` y `formatPlot`. 
 Las tres se sustentan en la gramática de [ggplot](https://ggplot2.tidyverse.org/). 
-Pueden explorar :mag: el código [aquí](https://github.com/CVFH/Tuits_arg_2019/blob/master/Modules/funcionesGraficos.R).
+Pueden [explorar :mag: el código aquí](https://github.com/CVFH/Tuits_arg_2019/blob/master/Modules/funcionesGraficos.R).
 
 [^1] Hemos leido y recomendamos [este libro](https://www.tidytextmining.com/)
