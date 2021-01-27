@@ -10,9 +10,9 @@ enableEmoki: true
 
 En esta sección y la [siguiente](/preparacion_datos/) presentaremos brevemente los pasos previos al análisis. Comenzaremos ocupándonos del "esqueleto" :skull: de nuestro proyecto: el desarrollo de _funciones_. 
 
-{{</ note />}}
+{{< note >}}
 Las funciones son fragmentos de código que nos permiten replicar tareas de forma sencilla. Las que definimos para nuestro trabajo realizan transformaciones: reciben determinado input, y arrojan un resultado deseado
-{{</ /note />}}
+{{< /note >}}
 
 Si bien algunas de éstas servirán al análisis que presentarmemos más adelante, elegimos comenzar por aquí ya que su principal aplicación es en el manejo y preparación de los datos. Como veremos en [el post correspondiente](/preparacion_datos/), nuestro proyecto ha hecho uso de bases de datos múltiples y dispersas. Su adecuado nos requería repetir una gran cantidad de operaciones, por lo que decidimos sistematizar las funciones que presentaremos a continuación... y, de allí en adelante, fuimos desarrollando algunas funciones adicionales. 
 
