@@ -49,7 +49,7 @@ traerDatosElectorales <- function(tipo_dato){
                               datos_base) %>% 
       dplyr::rename( 'Partido/Alianza' = 'Partido o alianza')
     
-      devolver_data <- votos_presid
+    devolver_data <- na.omit(votos_presid)
 
   }
   
