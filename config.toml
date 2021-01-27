@@ -1,13 +1,6 @@
 theme = "cupper-hugo-theme"
-baseURL = "/"
-languageCode = "es"
+baseURL = "https://tuitsarg2019.netlify.app/""
+languageCode = "en"
 title = "TuitsArg2019"
 enableEmoji = true
 
-[[menu.main]]
-    name = "Blog"
-    url = "/blog/"
-
-[[menu.main]]
-    name = "About"
-    url = "/about/"
