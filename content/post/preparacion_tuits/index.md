@@ -2,7 +2,7 @@
 date: "2021-01-26"
 author: Carolina Franco
 tags:
-- prepracion
+- preparacion
 - datos
 title: Preparacion de Bases de Datos de Tuits
 weight: 4

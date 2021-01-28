@@ -3,7 +3,7 @@ date: "2021-01-26"
 title: Home
 ---
 
-![](../static/images/urna.JPG)
+<img src="https://github.com/CVFH/Tuits_arg_2019/raw/master/images/urna.jpg" width="900" height="700" />
 
 {{<warning>}}
 AVISO: ESTE SITIO ESTA EN CONSTRUCCION
@@ -13,7 +13,7 @@ Bienvenidos a [**TuitsArg2019**](/about/): mi trabajo final para la materia [Mé
 
 Se trata de un [proyecto](https://github.com/CVFH/Tuits_arg_2019) hecho con `r` que explora los tuits emitidos por **los candidatos a las elecciones de 2019 en la Argentina**. Esta web introduce el código con el que trabajamos y nuestros principales hallazgos.
 
-Proponemos el siguiente recorrido :feet: :feet: :feet:.
+Proponemos el siguiente recorrido:
 
 :feet: En una primera etapa, que denominamos "preparatoria", presentamos nuestra "materia prima". Esta consta de:
 
