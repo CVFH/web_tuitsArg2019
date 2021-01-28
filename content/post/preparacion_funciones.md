@@ -114,4 +114,4 @@ Pueden [explorar :mag: el código aquí](https://github.com/CVFH/Tuits_arg_2019/
 Finalmente, hemos optado por "envolver" las operaciones para preparar nuestros datos en dos funciones respectivas: `traerDatosElectorales` y `traerDatosTuits`, como explicaremos a partir de la [próxima sección](/preparacion_datos). 
 
 
-[^1]: Hemos leido y recomendamos [este libro](https://www.tidytextmining.com/)]
+[^1]: Hemos leido y recomendamos [este libro](https://www.tidytextmining.com/)
