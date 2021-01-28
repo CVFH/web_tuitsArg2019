@@ -23,7 +23,6 @@ En este caso, recurrimos a dos fuentes
 1. "oficiales" 
 2. y un [script propio](https://github.com/CVFH/Tuits_arg_2019/blob/master/Modules/tablasElectorales.R):
 
-```
 {{< code numbered="true" >}}
 # Apertura de librerías.
 
@@ -35,7 +34,6 @@ library(readxl) # extraer datos de excel
 [[[# Propio]]]
 source("https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/tablasElectorales.R")
 {{< /code >}}
-```
 
 también utilizamos una base de datos que contiene ciertas referencias básicas relativas a la muestra con la que elejimos trabajar, almacenado como "datos_base.xlsx"
 
@@ -55,7 +53,6 @@ Adicionalmente, nótese
 7. Las particularidades de las webs con los datos de [Tierra del Fuego](https://www.argentina.gob.ar/analisis-politico-electoral/tierra-del-fuego) y [Formosa](https://es.wikipedia.org/wiki/Elecciones_provinciales_de_Formosa_de_2019) exigieron incorporar pasos de limpieza adicionales
 8. en caso de llamar a los datos de la totalidad de los candidatos ("tot"), realizamos un paso recursivo.
 
-```
 {{< code numbered="true" >}}
 traerDatosElectorales <- function(tipo_dato){
   
@@ -208,7 +205,7 @@ traerDatosElectorales <- function(tipo_dato){
   
 }
 {{< /code >}}
-```
+
 Así, llamado a `traerDatosElectorales()`, obtenemos la información de nuestro interés, tal como ilustramos en [el post anterior](../preparacion_datos)
 
 Volver a [Home :house:](/)

@@ -1,5 +1,5 @@
 ---
-title: preparacion_datos
+title: Preparación de Datos
 author: ~
 date: '2021-01-27'
 slug: preparacion_datos
