@@ -123,7 +123,7 @@ head(tuits_Kicillofok)
 
 El default de `get_timeline` trae los últimos 100 tuits. Como máximo, las normas de Twitter permiten extraer 3.200 tuits. Dado que este límite implica que la fecha de los tuits que obtenemos con el llamado va cambiando con el tiempo, nosotros optamos por guardar estas bases de datos en archivos .csv, a los que se puede acceder desde [este enlace a nuestro repositorio de Git](https://github.com/CVFH/Tuits_arg_2019/tree/master/Data).
 
-Por este mismo motivo es que desarrollamos una funcion que agrega y emprolija estos datos en [este script](https://github.com/CVFH/Tuits_arg_2019/blob/master/preparacion_datos_tuits.R) que explicamos en [este post](../preparacion_datos_tuits/), de manera similar a como hicimos con los datos electorales.
+Por este mismo motivo es que desarrollamos una funcion que agrega y emprolija estos datos en [este script](https://github.com/CVFH/Tuits_arg_2019/blob/master/preparacion_datos_tuits.R) que explicamos en [este post](../preparacion_tuits/), de manera similar a como hicimos con los datos electorales.
 
 ## A trabajar!
 

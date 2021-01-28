@@ -3,7 +3,7 @@ date: "2021-01-26"
 tags:
 - prepracion
 - datos
-title: Preparacion Electorales
+title: Preparacion de Datos Electorales
 ---
 
 En este post comentamos los pasos seguidos para scrappear la web y obtener tablas con los resultados electorales para los distritos de nuestro interés.
@@ -212,6 +212,7 @@ traerDatosElectorales <- function(tipo_dato){
 Así, llamado a `traerDatosElectorales()`, obtenemos la información de nuestro interés, tal como ilustramos en [el post anterior](../preparacion_datos)
 
 Volver a [Home :house:](/)
-Seguir leyendo sobre [la preparación de los datos de Twitter](../preparacion_tuits)
+
+:fast_forward: Seguir leyendo sobre [la preparación de los datos de Twitter](../preparacion_tuits)
 
 [^1]: La identificación de estos nodos fue hecha manualmente, dado nuestra inspección de la web correspondiente.
