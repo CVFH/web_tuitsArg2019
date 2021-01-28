@@ -78,7 +78,7 @@ Para conocer el detalle de estas funciones, dejamos aquí el  [:arrow_right: scr
 
 Las funciones a continuación fueron centrales para la manipulación de los datos que nos conciernen: bases de datos de tuits, emitidas por candidatos a cargos políticos.
 
-De nuevo, su gramática se sustenta en el paquete tidyverse, _[tidyverse](https://www.tidyverse.org/)_. Por su parte, para el [análisis de texto][1] hemos sacado provecho de _[tidytext](https://www.tidyverse.org/)_.
+De nuevo, su gramática se sustenta en el paquete tidyverse, _[tidyverse](https://www.tidyverse.org/)_. Por su parte, para el análisis de texto hemos sacado provecho de _[tidytext](https://www.tidyverse.org/)_.[^1]
 
 De nuevo, también, su desarrollo y presentación va de lo más simple a lo más complejo: introduciremos algunas funciones que llamamos "de base", que constituyen los bloques para las funciones más complejas.
 
@@ -114,4 +114,4 @@ Pueden [explorar :mag: el código aquí](https://github.com/CVFH/Tuits_arg_2019/
 Finalmente, hemos optado por "envolver" las operaciones para preparar nuestros datos en dos funciones respectivas: `traerDatosElectorales` y `traerDatosTuits`, como explicaremos a partir de la [próxima sección](/preparacion_datos). 
 
 
-[1]: Hemos leido y recomendamos [este libro](https://www.tidytextmining.com/)]
+[^1]: Hemos leido y recomendamos [este libro](https://www.tidytextmining.com/)]
