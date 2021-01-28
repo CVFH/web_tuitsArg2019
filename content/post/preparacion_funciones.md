@@ -2,6 +2,7 @@
 date: "2020-01-26"
 tags:
 - preparacion
+- funciones
 title: Funciones
 enableEmoki: true
 ---

@@ -40,7 +40,7 @@ también utilizamos una base de datos que contiene ciertas referencias básicas 
 ## TraerDatosElectorales : una función para "llamar" datos
 
 A continuación, presentamos el código con el que procesamos los datos. 
-Para cada opción: datos de los candidatos a gobernador ("gob"), a presidente ("presid"), o el conjunto ("tot"), la función realiza los siguientes pasos:
+Para cada opción: datos de los candidatos a gobernador ("gob"), a presidente ("presid")[^2], o el conjunto ("tot"), la función realiza los siguientes pasos:
 
 1. llamado a los datos de base
 2. define el url de interés
@@ -50,8 +50,8 @@ Para cada opción: datos de los candidatos a gobernador ("gob"), a presidente ("
 6. devolución del resultado
 
 Adicionalmente, nótese 
-7. Las particularidades de las webs con los datos de [Tierra del Fuego](https://www.argentina.gob.ar/analisis-politico-electoral/tierra-del-fuego) y [Formosa](https://es.wikipedia.org/wiki/Elecciones_provinciales_de_Formosa_de_2019) exigieron incorporar pasos de limpieza adicionales
-8. en caso de llamar a los datos de la totalidad de los candidatos ("tot"), realizamos un paso recursivo.
+> 7. Las particularidades de las webs con los datos de [Tierra del Fuego](https://www.argentina.gob.ar/analisis-politico-electoral/tierra-del-fuego) y [Formosa](https://es.wikipedia.org/wiki/Elecciones_provinciales_de_Formosa_de_2019) exigieron incorporar pasos de limpieza adicionales
+> 8. en caso de llamar a los datos de la totalidad de los candidatos ("tot"), realizamos un paso recursivo.
 
 {{< code numbered="true" >}}
 traerDatosElectorales <- function(tipo_dato){
@@ -213,3 +213,4 @@ Volver a [Home :house:](/)
 :fast_forward: Seguir leyendo sobre [la preparación de los datos de Twitter](../preparacion_tuits)
 
 [^1]: La identificación de estos nodos fue hecha manualmente, dado nuestra inspección de la web correspondiente.
+[^2]: Una alternativa interesante en este caso hubiera sido utilizar la función `get_election_data()` del paquete [polAr](https://cran.r-project.org/web/packages/polAr/index.html)
