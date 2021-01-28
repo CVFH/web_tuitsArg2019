@@ -8,7 +8,7 @@ tags:
 weight: 5
 ---
 
-En este post presentamos el primer paso del análisis exploratorio que propusimos hacer. 
+En este post presentamos el primer paso del análisis exploratorio que propusimos hacer..
 
 Comenzaremos presentando el código utilizado. Diagramaremos gráficos que exploran los vínculos entre el desempeño en Twitter y el desempeño en las urnas de nuestros candidatos. Los presentaremos hacia el final, junto a unas breves conclusiones.
 
