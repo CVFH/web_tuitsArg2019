@@ -212,6 +212,6 @@ traerDatosElectorales <- function(tipo_dato){
 Así, llamado a `traerDatosElectorales()`, obtenemos la información de nuestro interés, tal como ilustramos en [el post anterior](../preparacion_datos)
 
 Volver a [Home :house:](/)
-Seguir leyendo sobre [la preparación de los datos de Twitter](../preparacion_tuiter)
+Seguir leyendo sobre [la preparación de los datos de Twitter](../preparacion_tuits)
 
 [^1]: La identificación de estos nodos fue hecha manualmente, dado nuestra inspección de la web correspondiente.

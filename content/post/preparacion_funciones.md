@@ -8,7 +8,7 @@ enableEmoki: true
 
 # Presentación: funciones
 
-En esta sección y la [siguiente](/preparacion_datos/) presentaremos brevemente los pasos previos al análisis. Comenzaremos ocupándonos del "esqueleto" :skull: de nuestro proyecto: el desarrollo de _funciones_. 
+En esta sección y la [siguiente](../preparacion_datos/) presentaremos brevemente los pasos previos al análisis. Comenzaremos ocupándonos del "esqueleto" :skull: de nuestro proyecto: el desarrollo de _funciones_. 
 
 {{< note >}}
 Las funciones son fragmentos de código que nos permiten replicar tareas de forma sencilla. Las que definimos para nuestro trabajo realizan transformaciones: reciben determinado input, y arrojan un resultado deseado
