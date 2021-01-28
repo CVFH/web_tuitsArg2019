@@ -5,8 +5,7 @@ date: '2021-01-27'
 slug: preparacion_datos
 categories: []
 tags: 
-  -preparacion
-  -datos
+  [preparacion, datos]
 ---
 
 En este post mostraremos los datos que utilizamos, e introduciremos dos subsecciones que permiten seguir los pasos que hicimos para obtenerlos.
@@ -57,9 +56,9 @@ datos_base %>%
 
 ## Datos Electorales
 
-Para "explorar la popularidad" de los candidatos (como veremos en la [sección correspondiente](https://tuitsarg2019.netlify.app/post/explorando_popularidad/)), debimos colectar datos sobre los resultados electorales. 
+Para "explorar la popularidad" de los candidatos (como veremos en la [sección correspondiente](/post/explorando_popularidad/)), debimos colectar datos sobre los resultados electorales. 
 
-Para eso desarrollamos [este script](https://github.com/CVFH/Tuits_arg_2019/blob/master/preparacion_datos_electorales.R) que explicamos en [este post](../post/preparacion_datos_electorales/). El código define una función que parte de enlaces de wikipedia y/o de la Dirección Nacional Electoral argentina, y devuelve una tabla de datos _tidy_.
+Para eso desarrollamos [este script](https://github.com/CVFH/Tuits_arg_2019/blob/master/preparacion_datos_electorales.R) que explicamos en [este post](/post/preparacion_datos_electorales/). El código define una función que parte de enlaces de wikipedia y/o de la Dirección Nacional Electoral argentina, y devuelve una tabla de datos _tidy_.
 
 Por ejemplo, partimos del enlace: 
 [https://es.wikipedia.org/wiki/Elecciones_presidenciales_de_Argentina_de_2019](https://es.wikipedia.org/wiki/Elecciones_presidenciales_de_Argentina_de_2019)
@@ -128,17 +127,6 @@ Una vez obtenidas nuestras tablas electorales y los datos de Twitter, podemos ju
 
 #### probando
 
-[este post](/../preparacion_datos_tuits/)
-[este post](../preparacion_datos_tuits/)
-[este post](../post/preparacion_datos_tuits/)
-[este post](../../post/preparacion_datos_tuits/)
-[este post](/../../post/preparacion_datos_tuits/)
 
-[este post](/post/preparacion_datos_tuits/)
-
-[este post](/preparacion_datos_tuits/)
-[este post](/..preparacion_datos_tuits/)
-
-[este post](https://tuitsarg2019.netlify.app/post/explorando_temas/)
 
 referencia {{ pattern "explorando_palabras" }} aca
