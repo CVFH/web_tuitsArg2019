@@ -128,14 +128,3 @@ Por este mismo motivo es que desarrollamos una funcion que agrega y emprolija es
 ## A trabajar!
 
 Una vez obtenidas nuestras tablas electorales y los datos de Twitter, podemos jugar, explorar, ensayar un análisis, algo que haremos en los posts que siguen.
-
-#### probando enlaces
-
-
-[este post](../../post/explorando_popularidad/)
-[este post](../../post/preparacion_electorales/)
-[este post](../preparacion_electorales/)
-[este post](../explorando_popularidad/)
-[prueba]{{ pattern "explorando_palabras" }} 
-
-

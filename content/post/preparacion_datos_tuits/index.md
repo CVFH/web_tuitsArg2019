@@ -1,10 +1,9 @@
 ---
-title: preparacion_datos_tuits
-author: ~
-date: '2021-01-27'
-slug: preparacion-datos-tuits
-categories: []
-tags: []
+date: "2021-01-26"
+tags:
+- prepracion
+- datos
+title: Preparacion Tuits
 ---
 
-prueba
+En este post presentaremos..
