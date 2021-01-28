@@ -1,11 +1,8 @@
 ---
-title: preparacion_electorales
-author: ~
-date: '2021-01-27'
-slug: preparacion-datos
-categories: []
+date: "2021-01-26"
 tags:
-  [preparacion]
+- análisis
+title: Preparacion Electorales
 ---
 
 En este post comentamos los pasos seguidos para scrappear la web y obtener tablas con los resultados electorales para los distritos de nuestro interés.
