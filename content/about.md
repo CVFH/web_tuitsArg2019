@@ -3,7 +3,7 @@ date: "2014-04-09"
 title: About
 ---
 
-**TuitsArg2019** es un proyecto creado por Carolina Franco como trabajo final de la materia [MetodosCiPol](https://tuqmano.github.io/MetodosCiPol/) :smile:
+**TuitsArg2019** es un proyecto creado por Carolina Franco como trabajo final de la materia [MetodosCiPol](https://tuqmano.github.io/MetodosCiPol/).
 
 # Sobre este proyecto
 
