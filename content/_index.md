@@ -3,7 +3,7 @@ date: "2021-01-26"
 title: ""
 ---
 
-![](../images/urna.jpg/)
+![](../images/urna2.jpg/)
 
 Bienvenidos a [**TuitsArg2019**](/about/): mi trabajo final para la materia [MétodosCiPol](https://tuqmano.github.io/MetodosCiPol/), _Herramientas Cuantitativas para el Análisis Político_. 
 

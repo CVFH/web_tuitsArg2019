@@ -137,23 +137,25 @@ Nótese que usamos algunas de las funciones que intridujimos en un [post anterio
 
 # rts / porcentaje de votos
 
-gobernadores_rtspromedio_porcentaje <- plotPoint(gobernadores_popu_ranking, 
+gobernadores_rtspromedio_porcentaje <-  plotPointText(gobernadores_popu_ranking, 
        aes(rts_obtenidos_promedio, 
            Porcentaje, 
-           colour = Distrito)) %>% 
+           colour = Distrito), 
+       aes(label = screen_name)) %>% 
   formatPlot(plottitle = "a Gobernador", xlabel = "", ylabel = "") 
 
 # Presidente
 
 # rts / porcentaje de votos
 
-presid_rtspromedio_porcentaje <- plotPoint(presid_popu_ranking, 
+presid_rtspromedio_porcentaje <- plotPointText(presid_popu_ranking, 
        aes(rts_obtenidos_promedio, 
            Porcentaje, 
-           colour = screen_name)) + 
-    labs(title = "a Presidente", 
-         x = "Rts obtenidos promedio", 
-         y = "% de votos obtenidos")
+           colour = screen_name),
+       aes(label=screen_name)) %>%  
+    formatPlot(plottitle = "a Presidente", 
+         xlabel = "Rts obtenidos promedio", 
+         ylabel = "% de votos obtenidos")
 
 
 # TODOS LOS CANDIDATOS
@@ -202,12 +204,12 @@ Hemos hecho nuestros gráficos. Utilizamos el paquete `patchwork` para presentar
 # Patchworks 
 # uniomos los gráficos para su presentación
 
-rtspromedio_porcentaje <- gobernadores_rtspromedio_porcentaje | presid_rtspromedio_porcentaje  + 
+rtspromedio_porcentaje <-  (presid_rtspromedio_porcentaje  | gobernadores_rtspromedio_porcentaje)  + 
   plot_annotation(
   title = 'Relación entre cantidad de Rts Promedio y Porcentaje de votos obtenido',
   caption = "Fuente: elaboración propia")
 
-desempeño_totcandidatos <- candidatos_rtspromedio_votos | candidatos_rts_votos  +
+desempeño_totcandidatos <-  (candidatos_rts_votos |  candidatos_rtspromedio_votos)  +
   plot_annotation(
   title = 'Desempeño de los candidatos tomados en conjunto',
   caption = "Fuente: elaboración propia")
@@ -241,7 +243,7 @@ Esto sugiere que sería interesante explorar de manera más sofisticada las rela
 
 El siguiente gráfico sugiere una relación débil o inexistente entre la cantidad de tuits emitidos y los rts obtenidos por nuestros candidatos.
 
-```{ rg2, warning= FALSE, message= FALSE}
+```{ r g3, warning= FALSE, message= FALSE}
 candidatos_rts_emitidos
 ```
 

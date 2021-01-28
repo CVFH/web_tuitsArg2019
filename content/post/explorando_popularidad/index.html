@@ -123,23 +123,25 @@ presid_popu_ranking &lt;- full_join(presid_popu,
 
 # rts / porcentaje de votos
 
-gobernadores_rtspromedio_porcentaje &lt;- plotPoint(gobernadores_popu_ranking, 
+gobernadores_rtspromedio_porcentaje &lt;-  plotPointText(gobernadores_popu_ranking, 
        aes(rts_obtenidos_promedio, 
            Porcentaje, 
-           colour = Distrito)) %&gt;% 
+           colour = Distrito), 
+       aes(label = screen_name)) %&gt;% 
   formatPlot(plottitle = &quot;a Gobernador&quot;, xlabel = &quot;&quot;, ylabel = &quot;&quot;) 
 
 # Presidente
 
 # rts / porcentaje de votos
 
-presid_rtspromedio_porcentaje &lt;- plotPoint(presid_popu_ranking, 
+presid_rtspromedio_porcentaje &lt;- plotPointText(presid_popu_ranking, 
        aes(rts_obtenidos_promedio, 
            Porcentaje, 
-           colour = screen_name)) + 
-    labs(title = &quot;a Presidente&quot;, 
-         x = &quot;Rts obtenidos promedio&quot;, 
-         y = &quot;% de votos obtenidos&quot;)
+           colour = screen_name),
+       aes(label=screen_name)) %&gt;%  
+    formatPlot(plottitle = &quot;a Presidente&quot;, 
+         xlabel = &quot;Rts obtenidos promedio&quot;, 
+         ylabel = &quot;% de votos obtenidos&quot;)
 
 
 # TODOS LOS CANDIDATOS
@@ -183,12 +185,12 @@ candidatos_rts_emitidos &lt;- plotPoint(candidatos_popu_ranking,
 <pre class="r"><code># Patchworks 
 # uniomos los gráficos para su presentación
 
-rtspromedio_porcentaje &lt;- gobernadores_rtspromedio_porcentaje | presid_rtspromedio_porcentaje  + 
+rtspromedio_porcentaje &lt;-  (presid_rtspromedio_porcentaje  | gobernadores_rtspromedio_porcentaje)  + 
   plot_annotation(
   title = &#39;Relación entre cantidad de Rts Promedio y Porcentaje de votos obtenido&#39;,
   caption = &quot;Fuente: elaboración propia&quot;)
 
-desempeño_totcandidatos &lt;- candidatos_rtspromedio_votos | candidatos_rts_votos  +
+desempeño_totcandidatos &lt;-  (candidatos_rts_votos |  candidatos_rtspromedio_votos)  +
   plot_annotation(
   title = &#39;Desempeño de los candidatos tomados en conjunto&#39;,
   caption = &quot;Fuente: elaboración propia&quot;)</code></pre>
@@ -208,7 +210,7 @@ desempeño_totcandidatos &lt;- candidatos_rtspromedio_votos | candidatos_rts_vot
 <p>Esto sugiere que sería interesante explorar de manera más sofisticada las relaciones entre el partido de los candidatos, su distrito de pertenencia, la cantidad de votos obtenidos, etc.</p>
 <p>¿Y qué hay de la propia actividad en la red social?</p>
 <p>El siguiente gráfico sugiere una relación débil o inexistente entre la cantidad de tuits emitidos y los rts obtenidos por nuestros candidatos.</p>
-<p><code>{ rg2, warning= FALSE, message= FALSE} candidatos_rts_emitidos</code></p>
+<p><code>{ r g3, warning= FALSE, message= FALSE} candidatos_rts_emitidos</code></p>
 <p>¡Pero claro! La cantidad de tuits que envía a la nube un candidato no es la única medida (de hecho, es una medida bastante mala) de qué tan atractivo es su discurso en esta red social.</p>
 <p>Querés explorar un poco más en las palabras y temas abordados por nuestros emisores? :fast_forward: seguime en el <a href="../exploracion_palabras/">siguiente post</a>.</p>
 <p>O bien podés <a href="/">volver al inicio :house:</a></p>

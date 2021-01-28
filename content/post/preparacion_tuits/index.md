@@ -10,7 +10,7 @@ weight: 4
 
 El objetivo de este post es exponer los pasos realizados para agregar y formatear la :meat_on_bone: carne de nuestro proyecto: información relativa a los tuits emitidos por los candidatos a las elecciones de 2019 en la Argentina.
 
-De manera similar al [post anterior](../preparacion_electorales/), aquí referimos y explicamos brevemente el script ["preparacion_datos_tuits.R)"](https://github.com/CVFH/Tuits_arg_2019/blob/master/preparacion_datos_tuits.R), que define la función `traerDatosTuits()`[^1].
+De manera similar al [post anterior](../preparacion_electorales/), aquí referimos y explicamos brevemente el script ["preparacion_datos_tuits.R"](https://github.com/CVFH/Tuits_arg_2019/blob/master/preparacion_datos_tuits.R), que define la función `traerDatosTuits()`[^1].
 
 ## La previa
 
