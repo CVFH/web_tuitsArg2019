@@ -131,6 +131,8 @@ Una vez obtenidas nuestras tablas electorales y los datos de Twitter, podemos ju
 [este post](../post/preparacion_datos_tuits/)
 [este post](../../post/preparacion_datos_tuits/)
 [este post](/../../post/preparacion_datos_tuits/)
+
 [este post](/post/preparacion_datos_tuits/)
+
 [este post](/preparacion_datos_tuits/)
 [este post](/..preparacion_datos_tuits/)
