@@ -1,6 +1,6 @@
 ---
 date: "2021-01-26"
-title: Home
+title: ""
 ---
 
 ![](../images/urna.jpg/)
@@ -21,13 +21,13 @@ Proponemos el siguiente recorrido:
 :feet: En la segunda etapa, pasamos a introducir el "análisis" propiamente dicho. Nos ocupamos de tres "tópicos": la popularidad, las palabras, y los temas que resultan de explorar los tuits emitidos por los candidatos a las elecciones de 2019 en la Argentina.
 
 {{< ticks >}}
-* [Explorando Popularidad](/post/explorando_popularidad/). Nuestra primera exploración ensaya relaciones entre el desempeño de los candidatos en Twitter, y los resultados electorales. 
+* [Explorando Popularidad](/post/explorando_popularidad/). Nuestra primera exploración ensaya relaciones entre el desempeño de los candidatos en Twitter y los resultados electorales. 
 * [Explorando Palabras](/post/explorando_palabras/). En segundo lugar, indagamos en medidas comparativas de las palabras utilizadas por nuestros emisores en la red social.
 * [Explorando Temas](/post/explorando_temas/). Finalmente, intentamos rastrear acerca de qué cuestiones hablan o no nuestros candidatos, y las similitudes o diferencias entre ellos.
 {{< /ticks >}}
 
 {{< expandable label="Leer más" level="2" >}}
-Para leer un poquito más sobre este proyecto y su autora :information_desk_person:, visitar [Acerca de](/about/)
+Para leer un poquito más sobre este proyecto y su autora :information_desk_person:, visitar la sección [_Acerca de_](/about/).
 {{< /expandable >}}
 
 {{<warning>}}
