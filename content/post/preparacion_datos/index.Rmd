@@ -72,7 +72,7 @@ Extrajimos de esta manera los datos:
 ```{r, message=FALSE, warning=FALSE}
 
 # Primero, llamamos al script que diseñamos
-source("preparacion_datos_electorales.R", encoding = "UTF-8")
+source("https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/preparacion_datos_electorales.R", encoding = "UTF-8")
 
 # Llamamos a una función para obtener los datos presidenciales, 
 # asignando el parámetro correspondiente ("presid")
@@ -103,17 +103,21 @@ votos_presid %>%
 
 Una vez identificadas las cuentas de nuestro interés, nos ocupamos de traer los datos de los tuits emitidos con _rtweet_. 
 
-Por ejemplo, para @[alferdez](https://twitter.com/alferdez), utilizamos el comando
-`tuits_alferdez <- get_timeline("alferdez")`. Con esto, obtenemos una tabla (aprox) como la siguiente: 
+Por ejemplo, para @[Kicillofok](https://twitter.com/Kicillofok), utilizamos el comando
+
+
+tuits_Kicillofok <- get_timeline("Kicillofok")
+
+
+Con esto, obtenemos una tabla (aprox) como la siguiente: 
 
 ```{r, eval = TRUE, echo = FALSE}
-tuits_alferdez <- read_xlsx("alferdez.xlsx")
+tuits_Kicillofok <- read_csv("https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Data/Kicillofok.csv")
 ```
-
 
 ```{r, message=FALSE, warning=FALSE}
 
-head(tuits_alferdez)
+head(tuits_Kicillofok)
 
 ```
 
@@ -125,8 +129,19 @@ Por este mismo motivo es que desarrollamos una funcion que agrega y emprolija es
 
 Una vez obtenidas nuestras tablas electorales y los datos de Twitter, podemos jugar, explorar, ensayar un análisis, algo que haremos en los posts que siguen.
 
-#### probando
+#### probando enlaces
 
-
-
-referencia {{ pattern "explorando_palabras" }} aca
+[prueba]{{ ref . "about" }}
+[prueba]{{ ref . "about#anchor" }}
+[prueba]{{ ref . "preparacion_funciones.md" }}
+[prueba]{{ ref . "about.md#Sobre-mí" }}
+[prueba]{{ ref . "about.md#sobre-mí" }}
+[prueba]{{ ref . "about.md#-Sobre-mí" }}
+[prueba]{{ ref . "#A-trabajar!" }}
+[prueba]{{ ref . "/blog/explorando_popularidad" }}
+[prueba]{{ ref . "/post/preparacion_funciones.md" }}
+[prueba]{{ ref . "/blog/preparacion_funciones.md" }}
+[este post](../../post/explorando_popularidad/)
+[este post](../post/explorando_popularidad/)
+[este post](../explorando_popularidad/)
+[prueba]{{ pattern "explorando_palabras" }} 

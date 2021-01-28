@@ -7,11 +7,12 @@
 #####
 #paquetes
 
-require(tidyverse)
-require(rvest) # extraer datos de html
+library(tidyverse)
+library(rvest) # extraer datos de html
+library(readxl) # extraer datos de excel
 
 #propias
-source("tablasElectorales.R", encoding = "UTF-8")
+source("https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/tablasElectorales.R")
 
 #####
 # EXTRACCION Y TRANSFORMACION / DATOS ELECTORALES
@@ -25,8 +26,8 @@ traerDatosElectorales <- function(tipo_dato){
   
   
   # ids
-  
-  datos_base <- read_xlsx("datos_base.xlsx")
+install.packages(readxls)
+  datos_base <- read_xlsx("Data/datos_base.xlsx")
   
   if(tipo_dato == "presid") {
     
