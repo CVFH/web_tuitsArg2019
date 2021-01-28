@@ -15,7 +15,7 @@ tags:
 <p>En este post mostraremos los datos que utilizamos, e introduciremos dos subsecciones que permiten seguir los pasos que hicimos para obtenerlos.</p>
 <p>Antes de comenzar, abrimos algunas librerías.</p>
 <pre class="r"><code>library(tidyverse) # trabajaremos en el paradigma &quot;tidy&quot;
-library(rtweet) # para leer datos desde Twitter
+#library(rtweet) # para leer datos desde Twitter
 library(readxl) # para leer datos desde excel
 library(gt) # para formatear tablas</code></pre>
 <div id="nuestra-base" class="section level2">
@@ -53,7 +53,7 @@ datos_base %&gt;%
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#jstpjwcgec .gt_table {
+#uzxanuzbyi .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -78,7 +78,7 @@ datos_base %&gt;%
   border-left-color: #D3D3D3;
 }
 
-#jstpjwcgec .gt_heading {
+#uzxanuzbyi .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -90,7 +90,7 @@ datos_base %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#jstpjwcgec .gt_title {
+#uzxanuzbyi .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -100,7 +100,7 @@ datos_base %&gt;%
   border-bottom-width: 0;
 }
 
-#jstpjwcgec .gt_subtitle {
+#uzxanuzbyi .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -110,13 +110,13 @@ datos_base %&gt;%
   border-top-width: 0;
 }
 
-#jstpjwcgec .gt_bottom_border {
+#uzxanuzbyi .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jstpjwcgec .gt_col_headings {
+#uzxanuzbyi .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -131,7 +131,7 @@ datos_base %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#jstpjwcgec .gt_col_heading {
+#uzxanuzbyi .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -151,7 +151,7 @@ datos_base %&gt;%
   overflow-x: hidden;
 }
 
-#jstpjwcgec .gt_column_spanner_outer {
+#uzxanuzbyi .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -163,15 +163,15 @@ datos_base %&gt;%
   padding-right: 4px;
 }
 
-#jstpjwcgec .gt_column_spanner_outer:first-child {
+#uzxanuzbyi .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jstpjwcgec .gt_column_spanner_outer:last-child {
+#uzxanuzbyi .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jstpjwcgec .gt_column_spanner {
+#uzxanuzbyi .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -183,7 +183,7 @@ datos_base %&gt;%
   width: 100%;
 }
 
-#jstpjwcgec .gt_group_heading {
+#uzxanuzbyi .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -205,7 +205,7 @@ datos_base %&gt;%
   vertical-align: middle;
 }
 
-#jstpjwcgec .gt_empty_group_heading {
+#uzxanuzbyi .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -220,15 +220,15 @@ datos_base %&gt;%
   vertical-align: middle;
 }
 
-#jstpjwcgec .gt_from_md > :first-child {
+#uzxanuzbyi .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jstpjwcgec .gt_from_md > :last-child {
+#uzxanuzbyi .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jstpjwcgec .gt_row {
+#uzxanuzbyi .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -247,7 +247,7 @@ datos_base %&gt;%
   overflow-x: hidden;
 }
 
-#jstpjwcgec .gt_stub {
+#uzxanuzbyi .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -259,7 +259,7 @@ datos_base %&gt;%
   padding-left: 12px;
 }
 
-#jstpjwcgec .gt_summary_row {
+#uzxanuzbyi .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -269,7 +269,7 @@ datos_base %&gt;%
   padding-right: 5px;
 }
 
-#jstpjwcgec .gt_first_summary_row {
+#uzxanuzbyi .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -279,7 +279,7 @@ datos_base %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#jstpjwcgec .gt_grand_summary_row {
+#uzxanuzbyi .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -289,7 +289,7 @@ datos_base %&gt;%
   padding-right: 5px;
 }
 
-#jstpjwcgec .gt_first_grand_summary_row {
+#uzxanuzbyi .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -299,11 +299,11 @@ datos_base %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#jstpjwcgec .gt_striped {
+#uzxanuzbyi .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jstpjwcgec .gt_table_body {
+#uzxanuzbyi .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -312,7 +312,7 @@ datos_base %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#jstpjwcgec .gt_footnotes {
+#uzxanuzbyi .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -326,13 +326,13 @@ datos_base %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#jstpjwcgec .gt_footnote {
+#uzxanuzbyi .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#jstpjwcgec .gt_sourcenotes {
+#uzxanuzbyi .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -346,46 +346,46 @@ datos_base %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#jstpjwcgec .gt_sourcenote {
+#uzxanuzbyi .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#jstpjwcgec .gt_left {
+#uzxanuzbyi .gt_left {
   text-align: left;
 }
 
-#jstpjwcgec .gt_center {
+#uzxanuzbyi .gt_center {
   text-align: center;
 }
 
-#jstpjwcgec .gt_right {
+#uzxanuzbyi .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jstpjwcgec .gt_font_normal {
+#uzxanuzbyi .gt_font_normal {
   font-weight: normal;
 }
 
-#jstpjwcgec .gt_font_bold {
+#uzxanuzbyi .gt_font_bold {
   font-weight: bold;
 }
 
-#jstpjwcgec .gt_font_italic {
+#uzxanuzbyi .gt_font_italic {
   font-style: italic;
 }
 
-#jstpjwcgec .gt_super {
+#uzxanuzbyi .gt_super {
   font-size: 65%;
 }
 
-#jstpjwcgec .gt_footnote_marks {
+#uzxanuzbyi .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="jstpjwcgec" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="uzxanuzbyi" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="5" class="gt_heading gt_title gt_font_normal" style="background-color: rgba(0,191,255,0.5);">Datos Utilizados</th>
@@ -600,7 +600,7 @@ votos_presid %&gt;%
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#uetnwpjdli .gt_table {
+#siqxnaqjno .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -625,7 +625,7 @@ votos_presid %&gt;%
   border-left-color: #D3D3D3;
 }
 
-#uetnwpjdli .gt_heading {
+#siqxnaqjno .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -637,7 +637,7 @@ votos_presid %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#uetnwpjdli .gt_title {
+#siqxnaqjno .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -647,7 +647,7 @@ votos_presid %&gt;%
   border-bottom-width: 0;
 }
 
-#uetnwpjdli .gt_subtitle {
+#siqxnaqjno .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -657,13 +657,13 @@ votos_presid %&gt;%
   border-top-width: 0;
 }
 
-#uetnwpjdli .gt_bottom_border {
+#siqxnaqjno .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#uetnwpjdli .gt_col_headings {
+#siqxnaqjno .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -678,7 +678,7 @@ votos_presid %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#uetnwpjdli .gt_col_heading {
+#siqxnaqjno .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -698,7 +698,7 @@ votos_presid %&gt;%
   overflow-x: hidden;
 }
 
-#uetnwpjdli .gt_column_spanner_outer {
+#siqxnaqjno .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -710,15 +710,15 @@ votos_presid %&gt;%
   padding-right: 4px;
 }
 
-#uetnwpjdli .gt_column_spanner_outer:first-child {
+#siqxnaqjno .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#uetnwpjdli .gt_column_spanner_outer:last-child {
+#siqxnaqjno .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#uetnwpjdli .gt_column_spanner {
+#siqxnaqjno .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -730,7 +730,7 @@ votos_presid %&gt;%
   width: 100%;
 }
 
-#uetnwpjdli .gt_group_heading {
+#siqxnaqjno .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -752,7 +752,7 @@ votos_presid %&gt;%
   vertical-align: middle;
 }
 
-#uetnwpjdli .gt_empty_group_heading {
+#siqxnaqjno .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -767,15 +767,15 @@ votos_presid %&gt;%
   vertical-align: middle;
 }
 
-#uetnwpjdli .gt_from_md > :first-child {
+#siqxnaqjno .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#uetnwpjdli .gt_from_md > :last-child {
+#siqxnaqjno .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#uetnwpjdli .gt_row {
+#siqxnaqjno .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -794,7 +794,7 @@ votos_presid %&gt;%
   overflow-x: hidden;
 }
 
-#uetnwpjdli .gt_stub {
+#siqxnaqjno .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -806,7 +806,7 @@ votos_presid %&gt;%
   padding-left: 12px;
 }
 
-#uetnwpjdli .gt_summary_row {
+#siqxnaqjno .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -816,7 +816,7 @@ votos_presid %&gt;%
   padding-right: 5px;
 }
 
-#uetnwpjdli .gt_first_summary_row {
+#siqxnaqjno .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -826,7 +826,7 @@ votos_presid %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#uetnwpjdli .gt_grand_summary_row {
+#siqxnaqjno .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -836,7 +836,7 @@ votos_presid %&gt;%
   padding-right: 5px;
 }
 
-#uetnwpjdli .gt_first_grand_summary_row {
+#siqxnaqjno .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -846,11 +846,11 @@ votos_presid %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#uetnwpjdli .gt_striped {
+#siqxnaqjno .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#uetnwpjdli .gt_table_body {
+#siqxnaqjno .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -859,7 +859,7 @@ votos_presid %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#uetnwpjdli .gt_footnotes {
+#siqxnaqjno .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -873,13 +873,13 @@ votos_presid %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#uetnwpjdli .gt_footnote {
+#siqxnaqjno .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#uetnwpjdli .gt_sourcenotes {
+#siqxnaqjno .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -893,46 +893,46 @@ votos_presid %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#uetnwpjdli .gt_sourcenote {
+#siqxnaqjno .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#uetnwpjdli .gt_left {
+#siqxnaqjno .gt_left {
   text-align: left;
 }
 
-#uetnwpjdli .gt_center {
+#siqxnaqjno .gt_center {
   text-align: center;
 }
 
-#uetnwpjdli .gt_right {
+#siqxnaqjno .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#uetnwpjdli .gt_font_normal {
+#siqxnaqjno .gt_font_normal {
   font-weight: normal;
 }
 
-#uetnwpjdli .gt_font_bold {
+#siqxnaqjno .gt_font_bold {
   font-weight: bold;
 }
 
-#uetnwpjdli .gt_font_italic {
+#siqxnaqjno .gt_font_italic {
   font-style: italic;
 }
 
-#uetnwpjdli .gt_super {
+#siqxnaqjno .gt_super {
   font-size: 65%;
 }
 
-#uetnwpjdli .gt_footnote_marks {
+#siqxnaqjno .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="uetnwpjdli" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="siqxnaqjno" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="10" class="gt_heading gt_title gt_font_normal" style="background-color: rgba(0,191,255,0.5);">Elecciones presidenciales Argentina 2019</th>
@@ -1036,22 +1036,44 @@ votos_presid %&gt;%
 <div id="datos-de-tuiter" class="section level2">
 <h2>Datos de tuiter</h2>
 <p>Una vez identificadas las cuentas de nuestro interés, nos ocupamos de traer los datos de los tuits emitidos con <em>rtweet</em>.</p>
-<p>Por ejemplo, para @<a href="https://twitter.com/alferdez">alferdez</a>, utilizamos el comando
-<code>tuits_alferdez &lt;- get_timeline("alferdez")</code>. Con esto, obtenemos una tabla (aprox) como la siguiente:</p>
-<pre class="r"><code>head(tuits_alferdez)</code></pre>
+<p>Por ejemplo, para @<a href="https://twitter.com/Kicillofok">Kicillofok</a>, utilizamos el comando</p>
+<p><code>tuits_Kicillofok &lt;- get_timeline("Kicillofok")</code></p>
+<p>Con esto, obtenemos una tabla (aprox) como la siguiente:</p>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_double(),
+##   created_at = col_datetime(format = &quot;&quot;),
+##   text = col_character(),
+##   link = col_character(),
+##   screen_name = col_character(),
+##   location = col_logical(),
+##   in_reply_to_screen_name = col_character(),
+##   latitude = col_logical(),
+##   longitude = col_logical(),
+##   mention_ids = col_character(),
+##   mention_screen_names = col_character(),
+##   created_at_user = col_datetime(format = &quot;&quot;),
+##   description = col_character(),
+##   geo_enabled = col_logical(),
+##   name = col_character(),
+##   time_zone = col_logical(),
+##   verified = col_logical()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre class="r"><code>head(tuits_Kicillofok)</code></pre>
 <pre><code>## # A tibble: 6 x 28
 ##   created_at          text    rts fav_count tweet_id link  screen_name location
-##   &lt;dttm&gt;              &lt;chr&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;   
-## 1 2020-05-17 20:20:59 &quot;Hoy~  2178     14775 1262161~ http~ alferdez    Buenos ~
-## 2 2020-05-17 11:57:49 &quot;En ~   573      2603 1262034~ http~ alferdez    Buenos ~
-## 3 2020-05-17 11:34:29 &quot;Hac~ 29757    113217 1262028~ http~ alferdez    Buenos ~
-## 4 2020-05-17 10:00:45 &quot;Cle~  1394      8274 1262005~ http~ alferdez    Buenos ~
-## 5 2020-05-15 20:01:37 &quot;El ~  2238     11018 1261431~ http~ alferdez    Buenos ~
-## 6 2020-05-15 19:45:56 &quot;Est~  1272      6163 1261427~ http~ alferdez    Buenos ~
+##   &lt;dttm&gt;              &lt;chr&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;       &lt;lgl&gt;   
+## 1 2020-07-16 00:39:36 &quot;Nos~   184       698  1.28e18 http~ Kicillofok  NA      
+## 2 2020-07-15 20:54:53 &quot;Con~   204       968  1.28e18 http~ Kicillofok  NA      
+## 3 2020-07-15 18:01:27 &quot;Est~   118       267  1.28e18 http~ Kicillofok  NA      
+## 4 2020-07-15 18:01:24 &quot;Vis~   243       745  1.28e18 http~ Kicillofok  NA      
+## 5 2020-07-14 23:08:21 &quot;Est~   323      1253  1.28e18 http~ Kicillofok  NA      
+## 6 2020-07-14 21:36:22 &quot;A p~   109       359  1.28e18 http~ Kicillofok  NA      
 ## # ... with 20 more variables: in_reply_to_screen_name &lt;chr&gt;,
 ## #   in_reply_to_status_id &lt;dbl&gt;, in_reply_to_user_id &lt;dbl&gt;, latitude &lt;lgl&gt;,
 ## #   longitude &lt;lgl&gt;, mention_ids &lt;chr&gt;, mention_screen_names &lt;chr&gt;,
-## #   place_latitude &lt;lgl&gt;, place_longitude &lt;lgl&gt;, user_id &lt;dbl&gt;,
+## #   place_latitude &lt;dbl&gt;, place_longitude &lt;dbl&gt;, user_id &lt;dbl&gt;,
 ## #   created_at_user &lt;dttm&gt;, description &lt;chr&gt;, favourites_count &lt;dbl&gt;,
 ## #   followers_count &lt;dbl&gt;, friends_count &lt;dbl&gt;, geo_enabled &lt;lgl&gt;, name &lt;chr&gt;,
 ## #   statuses_count &lt;dbl&gt;, time_zone &lt;lgl&gt;, verified &lt;lgl&gt;</code></pre>
@@ -1061,8 +1083,21 @@ votos_presid %&gt;%
 <div id="a-trabajar" class="section level2">
 <h2>A trabajar!</h2>
 <p>Una vez obtenidas nuestras tablas electorales y los datos de Twitter, podemos jugar, explorar, ensayar un análisis, algo que haremos en los posts que siguen.</p>
-<div id="probando" class="section level4">
-<h4>probando</h4>
-<p>referencia {{ pattern “explorando_palabras” }} aca</p>
+<div id="probando-enlaces" class="section level4">
+<h4>probando enlaces</h4>
+<p>[prueba]{{ ref . “about” }}
+[prueba]{{ ref . “about#anchor” }}
+[prueba]{{ ref . “preparacion_funciones.md” }}
+[prueba]{{ ref . “about.md#Sobre-mí” }}
+[prueba]{{ ref . “about.md#sobre-mí” }}
+[prueba]{{ ref . “about.md#-Sobre-mí” }}
+[prueba]{{ ref . “#A-trabajar!” }}
+[prueba]{{ ref . “/blog/explorando_popularidad” }}
+[prueba]{{ ref . “/post/preparacion_funciones.md” }}
+[prueba]{{ ref . “/blog/preparacion_funciones.md” }}
+<a href="../../post/explorando_popularidad/">este post</a>
+<a href="../post/explorando_popularidad/">este post</a>
+<a href="../explorando_popularidad/">este post</a>
+[prueba]{{ pattern “explorando_palabras” }}</p>
 </div>
 </div>

@@ -14,7 +14,7 @@ Antes de comenzar, abrimos algunas librerías.
 
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse) # trabajaremos en el paradigma "tidy"
-library(rtweet) # para leer datos desde Twitter
+#library(rtweet) # para leer datos desde Twitter
 library(readxl) # para leer datos desde excel
 library(gt) # para formatear tablas
 ```
@@ -72,7 +72,7 @@ Extrajimos de esta manera los datos:
 ```{r, message=FALSE, warning=FALSE}
 
 # Primero, llamamos al script que diseñamos
-source("https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/preparacion_datos_electorales.R", encoding = "UTF-8")
+source("preparacion_datos_electorales.R", encoding = "UTF-8")
 
 # Llamamos a una función para obtener los datos presidenciales, 
 # asignando el parámetro correspondiente ("presid")
@@ -106,7 +106,7 @@ Una vez identificadas las cuentas de nuestro interés, nos ocupamos de traer los
 Por ejemplo, para @[Kicillofok](https://twitter.com/Kicillofok), utilizamos el comando
 
 
-tuits_Kicillofok <- get_timeline("Kicillofok")
+`tuits_Kicillofok <- get_timeline("Kicillofok")`
 
 
 Con esto, obtenemos una tabla (aprox) como la siguiente: 

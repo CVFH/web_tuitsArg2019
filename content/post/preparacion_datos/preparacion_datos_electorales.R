@@ -26,8 +26,8 @@ traerDatosElectorales <- function(tipo_dato){
   
   
   # ids
-install.packages(readxls)
-  datos_base <- read_xlsx("Data/datos_base.xlsx")
+
+  datos_base <- read_xlsx("datos_base.xlsx")
   
   if(tipo_dato == "presid") {
     
