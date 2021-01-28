@@ -1,0 +1,222 @@
+---
+title: "Explorando Popularidad"
+date: "2021-01-26"
+author: "Carolina Franco"
+tags:
+- análisis
+- popularidad
+weight: 5
+---
+
+<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections/anchor-sections.js"></script>
+
+
+<p>En este post presentamos el primer paso del análisis exploratorio que propusimos hacer..</p>
+<p>Comenzaremos presentando el código utilizado. Diagramaremos gráficos que exploran los vínculos entre el desempeño en Twitter y el desempeño en las urnas de nuestros candidatos. Los presentaremos hacia el final, junto a unas breves conclusiones.</p>
+<div id="pasos-preliminares" class="section level2">
+<h2>Pasos preliminares</h2>
+<p>Como siempre, debemos ocuparnos de preparar nuestra sesión de <code>r</code>.</p>
+<div id="apertura-de-librerías" class="section level3">
+<h3>Apertura de librerías</h3>
+<p>Otra vez trabajaremos con paquetes oficiales (¡y conocidos!) y las funciones que desarrollamos a los fines de este trabajo.</p>
+<pre class="r"><code># APERTURA DE LIBRERIAS
+
+#paquetes
+
+require(tidyverse)
+require(readxl)
+require(ggplot2) # para graficar
+library(patchwork) # para unir graficos
+
+
+#propias
+
+source(&quot;https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/tuitsCandidatos.R&quot;, encoding = &quot;UTF-8&quot;) # para trabajar con bases de tuits
+source(&quot;https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/tablasElectorales.R&quot;, encoding = &quot;UTF-8&quot;) # para scrappear resultados electorales
+source(&quot;https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/funcionesGraficos.R&quot;, encoding = &quot;UTF-8&quot;) # para graficar</code></pre>
+</div>
+<div id="preparación-de-datos" class="section level3">
+<h3>Preparación de datos</h3>
+<p>Demos vida a nuestro análisis invocando a las bases de datos de nuestro interés.</p>
+<pre class="r"><code># IMPORTACION DE DATOS / TUITS
+
+# Datos Twitter
+# nos importan dataframes con tuits de candidatos: joined_gobernadores y joined_presid 
+
+source(&quot;https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/preparacion_datos_tuits.R&quot;, encoding = &quot;UTF-8&quot;)
+joined_presid &lt;- traerDatosTuits(&quot;presid&quot;)
+joined_gobernadores &lt;- traerDatosTuits(&quot;gob&quot;)
+joined_candidatos &lt;- traerDatosTuits(&quot;tot&quot;)
+
+# Datos electorales 
+# nos importan tablas con votos obtenidos por cada candidato: votos_gobernadores y votos_presid
+
+source(&quot;https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/preparacion_datos_electorales.R&quot;, encoding = &quot;UTF-8&quot;)
+votos_gobernadores &lt;- traerDatosElectorales(&quot;gob&quot;)
+votos_presid &lt;- traerDatosElectorales(&quot;presid&quot;)</code></pre>
+<p>¡Ya tenemos nuestros datos!, ahora vamos a trabajarlos</p>
+</div>
+</div>
+<div id="análisis" class="section level2">
+<h2>Análisis</h2>
+<div id="medidas-de-la-popularidad-en-twitter." class="section level3">
+<h3>Medidas de la popularidad en Twitter.</h3>
+<p>Primero vamos a calcular algunas medidas de la “popularidad” de nuestros candidatos en Twitter: los rts y favs obtenidos, en promedio y en total.</p>
+<p>Además vamos adicionar el <em>data frame</em> que contiene estas medidas y nuestras tablas de resultados electorales.</p>
+<p>Lo hacemos de manera separada para candidatos a Gobernador y a Presidente.
+El motivo de mantener bases independientes es que algunas medidas no son directamente comparables, dado el diferente tamaño de los distritos que nos ocupan.</p>
+<pre class="r"><code># UNIENDO Y TRABAJANDO DATOS / TUTIS / ELECTORALES
+
+# Provincias
+
+gobernadores_popu &lt;- joined_gobernadores %&gt;%  
+  subset( Campaña == 1 ) %&gt;% 
+  select(created_at, screen_name, rts,fav_count, followers_count, friends_count ) %&gt;% 
+  group_by(screen_name) %&gt;% 
+  dplyr::summarise(rts_obtenidos_totales = sum(rts),
+            favs_obtenidos_totales = sum(fav_count),
+            cantidad_emitidos_totales = n(),
+            rts_obtenidos_promedio = rts_obtenidos_totales/cantidad_emitidos_totales,
+            favs_obtenidos_promedio = favs_obtenidos_totales/cantidad_emitidos_totales
+  )
+
+# uniendo ambas bases 
+
+gobernadores_popu_ranking &lt;- full_join(gobernadores_popu, 
+                                 votos_gobernadores %&gt;% 
+                                   subset( Ranking == 1 | Ranking ==2 ) %&gt;% 
+                                   subset(!is.na(screen_name)),
+                                          &quot;screen_name&quot;)
+
+# Presidente
+
+presid_popu &lt;- joined_presid %&gt;%  
+  subset( Campaña == 1 ) %&gt;% 
+  select(created_at, screen_name, rts,fav_count, followers_count, friends_count ) %&gt;% 
+  group_by(screen_name) %&gt;% 
+  dplyr::summarise(rts_obtenidos_totales = sum(rts),
+            favs_obtenidos_totales = sum(fav_count),
+            cantidad_emitidos_totales = n(),
+            rts_obtenidos_promedio = rts_obtenidos_totales/cantidad_emitidos_totales,
+            favs_obtenidos_promedio = favs_obtenidos_totales/cantidad_emitidos_totales
+  )
+
+# uniendo ambas bases 
+
+presid_popu_ranking &lt;- full_join(presid_popu, 
+                                 votos_presid, 
+                                 &quot;screen_name&quot;)</code></pre>
+</div>
+<div id="análisis-de-relaciones" class="section level3">
+<h3>Análisis de relaciones</h3>
+<p>Ahora sí, podemos inspeccionar si hay vínculos entre el desempeño en las urnas y el desempeño en la red social. Nuestra exploración es visual :mag: : haremos algunos gráficos.</p>
+<blockquote>
+<p>En el código a continuación, incorporamos los resultados que encontramos más interesantes. Ensayamos algunos gráficos de dispersión adicionales, pero, o bien arrojaban resultados irrelevantes: por ejemplo, entre la cantidad de tuits emitidos y los votos obtenidos; o bien, muy similares a los que muestran los gráficos que siguen, como sea entre la cantidad de favs y los votos obtenidos. <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+</blockquote>
+<p>Nótese que usamos algunas de las funciones que intridujimos en un <a href="../preparacion_funciones">post anterior</a>, que desde ya hacen uso y abuso de la gramática de <code>ggplot</code></p>
+<pre class="r"><code># GRAFICOS DE RELACIONES
+
+# provincias y nacion por separado
+
+# Provincias
+
+# rts / porcentaje de votos
+
+gobernadores_rtspromedio_porcentaje &lt;- plotPoint(gobernadores_popu_ranking, 
+       aes(rts_obtenidos_promedio, 
+           Porcentaje, 
+           colour = Distrito)) %&gt;% 
+  formatPlot(plottitle = &quot;a Gobernador&quot;, xlabel = &quot;&quot;, ylabel = &quot;&quot;) 
+
+# Presidente
+
+# rts / porcentaje de votos
+
+presid_rtspromedio_porcentaje &lt;- plotPoint(presid_popu_ranking, 
+       aes(rts_obtenidos_promedio, 
+           Porcentaje, 
+           colour = screen_name)) + 
+    labs(title = &quot;a Presidente&quot;, 
+         x = &quot;Rts obtenidos promedio&quot;, 
+         y = &quot;% de votos obtenidos&quot;)
+
+
+# TODOS LOS CANDIDATOS
+
+# unimos bases
+
+candidatos_popu_ranking &lt;- rbind(gobernadores_popu_ranking, presid_popu_ranking) %&gt;% 
+  subset(!is.na(screen_name))
+
+# Graficamos 
+
+# Relaciones entre rts y votos
+
+candidatos_rts_votos &lt;- plotPoint(candidatos_popu_ranking, 
+                              aes(log(rts_obtenidos_totales), 
+                                  log(Votos), 
+        # utilizamos el log ya que hay mucha diferencia entre distritos
+                                  colour= Distrito)) +
+      labs(title = &quot; &quot;, 
+         x = &quot;Log de rts totales obtenidos&quot;, 
+         y = &quot;Log de votos obtenidos&quot;)
+
+candidatos_rtspromedio_votos &lt;- plotPoint(candidatos_popu_ranking, 
+                               aes(Votos,
+                                   rts_obtenidos_promedio, 
+                                   colour= Distrito)) %&gt;% 
+  formatPlot(plottitle = &quot;&quot;, 
+             xlabel = &quot;Rts obtenidos promedio&quot;,
+             ylabel = &quot;Votos obtenidos&quot;)
+
+# Twitter con twitter: relaciones entre cantidad de tuits emitidos y votos obtenidos
+
+candidatos_rts_emitidos &lt;- plotPoint(candidatos_popu_ranking, 
+                                         aes(cantidad_emitidos_totales, 
+                                             rts_obtenidos_totales,
+                                             colour= Distrito)) +
+      labs(title = &quot;Twitter con Twitter&quot;, 
+         x = &quot;Cantidad de tuits emitidos&quot;, 
+         y = &quot;Rts obtenidos&quot;)</code></pre>
+<p>Hemos hecho nuestros gráficos. Utilizamos el paquete <code>patchwork</code> para presentarlos de manera más prolija.</p>
+<pre class="r"><code># Patchworks 
+# uniomos los gráficos para su presentación
+
+rtspromedio_porcentaje &lt;- gobernadores_rtspromedio_porcentaje | presid_rtspromedio_porcentaje  + 
+  plot_annotation(
+  title = &#39;Relación entre cantidad de Rts Promedio y Porcentaje de votos obtenido&#39;,
+  caption = &quot;Fuente: elaboración propia&quot;)
+
+desempeño_totcandidatos &lt;- candidatos_rtspromedio_votos | candidatos_rts_votos  +
+  plot_annotation(
+  title = &#39;Desempeño de los candidatos tomados en conjunto&#39;,
+  caption = &quot;Fuente: elaboración propia&quot;)</code></pre>
+<p>Veamos qué hemos encontrado.</p>
+<p>Primero, veamos si hay relaciones entre la cantidad de rts y los votos obtenidos</p>
+<blockquote>
+<p>Recuerde el lector que explorando favs obteníamos un resutaldo muy parecido.</p>
+</blockquote>
+<pre class="r"><code>rtspromedio_porcentaje </code></pre>
+<p><img src="index_files/figure-html/g1-1.png" width="672" /></p>
+<p>Vemos que para el nivel nacional parece haber una relación: los candidatos que obtuvieron más votos, A. Fernández y M. Macri, también fueron los más <em>retwitteados</em>. En cambio, en las provincias hay mucha dispersión en la cantidad de votos que obtienen los candidatos, independientemente de la cantidad de rts promedios obtenidos.</p>
+<p>Desde luego, esto es esperable: las provincias tienen poblaciones de tamaños muy diferentes (y por ende, podemos suponer, un mayor o un menor “público” dispuestos a dar rt a su candidato preferido). Entonces, veamos qué sucede si comparamos el desempeño en la red social con la cantidad de votos absolutos.</p>
+<pre class="r"><code>desempeño_totcandidatos</code></pre>
+<p><img src="index_files/figure-html/g2-1.png" width="672" /></p>
+<p>Parece haber un vínculo positivo entre el desempeño en la red social y en las urnas. Sin embargo, también puede que sea bastante débil: la diagonal está dada, en buena medida, por el diferente tamaño de los distritos. Así, los dos primeros candidatos a nivel nacional y el #1 y la #2 de la Provincia de Buenos Aires son los que mas rts obtuvieron. Pero dentro de cada distrito, los candidatos de Cambiemos se ubican debajo de la recta de ajuste entre rts y votos obtenidos, mientras que los del Frente de Todxs se posicionan algo por encima.</p>
+<p>En cualquier caso, también es cierto que el resto de los candidatos a la presidencia obtuvo rts más o menos proporcionales a sus resultados electorales.</p>
+<p>Esto sugiere que sería interesante explorar de manera más sofisticada las relaciones entre el partido de los candidatos, su distrito de pertenencia, la cantidad de votos obtenidos, etc.</p>
+<p>¿Y qué hay de la propia actividad en la red social?</p>
+<p>El siguiente gráfico sugiere una relación débil o inexistente entre la cantidad de tuits emitidos y los rts obtenidos por nuestros candidatos.</p>
+<p><code>{ rg2, warning= FALSE, message= FALSE} candidatos_rts_emitidos</code></p>
+<p>¡Pero claro! La cantidad de tuits que envía a la nube un candidato no es la única medida (de hecho, es una medida bastante mala) de qué tan atractivo es su discurso en esta red social.</p>
+<p>Querés explorar un poco más en las palabras y temas abordados por nuestros emisores? :fast_forward: seguime en el <a href="../exploracion_palabras/">siguiente post</a>.</p>
+<p>O bien podés <a href="/">volver al inicio :house:</a></p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Podrán identificar algunas de estos intentos en <a href="https://github.com/CVFH/Tuits_arg_2019/blob/master/exploracion_popularidad.R">este script</a>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>

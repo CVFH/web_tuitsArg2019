@@ -140,8 +140,7 @@ Nótese que usamos algunas de las funciones que intridujimos en un [post anterio
 gobernadores_rtspromedio_porcentaje <- plotPoint(gobernadores_popu_ranking, 
        aes(rts_obtenidos_promedio, 
            Porcentaje, 
-           colour = Distrito),
-       aes(label=screen_name)) %>% 
+           colour = Distrito)) %>% 
   formatPlot(plottitle = "a Gobernador", xlabel = "", ylabel = "") 
 
 # Presidente
