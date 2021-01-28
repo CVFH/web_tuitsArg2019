@@ -3,11 +3,11 @@ date: "2021-01-26"
 title: Home
 ---
 
-<img src="https://github.com/CVFH/Tuits_arg_2019/raw/master/images/urna.jpg" width="900" height="700" />
-
 {{<warning>}}
 AVISO: ESTE SITIO ESTA EN CONSTRUCCION
 {{< /warning >}}
+
+< img src="https://github.com/CVFH/Tuits_arg_2019/raw/master/images/urna.jpg" align=“middle” />
 
 Bienvenidos a [**TuitsArg2019**](/about/): mi trabajo final para la materia [MétodosCiPol](https://tuqmano.github.io/MetodosCiPol/), _Herramientas Cuantitativas para el Análisis Político_. 
 
