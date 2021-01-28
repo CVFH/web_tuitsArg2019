@@ -1,8 +1,11 @@
 ---
+title: "Explorando Popularidad"
 date: "2021-01-26"
+author: "Carolina Franco"
 tags:
 - análisis
-title: Explorando Popularidad
+- popularidad
+weight: 5
 ---
 
 # Los pasos preliminares

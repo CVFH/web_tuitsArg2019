@@ -1,9 +1,11 @@
 ---
 date: "2021-01-26"
+author: Carolina Franco
 tags:
 - prepracion
 - datos
 title: Preparacion de Datos Electorales
+weight: 3
 ---
 
 En este post comentamos los pasos seguidos para scrappear la web y obtener tablas con los resultados electorales para los distritos de nuestro interés.

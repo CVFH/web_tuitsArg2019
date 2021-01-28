@@ -1,9 +1,11 @@
 ---
 date: "2021-01-26"
+author: Carolina Franco
 tags:
 - prepracion
 - datos
 title: Preparacion de Bases de Datos de Tuits
+weight: 4
 ---
 
 El objetivo de este post es exponer los pasos realizados para agregar y formatear la :meat_on_bone: carne de nuestro proyecto: información relativa a los tuits emitidos por los candidatos a las elecciones de 2019 en la Argentina.

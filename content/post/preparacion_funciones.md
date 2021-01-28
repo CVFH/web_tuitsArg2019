@@ -1,10 +1,12 @@
 ---
 date: "2020-01-26"
+author: "Carolina Franco"
 tags:
 - preparacion
 - funciones
 title: Funciones
 enableEmoki: true
+weight: 1
 ---
 
 # Presentación: funciones

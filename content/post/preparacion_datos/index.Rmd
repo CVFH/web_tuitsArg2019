@@ -1,11 +1,11 @@
 ---
 title: Preparación de Datos
-author: ~
+author: Carolina Franco
 date: '2021-01-27'
 slug: preparacion_datos
-categories: []
 tags: 
   [preparacion, datos]
+weight: 2
 ---
 
 En este post mostraremos los datos que utilizamos, e introduciremos dos subsecciones que permiten seguir los pasos que hicimos para obtenerlos.

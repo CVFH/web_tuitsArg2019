@@ -1,25 +1,35 @@
 ---
-date: "2017-06-26T18:27:58+01:00"
+date: "2021-01-26"
 title: Home
 ---
+
+![](../static/images/urna.JPG)
 
 {{<warning>}}
 AVISO: ESTE SITIO ESTA EN CONSTRUCCION
 {{< /warning >}}
 
-Bienvenidos a [**TuitsArg2019**](/about/): mi proyecto final para la materia [MétodosCiPol](https://tuqmano.github.io/MetodosCiPol/), _Herramientas Cuantitativas para el Análisis Político_. 
+Bienvenidos a [**TuitsArg2019**](/about/): mi trabajo final para la materia [MétodosCiPol](https://tuqmano.github.io/MetodosCiPol/), _Herramientas Cuantitativas para el Análisis Político_. 
 
-Se trata de un proyecto que analiza los tuits para la campaña de 2019.
+Se trata de un [proyecto](https://github.com/CVFH/Tuits_arg_2019) hecho con `r` que explora los tuits emitidos por **los candidatos a las elecciones de 2019 en la Argentina**. Esta web introduce el código con el que trabajamos y nuestros principales hallazgos.
 
-Proponemos un recorrido que recorre los siguientes posts:
+Proponemos el siguiente recorrido :feet: :feet: :feet:.
 
-Primero, la "materia prima", o la preparación de nuestro trabajo, que consta de dos partes.
+:feet: En una primera etapa, que denominamos "preparatoria", presentamos nuestra "materia prima". Esta consta de:
 
 {{< ticks >}}
-* [Funciones](/post/preparacion_funciones/). Aquí exponemos...
-* [Datos](/post/preparacion_datos/). Mostramos brevemente.. [datos electorales](/post/preparacion_electorales/) y [datos de Twitter](/post/preparacion_tuits/)
-* [Explorando Popularidad](/post/explorando_popularidad/). Nuestra primera exploración...
-* [Explorando Palabras](/post/explorando_palabras/). En este post vemos....
-* [Explorando Temas](/post/explorando_temas/). Por último examinamos.. 
+* [Funciones](/post/preparacion_funciones/). Un post en el que consignamos las funciones ad hoc que desarrollamos para nuestro trabajo.
+* [Datos](/post/preparacion_datos/). Una serie de post que exponen los pasos preliminares para hacer accesible la información de nuestro interés: [datos electorales](/post/preparacion_electorales/) y [datos de Twitter](/post/preparacion_tuits/)
 {{< /ticks >}}
 
+:feet: En la segunda etapa, pasamos a introducir el "análisis" propiamente dicho. Nos ocupamos de tres "tópicos": la popularidad, las palabras, y los temas que resultan de explorar los tuits emitidos por los candidatos a las elecciones de 2019 en la Argentina.
+
+{{< ticks >}}
+* [Explorando Popularidad](/post/explorando_popularidad/). Nuestra primera exploración ensaya relaciones entre el desempeño de los candidatos en Twitter, y los resultados electorales. 
+* [Explorando Palabras](/post/explorando_palabras/). En segundo lugar, indagamos en medidas comparativas de las palabras utilizadas por nuestros emisores en la red social.
+* [Explorando Temas](/post/explorando_temas/). Finalmente, intentamos rastrear acerca de qué cuestiones hablan o no nuestros candidatos, y las similitudes o diferencias entre ellos.
+{{< /ticks >}}
+
+{{< expandable label="Leer más" level="2" >}}
+Para leer un poquito más sobre este proyecto y su autora :information_desk_person:, visitar [Acerca de](/about/)
+{{< /expandable >}}
