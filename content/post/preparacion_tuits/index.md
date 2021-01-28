@@ -38,7 +38,7 @@ source("Modules/tuitsCandidatos.R", encoding = "UTF-8")
 Luego, definimos la función de nuestro interés. De manera similar a `traerDatosElectorales()`, esta recibe una serie de opciones alternativas: "gob", para traer los datos de las bases de los candidatos a gobernador que obtuvieron el primer y el segundo puesto en las provincias seleccionadas; "presid", para traer los tuits emitidos por los candidatos a la presidencia; "tot" para el conjunto de estos datos. Incluimos además una opción "base" que invoca a la meta-data de la muestra elegida. 
 
 {{< note >}}
-La función llama y formatea a bases de datos previamente almacenadas, que obtuvimos en su momento con _get_timeline()_ de _rtweet_.
+La función llama y formatea a bases de datos previamente almacenadas, que obtuvimos en su momento con `get_timeline()` de `rtweet`.
 {{< /note >}}
 
 Presentamos el código, y abajo incluímos una breve explicación de los pasos más relevantes.

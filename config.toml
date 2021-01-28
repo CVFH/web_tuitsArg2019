@@ -28,6 +28,16 @@ enableEmoji = true
     weight = 1
     
   [[menu.nav]]
+    name = "Recorrido"
+    url = "/post/"
+    weight = 2
+    
+  [[menu.nav]]
     name = "About"
     url = "/about/"
-    weight = 2
+    weight = 3
+
+  [[menu.nav]]
+    name = "Tags"
+    url = "/tags/"
+    weight = 3

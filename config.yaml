@@ -39,9 +39,15 @@ menu:
     - name: Home
       url: /
       weight: 1
+    - name: Recorrido
+      url: /post/
+      weight: 2
     - name: About
       url: /about/
-      weight: 2
+      weight: 3
+    - name: Tags
+      url: /tags/
+      weight: 4
 
 markup:
   defaultMarkdownHandler: goldmark
