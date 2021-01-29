@@ -6,12 +6,9 @@ tags: ["análisis", "palabras"]
 weight: 6
 output:
   blogdown::html_page:
-    highlight: tango
+    highlight: kate
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(collapse = TRUE)
-```
 
 # R Markdown
 ```{r apertura, warning = FALSE, message = FALSE}
