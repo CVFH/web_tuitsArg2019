@@ -249,7 +249,7 @@ candidatos_rts_emitidos
 
 ¡Pero claro! La cantidad de tuits que envía a la nube un candidato no es la única medida (de hecho, es una medida bastante mala) de qué tan atractivo es su discurso en esta red social.
 
-Querés explorar un poco más en las palabras y temas abordados por nuestros emisores? :fast_forward: seguime en el [siguiente post](../exploracion_palabras/).
+Querés explorar un poco más en las palabras y temas abordados por nuestros emisores? :fast_forward: seguime en el [siguiente post](../explorando_palabras/).
 
 O bien podés [volver al inicio :house:](/)
 
