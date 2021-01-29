@@ -114,7 +114,7 @@ Para conocer el detalle de estas funciones :mag:, seguir  [:arrow_right: este en
 Adicionalmente hemos simplificado algunas tareas con el desarrollo de funciones. Destacamos en particular dos que alivianan el ploteo de gráficos (y estandarizan su formato): `plotPoint` y `plotPointText` y `formatPlot`. 
 Las tres se sustentan en la gramática de [ggplot](https://ggplot2.tidyverse.org/). 
 Pueden [explorar :mag: el código aquí](https://github.com/CVFH/Tuits_arg_2019/blob/master/Modules/funcionesGraficos.R).
-Finalmente, hemos optado por "envolver" las operaciones para preparar nuestros datos en dos funciones respectivas: `traerDatosElectorales` y `traerDatosTuits`, como explicaremos a partir de la [próxima sección](/preparacion_datos/). 
+Finalmente, hemos optado por "envolver" las operaciones para preparar nuestros datos en dos funciones respectivas: `traerDatosElectorales` y `traerDatosTuits`, como explicaremos a partir de la [próxima sección](../preparacion_datos/). 
 
 
 [^1]: Hemos leido y recomendamos [este libro](https://www.tidytextmining.com/)

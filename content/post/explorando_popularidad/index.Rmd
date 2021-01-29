@@ -209,7 +209,7 @@ rtspromedio_porcentaje <-  (presid_rtspromedio_porcentaje  | gobernadores_rtspro
   title = 'Relación entre cantidad de Rts Promedio y Porcentaje de votos obtenido',
   caption = "Fuente: elaboración propia")
 
-desempeño_totcandidatos <-  (candidatos_rts_votos |  candidatos_rtspromedio_votos)  +
+desempeño_totcandidatos <-  (candidatos_rtspromedio_votos |  candidatos_rts_votos)  +
   plot_annotation(
   title = 'Desempeño de los candidatos tomados en conjunto',
   caption = "Fuente: elaboración propia")
@@ -243,7 +243,7 @@ Esto sugiere que sería interesante explorar de manera más sofisticada las rela
 
 El siguiente gráfico sugiere una relación débil o inexistente entre la cantidad de tuits emitidos y los rts obtenidos por nuestros candidatos.
 
-```{ r g3, warning= FALSE, message= FALSE}
+```{r g3, warning= FALSE, message= FALSE}
 candidatos_rts_emitidos
 ```
 
