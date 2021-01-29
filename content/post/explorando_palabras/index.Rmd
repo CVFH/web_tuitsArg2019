@@ -4,6 +4,9 @@ author: "Carolina Franco"
 date: "2021-01-26"
 tags: ["análisis", "palabras"]
 weight: 6
+output:
+  blogdown::html_page:
+    highlight: tango
 ---
 
 ```{r setup, include=FALSE}
@@ -11,27 +14,20 @@ knitr::opts_chunk$set(collapse = TRUE)
 ```
 
 # R Markdown
+```{r apertura, warning = FALSE, message = FALSE}
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+# APERTURA DE LIBRERIAS #####
 
-You can embed an R code chunk like this:
+#paquetes
 
-```{r cars}
-summary(cars)
-fit <- lm(dist ~ speed, data = cars)
-fit
+library(tidyverse)
+library(lubridate) # para trabajar con fechas
+library(ggplot2) # para graficar
+library(patchwork) # para unir graficos
+library(wordcloud2) # para nubes de palabras
+library(ggwordcloud)
+library(reshape2)
+library(ggforce) # para graficos de sets paralelos
+
 ```
 
-# Including Plots
-
-You can also embed plots. See Figure \@ref(fig:pie) for example:
-
-```{r pie, fig.cap='A fancy pie chart.', tidy=FALSE}
-par(mar = c(0, 1, 0, 1))
-pie(
-  c(280, 60, 20),
-  c('Sky', 'Sunny side of pyramid', 'Shady side of pyramid'),
-  col = c('#0292D8', '#F7EA39', '#C4B632'),
-  init.angle = -50, border = NA
-)
-```

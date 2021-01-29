@@ -4,6 +4,8 @@ languageCode = "en-us"
 defaultContentLanguage = "en"
 title = "TuitsArg2019"
 enableEmoji = true
+pygmentsCodeFences = true
+pygmentsStyle = "tango"
 
 [taxonomies]
   tag = "tags"
