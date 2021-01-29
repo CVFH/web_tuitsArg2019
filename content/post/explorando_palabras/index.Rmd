@@ -4,9 +4,6 @@ author: "Carolina Franco"
 date: "2021-01-26"
 tags: ["análisis", "palabras"]
 weight: 6
-output:
-  blogdown::html_page:
-    highlight: kate
 ---
 
 
