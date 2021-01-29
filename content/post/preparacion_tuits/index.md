@@ -55,7 +55,20 @@ traerDatosTuits <- function(tipo_dato){
    # función que trae los datos necesarios.
    # opciones: candidatos a presidente, a gobernador, todos juntos, datos   de base
    # "presid", "gob", "tot", "base", respectivamente
-    
+   
+   
+   # definimos previamente un vector con las columnas que retendremos de los dataframes de tuits (ver punto 10)
+  
+  select_columnas <- c("created_at", 
+                       "text", 
+                       "rts", "fav_count", 
+                       "tweet_id", 
+                       "screen_name", "user_id", "description", 
+                       "location", 
+                       "mention_screen_names", 
+                       "in_reply_to_screen_name",
+                       "Campaña")
+                       
     if(tipo_dato == "base") {
    
     # ids
@@ -109,7 +122,8 @@ traerDatosTuits <- function(tipo_dato){
       map_dfr(read.csv, encoding = "UTF-8" ) %>% 
       determinarTuitsCampaña(fecha_paso, fecha_grales)
     
-    [[[joined_gobernadores <- rbind(simultaneas_df, desdobladas_df)]]]
+    [[[joined_gobernadores <- rbind(simultaneas_df, desdobladas_df)]]] %>% 
+    [[[select(select_columnas)]]]
     
     [[[devolver_data <- joined_gobernadores]]]
    
@@ -126,9 +140,8 @@ traerDatosTuits <- function(tipo_dato){
     fecha_paso <- as.Date("2019-08-11")
     fecha_grales <- as.Date("2019-10-27")
     
-  
-    # enlaces
-   
+  # enlaces
+    
   presid1 <- "https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Data/alferdez.csv"
   presid2 <- "https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Data/mauriciomacri.csv"
   presid3 <- "https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Data/RLavagna.csv"
@@ -136,11 +149,22 @@ traerDatosTuits <- function(tipo_dato){
   presid5 <- "https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Data/juanjomalvinas.csv"
   presid6 <- "https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Data/jlespert.csv"
   
-  presid_filenames <- c(presid1, presid2, presid3, presid4, presid5, presid6)
+  presid_filenames <- c(presid2, presid3, presid4, presid5, presid6)
   
   joined_presid <- presid_filenames %>% 
-    map_dfr(read.csv, encoding = "UTF-8" ) %>% 
-    determinarTuitsCampaña(fecha_paso, fecha_grales)
+    map_dfr(read.csv, encoding = "UTF-8", stringsAsFactors = FALSE ) %>% 
+    determinarTuitsCampaña(fecha_paso, fecha_grales) %>% 
+    select(select_columnas)
+
+  # en este caso traemos por separado la base de alferdez por una diferencia en el .csv, y después las unimos
+  
+  presid1 <- read.csv(presid1, encoding = "UTF-8", stringsAsFactors = FALSE) %>% 
+    determinarTuitsCampaña(fecha_paso, fecha_grales) %>% 
+    select(select_columnas)
+  
+  # unimos la base con los tuits de @alferdez y el resto
+  
+  joined_presid <- joined_presid %>% rbind(presid1)
   
   devolver_data <- joined_presid
 
@@ -148,29 +172,17 @@ traerDatosTuits <- function(tipo_dato){
   
     [[[else if (tipo_dato=="tot")]]] {
       
-    # trae bases separadas
+     # traemos bases separadas
     
-       joined_presid <- traerDatosTuits("presid")
-       joined_gobernadores <- traerDatosTuits("gob")
-       
-    # unir las dos de manera prolija
-    
-    mismatched_cols <- compare_df_cols(joined_presid, 
-                                       joined_gobernadores, 
-                                       return =  "mismatch",
-                                       bind_method = "rbind")
-    
-    joined_presid <- joined_presid %>% 
-      mutate(created_at = as.factor(created_at),
-             created_at_user = as.factor(created_at_user))
-    joined_gobernadores <- joined_gobernadores %>% 
-      mutate( text = as.character(text),
-              tweet_id = as.numeric(tweet_id))
-        
-    joined_candidatos <- rbind(joined_gobernadores,
-                               joined_presid) 
-    
-    devolver_data <- joined_candidatos
+     joined_presid <- traerDatosTuits("presid")
+     joined_gobernadores <- traerDatosTuits("gob")
+     
+     # las unimos
+      
+     joined_candidatos <- rbind(joined_gobernadores,
+                             joined_presid) 
+  
+     devolver_data <- joined_candidatos
   
     }
     
@@ -192,8 +204,9 @@ traerDatosTuits <- function(tipo_dato){
 6. leer los .csv
 7. identificar los tuits emitidos durante la campaña
 8. Cuando correspondía, luego, agregamos las bases (por ejemplo, de provincias que hicieron elecciones desdobladas y en simultáneo).
-9. Finalmente, "devolvimos" los datos de interés
-10.  _Note el lector que, nuevamente, para la opción que pide la totalidad de los tuits emitidos por los candidatos, utilizamos un esquema recursivo._
+9. Nos quedamos con las columnas que nos interesan, definidas previamente
+10. Finalmente, "devolvimos" los datos de interés
+11.  _Note el lector que, nuevamente, para la opción que pide la totalidad de los tuits emitidos por los candidatos, utilizamos un esquema recursivo._
 
 :tada: :tada: :tada: listos para su análisis!!! :tada: :tada: :tada:
 

@@ -10,8 +10,12 @@ weight: 6
 <script src="index_files/anchor-sections/anchor-sections.js"></script>
 
 
-<div id="r-markdown" class="section level1">
-<h1>R Markdown</h1>
+<p>Finalizamos la <a href="../explorando_popularidad/">sección anterior</a> inspeccionando si había una relación entre la cantidad de tuits emitidos durante la campaña, y los rts obtenidos. No parecía ser el caso… pero, a la vez, esto despertó nuestra curiosidad. <strong>¿Cuánto y qué dicen nuestros candidatos?</strong> De nuevo, ensayaremos respuestas con base en la exploracion visual.</p>
+<div id="pasos-previos" class="section level3">
+<h3>Pasos previos</h3>
+<p>Antes, como siempre, debemos poner a disposición nuestra “materia prima”: datos y funciones.</p>
+<div id="activamos-funciones" class="section level4">
+<h4>Activamos funciones</h4>
 <pre class="r"><code># APERTURA DE LIBRERIAS #####
 
 #paquetes
@@ -19,9 +23,285 @@ weight: 6
 library(tidyverse)
 library(lubridate) # para trabajar con fechas
 library(ggplot2) # para graficar
+library(ggthemes)
 library(patchwork) # para unir graficos
 library(wordcloud2) # para nubes de palabras
 library(ggwordcloud)
 library(reshape2)
-library(ggforce) # para graficos de sets paralelos</code></pre>
+library(ggforce) # para graficos de sets paralelos
+
+#propias
+
+source(&quot;https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/tuitsCandidatos.R&quot;, encoding = &quot;UTF-8&quot;) # para trabajar con bases de
+source(&quot;https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/funcionesGraficos.R&quot;, encoding = &quot;UTF-8&quot;) # para graficar</code></pre>
+</div>
+<div id="traemos-datos" class="section level4">
+<h4>Traemos datos</h4>
+<p>En este post y los siguientes meteremos mano exclusivamente en las bases de nuestro principal interés: <a href="../preparacion_tuits/">los tuits</a> emitidos por los candidatos a Gobernador y Presidente en la Argentina en 2019.</p>
+<p>En esta ocasión “llamaremos” además a los datos de la muestra contenidos en <em>datos_base</em>.</p>
+<pre class="r"><code># IMPORTACION DE DATOS #####
+
+# invocamos al script con las funciones correspondientes
+
+source(&quot;https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/preparacion_datos_tuits.R&quot;, encoding = &quot;UTF-8&quot;)
+
+# ids
+
+datos_base &lt;- traerDatosTuits(&quot;base&quot;)
+
+# Datos tuiter 
+
+joined_presid &lt;- traerDatosTuits(&quot;presid&quot;)
+joined_gobernadores &lt;- traerDatosTuits(&quot;gob&quot;)
+joined_candidatos &lt;- traerDatosTuits(&quot;tot&quot;)
+
+# añadimos referencias básicos a las bases de tuits
+
+joined_candidatos &lt;- joined_candidatos %&gt;% 
+  left_join(datos_base)</code></pre>
+<p>Más adelante manipularemos estas bases y traeremos datos adicionales. Pero, por ahora, ¡manos a la obra!</p>
+</div>
+</div>
+<div id="cuánto-y-qué-dicen-los-candidatos" class="section level2">
+<h2>¿Cuánto y qué dicen los candidatos?</h2>
+<div id="elocuencia-de-los-candidatos" class="section level3">
+<h3>Elocuencia de los candidatos</h3>
+<p>Atendamos a la primera parte de nuestro interrogante. Algo interesante de ver es cómo evoluciona la emisión de tuits en el tiempo. Para eso, elaboramos el gráfico a continuación.</p>
+<pre class="r"><code>linea_fecha &lt;- ggplot(joined_candidatos %&gt;%  
+                         filter(year(created_at) == 2019 ) %&gt;% 
+                        # filtramos el año electoral
+                         arrange(tipo_fecha), 
+                       aes(x = date(created_at), fill = tipo_fecha)) +
+  geom_histogram(position = &quot;identity&quot;, bins = 24, alpha = 0.5)  +
+  facet_wrap(~Cargo, ncol = 2) + 
+  # vemos separadamente candidatos a presidente y a gobernador
+  theme_minimal() + 
+  theme(legend.position = &quot;bottom&quot;,
+        axis.text.x = element_text(angle = 90)) + 
+  labs(title = &quot;Evolución de la emisión de tuits en el tiempo&quot;,
+         subtitle = &quot;durante el 2019&quot;,
+         x = &quot;cantidad de tuits emitidos&quot;,
+         y = &quot;fecha&quot;,
+         fill = &quot;&quot;)
+
+linea_fecha</code></pre>
+<p><img src="index_files/figure-html/elocuencia-1.png" width="672" /></p>
+<p>Los candidatos pueden haber “hablado” mucho o poco… pero claramente lo hacen más durante la campaña<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
+<p>Ahora bien, puede objetarse: la cantidad de tuits emitidos es sin dudas una medida básica aún para la sencilla pregunta que nos hemos hecho <em>(¿cuánto han hablado nuestros candidatos?)</em>. Ocurre que un simple tuit puede decir mucho, o decir muy poco.</p>
+<p>Es hora de transformar nuestra base de datos. Hasta aquí, cada tuit ha constituido una “observación”, es decir, una fila, un dato.</p>
+<p>En adelante, buena parte de nuestro trabajo se basará en la descomposición de estos tuits en sus elementos constituyentes: las palabras.</p>
+<p>Para operar las transformaciones necesarias, nos valemos de funciones definidas previamente, <a href="../preparacion_funciones/">tal como hemos explicado</a>. Apliquémoslas, entonces.</p>
+<p>De manera provisoria, exploraremos diferentes opciones. Tenemos diferentes vías para arribar a los mismos resultados; básicamente, hemos buscado mantener bases separadas para candidatos a gobernador y a presidente, y hemos aplicado a cada base diferentes tipos de <em>“tokenización”</em>.</p>
+<pre class="r"><code># TRANSFORMACIONES DE LOS DATOS 
+
+# Tokenizando ######
+
+# tokenizando por palabra
+
+joined_presid_tokenizadas &lt;- joined_presid %&gt;% tokenizarTextoTuits() 
+joined_gobernadores_tokenizadas &lt;- joined_gobernadores %&gt;% tokenizarTextoTuits() 
+
+# tokenizado especial para tuits
+
+joined_presid_tokentweets &lt;- joined_presid %&gt;% tokenizarTextoTuits(tipo_token = &quot;tweets&quot;) 
+joined_gobernadores_tokentweets &lt;- joined_gobernadores %&gt;% tokenizarTextoTuits(tipo_token = &quot;tweets&quot;)
+
+# tokenizando por bigramas
+
+joined_presid_bigramas &lt;- joined_presid %&gt;% tokenizarTextoTuits(tipo_token = &quot;ngrams&quot;) 
+joined_gobernadores_bigramas &lt;- joined_gobernadores %&gt;% tokenizarTextoTuits(tipo_token = &quot;ngrams&quot;)
+
+# agregando bases ####
+
+joined_candidatos &lt;- joined_candidatos %&gt;% 
+  left_join(datos_base)
+
+candidatos_tokenizadas &lt;- rbind(joined_gobernadores_tokenizadas,
+                                joined_presid_tokenizadas) %&gt;% 
+  left_join(datos_base)
+
+candidatos_tokentweets &lt;- rbind(joined_presid_tokentweets,
+                                joined_gobernadores_tokentweets)%&gt;% 
+  left_join(datos_base) </code></pre>
+<p>¿Cómo se disponen nuestros datos ahora?
+Veamos un ejemplo</p>
+<pre class="r"><code>str(candidatos_tokenizadas)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    128093 obs. of  10 variables:
+##  $ screen_name: chr  &quot;Kicillofok&quot; &quot;Kicillofok&quot; &quot;Kicillofok&quot; &quot;Kicillofok&quot; ...
+##  $ tweet_id   : num  1.19e+18 1.19e+18 1.19e+18 1.19e+18 1.19e+18 ...
+##  $ created_at : Factor w/ 36279 levels &quot;2016-05-09 13:20:14-03:00&quot;,..: 1826 1826 1826 1826 1826 1826 1826 1826 1826 1826 ...
+##  $ rts        : int  1298 1298 1298 1298 1298 1298 1298 1298 1298 1298 ...
+##  $ fav_count  : int  4549 4549 4549 4549 4549 4549 4549 4549 4549 4549 ...
+##  $ tokens     : chr  &quot;este&quot; &quot;es&quot; &quot;un&quot; &quot;proyecto&quot; ...
+##  $ Candidato  : chr  &quot;Axel Kicillof&quot; &quot;Axel Kicillof&quot; &quot;Axel Kicillof&quot; &quot;Axel Kicillof&quot; ...
+##  $ Distrito   : chr  &quot;Buenos Aires&quot; &quot;Buenos Aires&quot; &quot;Buenos Aires&quot; &quot;Buenos Aires&quot; ...
+##  $ tipo_fecha : chr  &quot;Simultanea&quot; &quot;Simultanea&quot; &quot;Simultanea&quot; &quot;Simultanea&quot; ...
+##  $ Cargo      : chr  &quot;Gobernador&quot; &quot;Gobernador&quot; &quot;Gobernador&quot; &quot;Gobernador&quot; ...</code></pre>
+<p>Ya podemos seguir explorando :mag: . Para seguir con la pregunta que nos convocaba, <em>“¿cuánto hablan nuestros candidatos?”</em>, podemos diagramar la relación entre las palabras y los tuits emitidos. Graficamos separadamente los candidatos a presidente y a gobernador</p>
+<pre class="r"><code># preparamos los datos a graficar
+
+# obtenemos las medidas deseadas: cantidad de palabras emitidas por nuestros candidatos
+
+candidatos_sintesis1 &lt;- candidatos_tokenizadas %&gt;% 
+  group_by(screen_name, tweet_id) %&gt;% 
+  dplyr::mutate(cantidad_palabras_tuit =  dplyr::n()) %&gt;% 
+  ungroup() %&gt;% 
+  group_by(screen_name) %&gt;% 
+  dplyr::summarise(palabras_promedio_tuit = mean(cantidad_palabras_tuit),
+                   palabras_totales_emitidas = dplyr::n())
+
+# .. y calculamos los tuits emitidos
+
+candidatos_sintesis2 &lt;-joined_candidatos %&gt;% 
+  subset(Campaña ==1) %&gt;% 
+  group_by(screen_name) %&gt;% 
+  dplyr::summarise(cantidad_tuits_emitidos = n())
+
+candidatos_sintesis &lt;- left_join(candidatos_sintesis1, candidatos_sintesis2) %&gt;% 
+  left_join(datos_base)
+
+# graficamos: 
+
+plot_promediopalabras_cantidadtuits &lt;- ggplot(candidatos_sintesis,
+                                              aes(cantidad_tuits_emitidos,
+                                                  palabras_promedio_tuit,
+                                                  colour=screen_name,
+                                                  size= palabras_totales_emitidas)) +
+  geom_point(alpha = 0.8) +
+  geom_text(aes(label= screen_name),hjust=0, vjust=0, size=4, colour=&quot;black&quot;) +
+  facet_wrap(~ Cargo)
+
+# un poquito de formato para nuestro gráfico
+
+plot_promediopalabras_cantidadtuits &lt;- plot_promediopalabras_cantidadtuits %&gt;% 
+  formatPlot(plottitle = &quot;Elocuencia de los candiatos a..&quot;,
+             plotsubtitle = &quot;durante la campaña de 2019&quot;,
+             xlabel = &quot;Tuits emitidos&quot;,
+             ylabel = &quot;Palabras promedio por tuit&quot;,
+             plotcaption = &quot;Fuente: elaboración propia&quot;) 
+
+# resultado: 
+plot_promediopalabras_cantidadtuits</code></pre>
+<p><img src="index_files/figure-html/palabras_tuits,%20-1.png" width="672" /></p>
+<p>Vemos que hay candidatos que dijeron mucho en cada tuit, como Raúl Jalil, pero emitieron pocos tuits; otros, como A. R. Saa, emitieron muchos tuits pero fueron breves en cada uno de ellos (en promedio); finalmente, hay candidatos que hablaron muy poco, como A. Bogado, o mucho, como M. Macri, conforme a ambas medidas.</p>
+</div>
+<div id="de-la-cantidad-a-la-calidad" class="section level3">
+<h3>De la cantidad a la calidad</h3>
+<p>La cantidad de palabras o tutis dichos por un candidato, su “elocuencia”, sigue siendo poco informativa acerca de qué tan atractivo o no es su discurso en la red social.</p>
+<p>Exploremos qué palabras, y no ya cuántas, prefirieron nuestros <em>twitteros</em> durante la campaña.</p>
+<p>Podemos comenzar por una sencilla nube de palabras. Nos valemos del paquete <em>wordcloud()</em>, que nos permite hacer “nubes comparativas”.</p>
+<pre class="r"><code># Nubes de palabras #####
+
+# comparando por distrito
+
+matriz_cargos &lt;- candidatos_tokenizadas %&gt;%
+  limpiarTokens(palabras_web = TRUE, hashtags = TRUE, mentions = TRUE) %&gt;%  
+  group_by(Cargo, tokens) %&gt;% 
+  dplyr::mutate(n =  dplyr::n()) %&gt;% 
+  acast(tokens ~ Cargo, value.var = &quot;n&quot;, fill = 0)
+
+wordcloud::comparison.cloud(matriz_cargos,
+                            colors = c(&quot;lightblue&quot;, &quot;blue&quot;),
+                            max.words = 100,
+                            title.size=NULL)</code></pre>
+<p><img src="index_files/figure-html/nubes%20por%20distrito-1.png" width="672" /></p>
+<p>Como podríamos haber imaginado, los candidatos a gobernador utilizan más términos relativos al “territorio”: “vecinos”, “provincia”, “barrios”, “ciudad”, “villa”. Pero también a las “familias”, la “casa”, el “club”. En cambio, los candidatos a la presidencia apelan a la “nación”, a la “Argentina”, y, en principio, a temas de macroeconomía como los “impuestos” y la “deuda”.</p>
+<p>Una medida comparativa interesante es el cálculo de <em>term frequency - inverse document frequency</em> (o sencillamente <strong>tf-idf</strong>), que estima qué tan “particulares” son los términos utilizados por un hablante<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
+<p>En <a href="">este script</a> exploramos varias combinaciones de cálculos interesantes, pero elejimos a nuestros fines en este post mostramos las <em>palabras</em> que mejor caracterizan a cada candidato a Gobernador, y los “términos de twitter” más propios de cada candidato a la presidencia.</p>
+<blockquote>
+<p>Nótese que debimos limpiar las bases “tokenizadas”. De no hacerlo, las palabras más propias de cada candidato eran los hashtagas de la propia campaña. Veremos cuáles son estos enseguida.</p>
+</blockquote>
+<blockquote>
+<p>Nótese también que aquí estamos tratando <strong>al conjunto de tuits</strong> emitidos por los candidatos como un único “documento”. Para otro tipo de cálculos, resulta más pertinente tomar a cada tuit único en calidad de documento independiente.</p>
+</blockquote>
+<pre class="r"><code># a gobernador
+
+# tf_idf / gobernadores / tokens = tweets
+
+joined_gobernadores_tokentweets_tfidf &lt;- joined_gobernadores_tokentweets %&gt;%
+  limpiarTokens(palabras_web = TRUE, mentions = TRUE, hashtags = TRUE) %&gt;%  
+  # limpiamos la base 
+  dplyr::count(screen_name, tokens, sort = TRUE) %&gt;% 
+  # cálculo de tf_idf
+  bind_tf_idf(tokens, screen_name, n)
+
+sliced_gobs_tfidf_tokentweet &lt;- joined_gobernadores_tokentweets_tfidf %&gt;%
+  # nos quedamos con los términos más relevantes a los fines de hacer un gráfico legible
+  subset( !(str_detect(tokens, &quot;enlacetuit&quot; ))) %&gt;% 
+  group_by(screen_name) %&gt;%
+  slice_max(tf_idf, n = 12) %&gt;%
+  ungroup()  %&gt;% 
+  mutate(tokens = reorder(tokens, tf_idf)) %&gt;% 
+  left_join(datos_base) %&gt;% 
+  group_by(screen_name) %&gt;% 
+  slice_head(n=12) %&gt;% 
+  ungroup()
+
+plot_gobs_tfidf_tokentweet &lt;- ggplot(sliced_gobs_tfidf_tokentweet ,
+                                   aes(tokens, tf_idf, fill = Distrito)) +
+  geom_col(show.legend = FALSE) +
+  labs(x = NULL, y = &quot;tf-idf&quot;) +
+  # mostramos a cada candidato independientemente
+  facet_wrap(~screen_name, ncol = 5, scales = &quot;free&quot;) +
+  # un poco de formato
+  theme_clean() +
+  coord_flip() +
+  scale_x_reordered() + 
+  theme(strip.text = element_text(size=8),
+        axis.text.y = element_text(size = 7, hjust = 0.8),
+        axis.text.x = element_blank())  +
+  labs(title = &quot;Términos más &#39;propios&#39; de cada candidato&quot;,
+       subtitle = &quot;a Gobernador&quot;)
+
+# a presidente. Repetimos pasos
+
+# tf_idf / presidente / tokens = words
+
+joined_presid_tokenizadas_tfidf &lt;- joined_presid_tokenizadas %&gt;%
+  # limpiamos base
+  limpiarTokens(palabras_web = TRUE, mentions = TRUE, hashtags = TRUE) %&gt;%  
+  dplyr::count(screen_name, tokens, sort = TRUE) %&gt;% 
+  # calculamos tf_idf
+  bind_tf_idf(tokens, screen_name, n) 
+
+# nos quedamos con los términos más relevantes
+sliced_presid_tfidf &lt;- joined_presid_tokenizadas_tfidf %&gt;% 
+  group_by(screen_name) %&gt;%
+  slice_max(tf_idf, n = 15) %&gt;%
+  ungroup() %&gt;% 
+  mutate(tokens = reorder(tokens, tf_idf)) #ordenamos 
+
+plot_presid_tfidf &lt;- ggplot(sliced_presid_tfidf,
+                          aes(tokens, tf_idf, fill = screen_name)) +
+  geom_col(show.legend = FALSE) +
+  labs(x = NULL, y = &quot;tf-idf&quot;) +
+  facet_wrap(~screen_name, ncol = 2, scales = &quot;free&quot;) +
+  # un poco de formato
+  theme_clean() +
+  coord_flip() +
+  scale_x_reordered() + 
+  theme(strip.text = element_text(size=9),
+        axis.text.y = element_text(size = 8, hjust = 0.8),
+        axis.text.x = element_blank())  +
+  labs(title = &quot;Términos más &#39;propios&#39; de cada candidato&quot;,
+       subtitle = &quot;a Presidente&quot;)</code></pre>
+<p>Veamos los resultados para los candidatos a Gobernador</p>
+<pre class="r"><code>plot_presid_tfidf</code></pre>
+<p><img src="index_files/figure-html/tf_idf%20gobernador-1.png" width="672" /></p>
+<p>Quizás era esperable: el discurso de los candidatos se distingüe conforme a su distrito de pertenencia. M. Lammens se dirije a los “porteños”, G. Insfrán a “Formosa” y los “formoseños”, A. Bonfatti a los “santafesinos”, a la ciudad de Rosario… etc.</p>
+<p>Algunas cosas más interesantes surjen de ver qué caracteriza a los candidatos a la presidencia.</p>
+<pre class="r"><code>plot_gobs_tfidf_tokentweet</code></pre>
+<p><img src="index_files/figure-html/tf_idf%20presidente-1.png" width="672" /></p>
+<p>Los términos parecen ser indicativos de un estilo discursivo global.</p>
+<p>En algunos casos parecen ilustrar la construcción del “ethos” de los candidatos. Por ejemplo, J.L. Espert difunde muy activamente su costado “mediático”. R. Lavagna, en cambio, parece haberse posicionado por referencia a su gestión como ministro de economía a la salida de la crisis de 2001.</p>
+<p>En otros destaca el componente temporal: A. Fernández refiere claramente al futuro, M. Macri parece concentrarse en la política en sus detalles (y probablemente a lo hecho durante su gestión) - desde luego, esperable dado que era el Presidente en ejercicio -.</p>
+<p>Por su parte, destaca la carga “páthica” de J.J. Gomez Centurión, que hace alusiones al “terror” y al “terrorismo”. Y, finalmente, N. del Caño se diferencia por su interlocutor: los “trabajadores”, los sectores “populares”.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Adicionalmente, como pueden ver en <a href="">este script</a> y <a href="">este</a> y <a href="">este otro</a> gráficos, nos preguntamos si había alguna diferencia en la evolución de los tuits emitidos para los “ganadores” y los “perdedores” en las elecciones. Imaginamos que la baja en la emisión de tuits después de los comicios podía ser signo de que los candidatos no electos “tiraron la toalla”. Sin embargo, la inspección ocular desmiente, en principio, nuestras sospechas. Por otro lado, es interesante notar que los tuits emitidos por día no se corresponden con la cantidad de rts recibidos, como puede observarse al comparar el gráfico de arriba con <a href="">este otro</a>. ¿Sorprendente? Para nada, recordemos que en la sección anterior vimos que una y otra medida no parecían ir de la mano.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>Para una explicación más completa, recomendamos la lectura de <a href="https://www.tidytextmining.com/tfidf.html">este capítulo</a><a href="#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
 </div>

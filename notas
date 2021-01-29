@@ -1,0 +1,46 @@
+#notes
+
+#pagina de contexto. mapa cdad de electores. mapa cuadraditos facetar ppac distinto color para distritos elegidos o solo mostrar info en estos
+
+dim(): shows the dimensions of the data frame by row and column
+str(): shows the structure of the data frame
+summary(): provides summary statistics on the columns of the data frame
+colnames(): shows the name of each column in the data frame
+head(): shows the first 6 rows of the data frame
+tail(): shows the last 6 rows of the data frame
+View(): shows a spreadsheet-like display of the entire data frame
+
+agregar este cambio
+
+    select("created_at", 
+           "text", 
+           "rts", "fav_count", 
+           "tweet_id", 
+           "screen_name", "user_id", "description", 
+           "location", 
+           "mention_screen_names", 
+           "in_reply_to_screen_name")
+           
+select_columnas <- c("created_at", 
+           "text", 
+           "rts", "fav_count", 
+           "tweet_id", 
+           "screen_name", "user_id", "description", 
+           "location", 
+           "mention_screen_names", 
+           "in_reply_to_screen_name")
+
+# PROBAR PLOT POINT PLOT TEXT            
+# create the subset
+g1 <- subset(a, GeneName == "G1")
+
+# plot the data
+ggplot(a, aes(log10(Index1+1), Index2)) + geom_point(alpha=1/5) +  # this is the base plot
+  geom_point(data=g1, colour="red") +  # this adds a red point
+  geom_text(data=g1, label="G1", vjust=1) # this adds a label for the red point
+  
+  
+  Adicionalmente, como pueden ver en [este script]() y [este]() y [este otro]() gráficos
+  
+  
+  ver si se corrigio t del fuego NA

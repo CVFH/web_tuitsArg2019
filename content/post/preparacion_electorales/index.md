@@ -45,8 +45,8 @@ A continuación, presentamos el código con el que procesamos los datos.
 Para cada opción: datos de los candidatos a gobernador ("gob"), a presidente ("presid")[^2], o el conjunto ("tot"), la función realiza los siguientes pasos:
 
 1. llamado a los datos de base
-2. define el url de interés
-3. lee el código html de dicho url y descarga los nodos que sean "tablas"; en el mismo paso, dado un nodo, selecciona una tabla en particular[^1]
+2. define el _url_ de interés
+3. lee el código html de dicho _url_ y descarga los nodos que sean "tablas"; en el mismo paso, dado un nodo, selecciona una tabla en particular[^1]
 4. formateo de esa tabla
 5. incorporación de los datos de base
 6. devolución del resultado

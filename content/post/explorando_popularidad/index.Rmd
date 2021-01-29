@@ -38,7 +38,7 @@ source("https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/tab
 source("https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/funcionesGraficos.R", encoding = "UTF-8") # para graficar
 ```
 
-### Preparación de datos
+### Importación de datos
 
 Demos vida a nuestro análisis invocando a las bases de datos de nuestro interés.
 
@@ -125,7 +125,7 @@ Ahora sí, podemos inspeccionar si hay vínculos entre el desempeño en las urna
 
 > En el código a continuación, incorporamos los resultados que encontramos más interesantes. Ensayamos algunos gráficos de dispersión adicionales, pero, o bien arrojaban resultados irrelevantes: por ejemplo, entre la cantidad de tuits emitidos y los votos obtenidos; o bien, muy similares a los que muestran los gráficos que siguen, como sea entre la cantidad de favs y los votos obtenidos. [^1] 
 
-Nótese que usamos algunas de las funciones que intridujimos en un [post anterior](../preparacion_funciones), que desde ya hacen uso y abuso de la gramática de `ggplot`
+Nótese que usamos algunas de las funciones que intridujimos en un [post anterior](../preparacion_funciones), que desde ya hacen uso y abuso de la gramática de `ggplot`.
 
 ```{r graficos, warning= FALSE, message= FALSE}
 
@@ -152,7 +152,7 @@ presid_rtspromedio_porcentaje <- plotPointText(presid_popu_ranking,
        aes(rts_obtenidos_promedio, 
            Porcentaje, 
            colour = screen_name),
-       aes(label=screen_name)) %>%  
+       aes(label=c("alferdez", "mauriciomacri"))) %>%  
     formatPlot(plottitle = "a Presidente", 
          xlabel = "Rts obtenidos promedio", 
          ylabel = "% de votos obtenidos")
