@@ -91,7 +91,7 @@ linea_fecha</code></pre>
 <p>Es hora de transformar nuestra base de datos. Hasta aquí, cada tuit ha constituido una “observación”, es decir, una fila, un dato.</p>
 <p>En adelante, buena parte de nuestro trabajo se basará en la descomposición de estos tuits en sus elementos constituyentes: las palabras.</p>
 <p>Para operar las transformaciones necesarias, nos valemos de funciones definidas previamente, <a href="../preparacion_funciones/">tal como hemos explicado</a>. Apliquémoslas, entonces.</p>
-<p>De manera provisoria, exploraremos diferentes opciones. Tenemos diferentes vías para arribar a los mismos resultados; básicamente, hemos buscado mantener bases separadas para candidatos a gobernador y a presidente, y hemos aplicado a cada base diferentes tipos de <em>“tokenización”</em>.</p>
+<p>De manera provisoria, exploraremos diferentes opciones. Tenemos diferentes vías para arribar a los mismos resultados; hemos explorado con bases separadas para candidatos a gobernador y a presidente, y hemos aplicado a cada base diferentes tipos de <em>“tokenización”</em>. A continuación presentamos únicamente el código que da origen a las bases que utilizaremos después.</p>
 <pre class="r"><code># TRANSFORMACIONES DE LOS DATOS 
 
 # Tokenizando ######
@@ -103,13 +103,7 @@ joined_gobernadores_tokenizadas &lt;- joined_gobernadores %&gt;% tokenizarTextoT
 
 # tokenizado especial para tuits
 
-joined_presid_tokentweets &lt;- joined_presid %&gt;% tokenizarTextoTuits(tipo_token = &quot;tweets&quot;) 
 joined_gobernadores_tokentweets &lt;- joined_gobernadores %&gt;% tokenizarTextoTuits(tipo_token = &quot;tweets&quot;)
-
-# tokenizando por bigramas
-
-joined_presid_bigramas &lt;- joined_presid %&gt;% tokenizarTextoTuits(tipo_token = &quot;ngrams&quot;) 
-joined_gobernadores_bigramas &lt;- joined_gobernadores %&gt;% tokenizarTextoTuits(tipo_token = &quot;ngrams&quot;)
 
 # agregando bases ####
 
@@ -118,11 +112,7 @@ joined_candidatos &lt;- joined_candidatos %&gt;%
 
 candidatos_tokenizadas &lt;- rbind(joined_gobernadores_tokenizadas,
                                 joined_presid_tokenizadas) %&gt;% 
-  left_join(datos_base)
-
-candidatos_tokentweets &lt;- rbind(joined_presid_tokentweets,
-                                joined_gobernadores_tokentweets)%&gt;% 
-  left_join(datos_base) </code></pre>
+  left_join(datos_base)</code></pre>
 <p>¿Cómo se disponen nuestros datos ahora?
 Veamos un ejemplo</p>
 <pre class="r"><code>str(candidatos_tokenizadas)</code></pre>
@@ -189,6 +179,8 @@ plot_promediopalabras_cantidadtuits</code></pre>
 <h3>De la cantidad a la calidad</h3>
 <p>La cantidad de palabras o tutis dichos por un candidato, su “elocuencia”, sigue siendo poco informativa acerca de qué tan atractivo o no es su discurso en la red social.</p>
 <p>Exploremos qué palabras, y no ya cuántas, prefirieron nuestros <em>twitteros</em> durante la campaña.</p>
+<div id="palabras-en-la-nube-o-una-nube-de-palabras" class="section level4">
+<h4>¿Palabras en la nube o una nube de palabras?</h4>
 <p>Podemos comenzar por una sencilla nube de palabras. Nos valemos del paquete <em>wordcloud()</em>, que nos permite hacer “nubes comparativas”.</p>
 <pre class="r"><code># Nubes de palabras #####
 
@@ -206,6 +198,8 @@ wordcloud::comparison.cloud(matriz_cargos,
                             title.size=NULL)</code></pre>
 <p><img src="index_files/figure-html/nubes%20por%20distrito-1.png" width="672" /></p>
 <p>Como podríamos haber imaginado, los candidatos a gobernador utilizan más términos relativos al “territorio”: “vecinos”, “provincia”, “barrios”, “ciudad”, “villa”. Pero también a las “familias”, la “casa”, el “club”. En cambio, los candidatos a la presidencia apelan a la “nación”, a la “Argentina”, y, en principio, a temas de macroeconomía como los “impuestos” y la “deuda”.</p>
+<div id="términos-distinguidos-o-distinguidos-por-los-términos" class="section level5">
+<h5>Términos distinguidos, o distinguidos por los términos</h5>
 <p>Una medida comparativa interesante es el cálculo de <em>term frequency - inverse document frequency</em> (o sencillamente <strong>tf-idf</strong>), que estima qué tan “particulares” son los términos utilizados por un hablante<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
 <p>En <a href="">este script</a> exploramos varias combinaciones de cálculos interesantes, pero elejimos a nuestros fines en este post mostramos las <em>palabras</em> que mejor caracterizan a cada candidato a Gobernador, y los “términos de twitter” más propios de cada candidato a la presidencia.</p>
 <blockquote>
@@ -259,7 +253,7 @@ plot_gobs_tfidf_tokentweet &lt;- ggplot(sliced_gobs_tfidf_tokentweet ,
 
 joined_presid_tokenizadas_tfidf &lt;- joined_presid_tokenizadas %&gt;%
   # limpiamos base
-  limpiarTokens(palabras_web = TRUE, mentions = TRUE, hashtags = TRUE) %&gt;%  
+  limpiarTokens(palabras_web = TRUE, mentions = TRUE, hashtags = TRUE, largo =TRUE) %&gt;%  
   dplyr::count(screen_name, tokens, sort = TRUE) %&gt;% 
   # calculamos tf_idf
   bind_tf_idf(tokens, screen_name, n) 
@@ -286,16 +280,62 @@ plot_presid_tfidf &lt;- ggplot(sliced_presid_tfidf,
   labs(title = &quot;Términos más &#39;propios&#39; de cada candidato&quot;,
        subtitle = &quot;a Presidente&quot;)</code></pre>
 <p>Veamos los resultados para los candidatos a Gobernador</p>
-<pre class="r"><code>plot_presid_tfidf</code></pre>
-<p><img src="index_files/figure-html/tf_idf%20gobernador-1.png" width="672" /></p>
+<pre class="r"><code>plot_gobs_tfidf_tokentweet</code></pre>
+<p><img src="index_files/figure-html/tf_idf%20gobernador-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
 <p>Quizás era esperable: el discurso de los candidatos se distingüe conforme a su distrito de pertenencia. M. Lammens se dirije a los “porteños”, G. Insfrán a “Formosa” y los “formoseños”, A. Bonfatti a los “santafesinos”, a la ciudad de Rosario… etc.</p>
 <p>Algunas cosas más interesantes surjen de ver qué caracteriza a los candidatos a la presidencia.</p>
-<pre class="r"><code>plot_gobs_tfidf_tokentweet</code></pre>
-<p><img src="index_files/figure-html/tf_idf%20presidente-1.png" width="672" /></p>
+<pre class="r"><code>plot_presid_tfidf</code></pre>
+<p><img src="index_files/figure-html/tf_idf%20presidente-1.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
 <p>Los términos parecen ser indicativos de un estilo discursivo global.</p>
 <p>En algunos casos parecen ilustrar la construcción del “ethos” de los candidatos. Por ejemplo, J.L. Espert difunde muy activamente su costado “mediático”. R. Lavagna, en cambio, parece haberse posicionado por referencia a su gestión como ministro de economía a la salida de la crisis de 2001.</p>
 <p>En otros destaca el componente temporal: A. Fernández refiere claramente al futuro, M. Macri parece concentrarse en la política en sus detalles (y probablemente a lo hecho durante su gestión) - desde luego, esperable dado que era el Presidente en ejercicio -.</p>
 <p>Por su parte, destaca la carga “páthica” de J.J. Gomez Centurión, que hace alusiones al “terror” y al “terrorismo”. Y, finalmente, N. del Caño se diferencia por su interlocutor: los “trabajadores”, los sectores “populares”.</p>
+</div>
+</div>
+<div id="dime-qué-hashtag-usas-y-te-diré-quién-eres" class="section level4">
+<h4>Dime qué hashtag usas y te diré quién eres</h4>
+<p>Como habrá visto nuestro lector, en los gráficos anteriores seteamos la opción <code>hashtag = TRUE</code> en <code>limpiarTokens()</code>: esto se deshace de los tokens (términos) que sean, valga la obviedad, <em>hashtags</em>: “#”. Hicimos esto porque esta suerte de etiquetas virtuales son a la vez muy utilizadas y muy propias de cada candidato, ofician de “lemas de campaña” repetidos hasta el cansancio. En consecuencia ¡copaban todo el gráfico!</p>
+<p>A los fines de satisfacer a todo tipo de curiosos, y antes de pasar en la próxima sección a atender al otro gran tipo de término que hicimos a un lado de momento: las <em>menciones</em>, veamos <strong>cuáles fueron los hashtags más utilizados por nuestros candidatos</strong>.</p>
+<p>Para ello, graficamos unas “nubes de hashtags” a continuación:</p>
+<pre class="r"><code># Hashtags #####
+
+# identificamos nuestros datos
+
+candidatos_hashtags &lt;- candidatos_tokenizadas %&gt;% 
+  subset(str_detect(tokens, &quot;(hashtag)&quot;)) %&gt;% 
+  mutate(hashtags = str_replace(tokens, &quot;(hashtag)&quot;, &quot;#&quot;)) %&gt;% 
+  select(-c(tokens)) %&gt;% 
+  dplyr::count(screen_name, hashtags) %&gt;% 
+  left_join(datos_base) %&gt;% 
+  group_by(screen_name) %&gt;%
+  slice_max(n, n = 5) </code></pre>
+<pre><code>## Joining, by = &quot;screen_name&quot;</code></pre>
+<pre class="r"><code># plot por separado para claridad visual
+# usamos la nube de palabras de ggplot
+
+# de gobernadores
+
+plot_gobernador_hashtags &lt;- ggplot(candidatos_hashtags %&gt;% filter(Cargo==&quot;Gobernador&quot;), 
+                                   aes(label = hashtags, 
+                                       size = n,
+                                       colour= Distrito)) +
+  geom_text_wordcloud() +
+  facet_wrap(~screen_name, ncol = 3) +
+  scale_size_area(max_size = 4) + 
+  theme_clean()
+
+# de presid
+
+plot_presid_hashtags &lt;- ggplot(candidatos_hashtags %&gt;% filter(Cargo==&quot;Presidente&quot;), 
+                                   aes(label = hashtags, 
+                                       size = n,
+                                       colour=screen_name)) +
+  geom_text_wordcloud() +
+  facet_wrap(~screen_name, ncol = 3) +
+  scale_size_area(max_size = 5) + 
+  theme_clean()</code></pre>
+<p>Vemos que los candidatos no sólo utilizan distintos hashtags, sino que lo hacen con diferente intensidad, como indica el mayor o menor tamaño de los términos en la grilla.</p>
+</div>
 </div>
 </div>
 <div class="footnotes">

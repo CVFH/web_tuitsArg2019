@@ -106,7 +106,7 @@ En adelante, buena parte de nuestro trabajo se basará en la descomposición de 
 
 Para operar las transformaciones necesarias, nos valemos de funciones definidas previamente, [tal como hemos explicado](../preparacion_funciones/). Apliquémoslas, entonces. 
 
-De manera provisoria, exploraremos diferentes opciones. Tenemos diferentes vías para arribar a los mismos resultados; básicamente, hemos buscado mantener bases separadas para candidatos a gobernador y a presidente, y hemos aplicado a cada base diferentes tipos de _"tokenización"_.
+De manera provisoria, exploraremos diferentes opciones. Tenemos diferentes vías para arribar a los mismos resultados; hemos explorado con bases separadas para candidatos a gobernador y a presidente, y hemos aplicado a cada base diferentes tipos de _"tokenización"_. A continuación presentamos únicamente el código que da origen a las bases que utilizaremos después. 
 
 ```{r tokenizando, warning = FALSE, message = FALSE}
 
@@ -121,13 +121,7 @@ joined_gobernadores_tokenizadas <- joined_gobernadores %>% tokenizarTextoTuits()
 
 # tokenizado especial para tuits
 
-joined_presid_tokentweets <- joined_presid %>% tokenizarTextoTuits(tipo_token = "tweets") 
 joined_gobernadores_tokentweets <- joined_gobernadores %>% tokenizarTextoTuits(tipo_token = "tweets")
-
-# tokenizando por bigramas
-
-joined_presid_bigramas <- joined_presid %>% tokenizarTextoTuits(tipo_token = "ngrams") 
-joined_gobernadores_bigramas <- joined_gobernadores %>% tokenizarTextoTuits(tipo_token = "ngrams")
 
 # agregando bases ####
 
@@ -137,11 +131,6 @@ joined_candidatos <- joined_candidatos %>%
 candidatos_tokenizadas <- rbind(joined_gobernadores_tokenizadas,
                                 joined_presid_tokenizadas) %>% 
   left_join(datos_base)
-
-candidatos_tokentweets <- rbind(joined_presid_tokentweets,
-                                joined_gobernadores_tokentweets)%>% 
-  left_join(datos_base) 
-
 ```
 
 ¿Cómo se disponen nuestros datos ahora?
@@ -209,6 +198,8 @@ La cantidad de palabras o tutis dichos por un candidato, su "elocuencia", sigue 
 
 Exploremos qué palabras, y no ya cuántas, prefirieron nuestros _twitteros_ durante la campaña.
 
+#### ¿Palabras en la nube o una nube de palabras?
+
 Podemos comenzar por una sencilla nube de palabras. Nos valemos del paquete _wordcloud()_, que nos permite hacer "nubes comparativas".
 
 ```{r nubes por distrito, warning= FALSE, message= FALSE}
@@ -229,6 +220,8 @@ wordcloud::comparison.cloud(matriz_cargos,
 ```
 
 Como podríamos haber imaginado, los candidatos a gobernador utilizan más términos relativos al "territorio": "vecinos", "provincia", "barrios", "ciudad", "villa". Pero también a las "familias", la "casa", el "club". En cambio, los candidatos a la presidencia apelan a la "nación", a la "Argentina", y, en principio, a temas de macroeconomía como los "impuestos" y la "deuda".
+
+##### Términos distinguidos, o distinguidos por los términos
 
 Una medida comparativa interesante es el cálculo de _term frequency - inverse document frequency_ (o sencillamente **tf-idf**), que estima qué tan "particulares" son los términos utilizados por un hablante[^2].
 
@@ -286,7 +279,7 @@ plot_gobs_tfidf_tokentweet <- ggplot(sliced_gobs_tfidf_tokentweet ,
 
 joined_presid_tokenizadas_tfidf <- joined_presid_tokenizadas %>%
   # limpiamos base
-  limpiarTokens(palabras_web = TRUE, mentions = TRUE, hashtags = TRUE) %>%  
+  limpiarTokens(palabras_web = TRUE, mentions = TRUE, hashtags = TRUE, largo =TRUE) %>%  
   dplyr::count(screen_name, tokens, sort = TRUE) %>% 
   # calculamos tf_idf
   bind_tf_idf(tokens, screen_name, n) 
@@ -312,22 +305,20 @@ plot_presid_tfidf <- ggplot(sliced_presid_tfidf,
         axis.text.x = element_blank())  +
   labs(title = "Términos más 'propios' de cada candidato",
        subtitle = "a Presidente")
-
-
 ```
 
 Veamos los resultados para los candidatos a Gobernador
 
-```{r tf_idf gobernador, warning= FALSE, message= FALSE}
-plot_presid_tfidf
+```{r tf_idf gobernador, warning= FALSE, message= FALSE, out.height=  '100%', out.width = '100%', fig.align = "center"}
+plot_gobs_tfidf_tokentweet
 ```
 
 Quizás era esperable: el discurso de los candidatos se distingüe conforme a su distrito de pertenencia. M. Lammens se dirije a los "porteños", G. Insfrán a "Formosa" y los "formoseños", A. Bonfatti a los "santafesinos", a la ciudad de Rosario... etc.
 
 Algunas cosas más interesantes surjen de ver qué caracteriza a los candidatos a la presidencia.
 
-```{r tf_idf presidente, warning= FALSE, message= FALSE}
-plot_gobs_tfidf_tokentweet
+```{r tf_idf presidente, warning= FALSE, message= FALSE, out.height=  '100%', out.width = '100%', fig.align = "center"}
+plot_presid_tfidf
 ```
 
 Los términos parecen ser indicativos de un estilo discursivo global. 
@@ -337,6 +328,57 @@ En algunos casos parecen ilustrar la construcción del "ethos" de los candidatos
 En otros destaca el componente temporal: A. Fernández refiere claramente al futuro, M. Macri parece concentrarse en la política en sus detalles (y probablemente a lo hecho durante su gestión) - desde luego, esperable dado que era el Presidente en ejercicio -.
 
 Por su parte, destaca la carga "páthica" de J.J. Gomez Centurión, que hace alusiones al "terror" y al "terrorismo". Y, finalmente, N. del Caño se diferencia por su interlocutor: los "trabajadores", los sectores "populares".
+
+#### Dime qué hashtag usas y te diré quién eres
+
+Como habrá visto nuestro lector, en los gráficos anteriores seteamos la opción `hashtag = TRUE` en `limpiarTokens()`: esto se deshace de los tokens (términos) que sean, valga la obviedad, _hashtags_: "#". Hicimos esto porque esta suerte de etiquetas virtuales son a la vez muy utilizadas y muy propias de cada candidato, ofician de "lemas de campaña" repetidos hasta el cansancio. En consecuencia ¡copaban todo el gráfico!
+
+A los fines de satisfacer a todo tipo de curiosos, y antes de pasar en la próxima sección a atender al otro gran tipo de término que hicimos a un lado de momento: las _menciones_, veamos **cuáles fueron los hashtags más utilizados por nuestros candidatos**.
+
+Para ello, graficamos unas "nubes de hashtags" a continuación:
+
+```{r}
+# Hashtags #####
+
+# identificamos nuestros datos
+
+candidatos_hashtags <- candidatos_tokenizadas %>% 
+  subset(str_detect(tokens, "(hashtag)")) %>% 
+  mutate(hashtags = str_replace(tokens, "(hashtag)", "#")) %>% 
+  select(-c(tokens)) %>% 
+  dplyr::count(screen_name, hashtags) %>% 
+  left_join(datos_base) %>% 
+  group_by(screen_name) %>%
+  slice_max(n, n = 5) 
+
+# plot por separado para claridad visual
+# usamos la nube de palabras de ggplot
+
+# de gobernadores
+
+plot_gobernador_hashtags <- ggplot(candidatos_hashtags %>% filter(Cargo=="Gobernador"), 
+                                   aes(label = hashtags, 
+                                       size = n,
+                                       colour= Distrito)) +
+  geom_text_wordcloud() +
+  facet_wrap(~screen_name, ncol = 3) +
+  scale_size_area(max_size = 4) + 
+  theme_clean()
+
+# de presid
+
+plot_presid_hashtags <- ggplot(candidatos_hashtags %>% filter(Cargo=="Presidente"), 
+                                   aes(label = hashtags, 
+                                       size = n,
+                                       colour=screen_name)) +
+  geom_text_wordcloud() +
+  facet_wrap(~screen_name, ncol = 3) +
+  scale_size_area(max_size = 5) + 
+  theme_clean()
+```
+
+Vemos que los candidatos no sólo utilizan distintos hashtags, sino que lo hacen con diferente intensidad, como indica el mayor o menor tamaño de los términos en la grilla.
+
 
 [^1]: Adicionalmente, como pueden ver en [este script]() y [este]() y [este otro]() gráficos, nos preguntamos si había alguna diferencia en la evolución de los tuits emitidos para los "ganadores" y los "perdedores" en las elecciones. Imaginamos que la baja en la emisión de tuits después de los comicios podía ser signo de que los candidatos no electos "tiraron la toalla". Sin embargo, la inspección ocular desmiente, en principio, nuestras sospechas. Por otro lado, es interesante notar que los tuits emitidos por día no se corresponden con la cantidad de rts recibidos, como puede observarse al comparar el gráfico de arriba con [este otro](). ¿Sorprendente? Para nada, recordemos que en la sección anterior vimos que una y otra medida no parecían ir de la mano. 
 [^2]: Para una explicación más completa, recomendamos la lectura de [este capítulo](https://www.tidytextmining.com/tfidf.html)
