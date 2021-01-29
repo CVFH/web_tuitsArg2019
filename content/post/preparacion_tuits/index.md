@@ -118,15 +118,17 @@ traerDatosTuits <- function(tipo_dato){
       else if (tipo_dato == "presid") {
     
   # PRESIDENCIALES 
+  
+  # mismos pasos
     
     # fechas
     
     fecha_paso <- as.Date("2019-08-11")
     fecha_grales <- as.Date("2019-10-27")
     
-  # aquí tenemos un archivo -xlsx y los demás .csv. 
-  # resultó más sencillo descargarlos independientemente y luego unirlos
   
+    # enlaces
+   
   presid1 <- "https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Data/alferdez.csv"
   presid2 <- "https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Data/mauriciomacri.csv"
   presid3 <- "https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Data/RLavagna.csv"
@@ -147,6 +149,7 @@ traerDatosTuits <- function(tipo_dato){
     [[[else if (tipo_dato=="tot")]]] {
       
     # trae bases separadas
+    
        joined_presid <- traerDatosTuits("presid")
        joined_gobernadores <- traerDatosTuits("gob")
        
