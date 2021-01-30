@@ -12,7 +12,7 @@ weight: 5
 <script src="index_files/anchor-sections/anchor-sections.js"></script>
 
 
-<p>En este post presentamos el primer paso del análisis exploratorio que propusimos hacer..</p>
+<p>En este post presentamos el primer paso del análisis exploratorio que propusimos hacer.</p>
 <p>Comenzaremos presentando el código utilizado. Diagramaremos gráficos que exploran los vínculos entre el desempeño en Twitter y el desempeño en las urnas de nuestros candidatos. Los presentaremos hacia el final, junto a unas breves conclusiones.</p>
 <div id="pasos-preliminares" class="section level2">
 <h2>Pasos preliminares</h2>
@@ -36,8 +36,8 @@ source(&quot;https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Module
 source(&quot;https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/tablasElectorales.R&quot;, encoding = &quot;UTF-8&quot;) # para scrappear resultados electorales
 source(&quot;https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/funcionesGraficos.R&quot;, encoding = &quot;UTF-8&quot;) # para graficar</code></pre>
 </div>
-<div id="preparación-de-datos" class="section level3">
-<h3>Preparación de datos</h3>
+<div id="importación-de-datos" class="section level3">
+<h3>Importación de datos</h3>
 <p>Demos vida a nuestro análisis invocando a las bases de datos de nuestro interés.</p>
 <pre class="r"><code># IMPORTACION DE DATOS / TUITS
 
@@ -72,7 +72,6 @@ El motivo de mantener bases independientes es que algunas medidas no son directa
 
 gobernadores_popu &lt;- joined_gobernadores %&gt;%  
   subset( Campaña == 1 ) %&gt;% 
-  select(created_at, screen_name, rts,fav_count, followers_count, friends_count ) %&gt;% 
   group_by(screen_name) %&gt;% 
   dplyr::summarise(rts_obtenidos_totales = sum(rts),
             favs_obtenidos_totales = sum(fav_count),
@@ -93,7 +92,6 @@ gobernadores_popu_ranking &lt;- full_join(gobernadores_popu,
 
 presid_popu &lt;- joined_presid %&gt;%  
   subset( Campaña == 1 ) %&gt;% 
-  select(created_at, screen_name, rts,fav_count, followers_count, friends_count ) %&gt;% 
   group_by(screen_name) %&gt;% 
   dplyr::summarise(rts_obtenidos_totales = sum(rts),
             favs_obtenidos_totales = sum(fav_count),
@@ -114,7 +112,7 @@ presid_popu_ranking &lt;- full_join(presid_popu,
 <blockquote>
 <p>En el código a continuación, incorporamos los resultados que encontramos más interesantes. Ensayamos algunos gráficos de dispersión adicionales, pero, o bien arrojaban resultados irrelevantes: por ejemplo, entre la cantidad de tuits emitidos y los votos obtenidos; o bien, muy similares a los que muestran los gráficos que siguen, como sea entre la cantidad de favs y los votos obtenidos. <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 </blockquote>
-<p>Nótese que usamos algunas de las funciones que intridujimos en un <a href="../preparacion_funciones">post anterior</a>, que desde ya hacen uso y abuso de la gramática de <code>ggplot</code></p>
+<p>Nótese que usamos algunas de las funciones que introdujimos en un <a href="../preparacion_funciones">post anterior</a>, que desde ya hacen uso y abuso de la gramática de <code>ggplot</code>.</p>
 <pre class="r"><code># GRAFICOS DE RELACIONES
 
 # provincias y nacion por separado
@@ -138,7 +136,7 @@ presid_rtspromedio_porcentaje &lt;- plotPointText(presid_popu_ranking,
        aes(rts_obtenidos_promedio, 
            Porcentaje, 
            colour = screen_name),
-       aes(label=screen_name)) %&gt;%  
+       aes(label = screen_name)) %&gt;%  
     formatPlot(plottitle = &quot;a Presidente&quot;, 
          xlabel = &quot;Rts obtenidos promedio&quot;, 
          ylabel = &quot;% de votos obtenidos&quot;)
@@ -185,7 +183,7 @@ candidatos_rts_emitidos &lt;- plotPoint(candidatos_popu_ranking,
 <pre class="r"><code># Patchworks 
 # uniomos los gráficos para su presentación
 
-rtspromedio_porcentaje &lt;-  (presid_rtspromedio_porcentaje  | gobernadores_rtspromedio_porcentaje)  + 
+rtspromedio_porcentaje &lt;-  (presid_rtspromedio_porcentaje  / gobernadores_rtspromedio_porcentaje)  + 
   plot_annotation(
   title = &#39;Relación entre cantidad de Rts Promedio y Porcentaje de votos obtenido&#39;,
   caption = &quot;Fuente: elaboración propia&quot;)

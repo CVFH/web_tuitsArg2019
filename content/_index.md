@@ -7,7 +7,7 @@ title: ""
 
 Bienvenidos a [**TuitsArg2019**](/about/): mi trabajo final para la materia [MétodosCiPol](https://tuqmano.github.io/MetodosCiPol/), _Herramientas Cuantitativas para el Análisis Político_. 
 
-Se trata de un [proyecto](https://github.com/CVFH/Tuits_arg_2019) hecho con `r` que explora los tuits emitidos por **los candidatos a las elecciones de 2019 en la Argentina**. Esta web introduce el código con el que trabajamos y nuestros principales hallazgos.
+Se trata de **un [proyecto](https://github.com/CVFH/Tuits_arg_2019) hecho con `r` que explora los tuits emitidos por los candidatos a las elecciones de 2019 en la Argentina**. Este blog introduce el código con el que trabajamos y nuestros principales hallazgos.
 
 Proponemos el siguiente recorrido:
 

@@ -8,7 +8,7 @@ tags:
 weight: 5
 ---
 
-En este post presentamos el primer paso del análisis exploratorio que propusimos hacer..
+En este post presentamos el primer paso del análisis exploratorio que propusimos hacer.
 
 Comenzaremos presentando el código utilizado. Diagramaremos gráficos que exploran los vínculos entre el desempeño en Twitter y el desempeño en las urnas de nuestros candidatos. Los presentaremos hacia el final, junto a unas breves conclusiones.
 
@@ -82,7 +82,6 @@ El motivo de mantener bases independientes es que algunas medidas no son directa
 
 gobernadores_popu <- joined_gobernadores %>%  
   subset( Campaña == 1 ) %>% 
-  select(created_at, screen_name, rts,fav_count, followers_count, friends_count ) %>% 
   group_by(screen_name) %>% 
   dplyr::summarise(rts_obtenidos_totales = sum(rts),
             favs_obtenidos_totales = sum(fav_count),
@@ -103,7 +102,6 @@ gobernadores_popu_ranking <- full_join(gobernadores_popu,
 
 presid_popu <- joined_presid %>%  
   subset( Campaña == 1 ) %>% 
-  select(created_at, screen_name, rts,fav_count, followers_count, friends_count ) %>% 
   group_by(screen_name) %>% 
   dplyr::summarise(rts_obtenidos_totales = sum(rts),
             favs_obtenidos_totales = sum(fav_count),
@@ -125,7 +123,7 @@ Ahora sí, podemos inspeccionar si hay vínculos entre el desempeño en las urna
 
 > En el código a continuación, incorporamos los resultados que encontramos más interesantes. Ensayamos algunos gráficos de dispersión adicionales, pero, o bien arrojaban resultados irrelevantes: por ejemplo, entre la cantidad de tuits emitidos y los votos obtenidos; o bien, muy similares a los que muestran los gráficos que siguen, como sea entre la cantidad de favs y los votos obtenidos. [^1] 
 
-Nótese que usamos algunas de las funciones que intridujimos en un [post anterior](../preparacion_funciones), que desde ya hacen uso y abuso de la gramática de `ggplot`.
+Nótese que usamos algunas de las funciones que introdujimos en un [post anterior](../preparacion_funciones), que desde ya hacen uso y abuso de la gramática de `ggplot`.
 
 ```{r graficos, warning= FALSE, message= FALSE}
 
@@ -152,7 +150,7 @@ presid_rtspromedio_porcentaje <- plotPointText(presid_popu_ranking,
        aes(rts_obtenidos_promedio, 
            Porcentaje, 
            colour = screen_name),
-       aes(label=c("alferdez", "mauriciomacri"))) %>%  
+       aes(label = screen_name)) %>%  
     formatPlot(plottitle = "a Presidente", 
          xlabel = "Rts obtenidos promedio", 
          ylabel = "% de votos obtenidos")
@@ -204,7 +202,7 @@ Hemos hecho nuestros gráficos. Utilizamos el paquete `patchwork` para presentar
 # Patchworks 
 # uniomos los gráficos para su presentación
 
-rtspromedio_porcentaje <-  (presid_rtspromedio_porcentaje  | gobernadores_rtspromedio_porcentaje)  + 
+rtspromedio_porcentaje <-  (presid_rtspromedio_porcentaje  / gobernadores_rtspromedio_porcentaje)  + 
   plot_annotation(
   title = 'Relación entre cantidad de Rts Promedio y Porcentaje de votos obtenido',
   caption = "Fuente: elaboración propia")

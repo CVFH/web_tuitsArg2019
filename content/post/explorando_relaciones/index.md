@@ -1,5 +1,5 @@
 ---
-title: explorando_relaciones
+title: Explorando Relaciones
 author: ~
 date: '2021-01-29'
 slug: explorando-relaciones
@@ -26,3 +26,5 @@ Para este post, partiremos simplemente de la base de con los tuits emitidos por 
 ### Dime a quién arrobas...
 
 Ahora sí, exploremos las relaciones que emergen entre nuestros candidatos a partir de las _mentions_
+
+

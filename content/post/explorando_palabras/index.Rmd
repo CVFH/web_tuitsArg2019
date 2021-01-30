@@ -183,7 +183,7 @@ plot_promediopalabras_cantidadtuits <- ggplot(candidatos_sintesis,
 # un poquito de formato para nuestro gráfico
 
 plot_promediopalabras_cantidadtuits <- plot_promediopalabras_cantidadtuits %>% 
-  formatPlot(plottitle = "Elocuencia de los candiatos a..",
+  formatPlot(plottitle = "Elocuencia de los candiatos",
              plotsubtitle = "durante la campaña de 2019",
              xlabel = "Tuits emitidos",
              ylabel = "Palabras promedio por tuit",
@@ -224,7 +224,7 @@ wordcloud::comparison.cloud(matriz_cargos,
 
 Como podríamos haber imaginado, los candidatos a gobernador utilizan más términos relativos al "territorio": "vecinos", "provincia", "barrios", "ciudad", "villa". Pero también a las "familias", la "casa", el "club". En cambio, los candidatos a la presidencia apelan a la "nación", a la "Argentina", y, en principio, a temas de macroeconomía como los "impuestos" y la "deuda".
 
-##### Términos distinguidos, o distinguidos por los términos
+#### Términos distinguidos, o distinguidos por los términos
 
 Una medida comparativa interesante es el cálculo de _term frequency - inverse document frequency_ (o sencillamente **tf-idf**), que estima qué tan "particulares" son los términos utilizados por un hablante[^2].
 
@@ -290,7 +290,7 @@ joined_presid_tokenizadas_tfidf <- joined_presid_tokenizadas %>%
 # nos quedamos con los términos más relevantes
 sliced_presid_tfidf <- joined_presid_tokenizadas_tfidf %>% 
   group_by(screen_name) %>%
-  slice_max(tf_idf, n = 15) %>%
+  slice_max(tf_idf, n = 14) %>%
   ungroup() %>% 
   mutate(tokens = reorder(tokens, tf_idf)) #ordenamos 
 
@@ -332,7 +332,7 @@ En otros destaca el componente temporal: A. Fernández refiere claramente al fut
 
 Por su parte, destaca la carga "páthica" de J.J. Gomez Centurión, que hace alusiones al "terror" y al "terrorismo". Y, finalmente, N. del Caño se diferencia por su interlocutor: los "trabajadores", los sectores "populares".
 
-#### Dime qué hashtag usas y te diré quién eres
+#### ¿Y los hashtags?
 
 Como habrá visto nuestro lector, en los gráficos anteriores seteamos la opción `hashtag = TRUE` en `limpiarTokens()`: esto se deshace de los tokens (términos) que sean, valga la obviedad, _hashtags_: "#". Hicimos esto porque esta suerte de etiquetas virtuales son a la vez muy utilizadas y muy propias de cada candidato, ofician de "lemas de campaña" repetidos hasta el cansancio. En consecuencia ¡copaban todo el gráfico!
 
@@ -397,7 +397,7 @@ plot_presid_hashtags
 
 Hemos indagado visualmente en algunos de los términos más o menos utilizados por los candidatos.
 
-Pero nos ha quedado pendiente uno de los "tipos" de palabras más importantes en Twitter: las menciones, esto es, cuando un _twittero_ utiliza el _@_ para dirigirse o citar directamente a alguien. Estos nombres propios pueden decirnos algo acerca de las relaciones interpersonales entre nuestros candidatos. Por ello les hemos dedicado un post completo, que sugerimos leer a continuación.
+Pero nos ha quedado pendiente uno de los "tipos" de palabras más importantes en Twitter: las menciones, esto es, cuando un _twittero_ utiliza el "@" para dirigirse o citar directamente a alguien. Estos nombres propios pueden decirnos algo acerca de las relaciones interpersonales entre nuestros candidatos. Por ello les hemos dedicado un post completo, que sugerimos leer a continuación.
 
 :fast_forward: [Seguir leyendo](../explorando_relaciones/)
 
