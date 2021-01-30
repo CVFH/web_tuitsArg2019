@@ -16,7 +16,7 @@ Antes, como siempre, debemos poner a disposición nuestra "materia prima": datos
 
 ```{r apertura, warning = FALSE, message = FALSE}
 
-# APERTURA DE LIBRERIAS ####
+# APERTURA DE LIBRERIAS #
 
 #paquetes
 
@@ -405,4 +405,4 @@ Volver [al inicio :house:](/)
 
 
 [^1]: Adicionalmente, como pueden ver en [este script](https://github.com/CVFH/Tuits_arg_2019/blob/master/exploracion_discursos.R) y [este gráfico](https://github.com/CVFH/Tuits_arg_2019/blob/master/images/ganadores_perdedores_ev_tiempo.png), nos preguntamos si había alguna diferencia en la evolución de los tuits emitidos para los "ganadores" y los "perdedores" en las elecciones. Imaginamos que la baja en la emisión de tuits después de los comicios podía ser signo de que los candidatos no electos "tiraron la toalla". Sin embargo, la inspección ocular desmiente, en principio, nuestras sospechas. Por otro lado, es interesante notar que los tuits emitidos por día no se corresponden con la cantidad de rts recibidos, como puede observarse al comparar el gráfico de arriba con [este otro](https://github.com/CVFH/Tuits_arg_2019/blob/master/images/rts_dia_2019.png). ¿Sorprendente? Para nada, recordemos que en la sección anterior vimos que una y otra medida no parecían ir de la mano. 
-[^2]: Para una explicación más completa, recomendamos la lectura de [este capítulo](https://www.tidytextmining.com/tfidf.html)
+[^2]: Para una explicación más completa, recomendamos la lectura de [este capítulo](https://www.tidytextmining.com/tfidf.html).

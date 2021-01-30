@@ -16,7 +16,7 @@ weight: 6
 <p>Antes, como siempre, debemos poner a disposición nuestra “materia prima”: datos y funciones.</p>
 <div id="activamos-funciones" class="section level4">
 <h4>Activamos funciones</h4>
-<pre class="r"><code># APERTURA DE LIBRERIAS #####
+<pre class="r"><code># APERTURA DE LIBRERIAS #
 
 #paquetes
 
@@ -77,15 +77,16 @@ joined_candidatos &lt;- joined_candidatos %&gt;%
   # vemos separadamente candidatos a presidente y a gobernador
   theme_minimal() + 
   theme(legend.position = &quot;bottom&quot;,
-        axis.text.x = element_text(angle = 90)) + 
+        axis.text.x = element_text(angle = 90)) +
+  scale_x_date(date_breaks = &quot;1 month&quot;, date_labels = &quot;%b&quot;) +
   labs(title = &quot;Evolución de la emisión de tuits en el tiempo&quot;,
          subtitle = &quot;durante el 2019&quot;,
-         x = &quot;cantidad de tuits emitidos&quot;,
-         y = &quot;fecha&quot;,
+         y = &quot;cantidad de tuits emitidos&quot;,
+         x = &quot;fecha&quot;,
          fill = &quot;&quot;)
 
 linea_fecha</code></pre>
-<p><img src="index_files/figure-html/elocuencia-1.png" width="1400" /></p>
+<p><img src="index_files/figure-html/elocuencia-1.png" width="672" /></p>
 <p>Los candidatos pueden haber “hablado” mucho o poco… pero claramente lo hacen más durante la campaña<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
 <p>Ahora bien, puede objetarse: la cantidad de tuits emitidos es sin dudas una medida básica aún para la sencilla pregunta que nos hemos hecho <em>(¿cuánto han hablado nuestros candidatos?)</em>. Ocurre que un simple tuit puede decir mucho, o decir muy poco.</p>
 <p>Es hora de transformar nuestra base de datos. Hasta aquí, cada tuit ha constituido una “observación”, es decir, una fila, un dato.</p>
@@ -161,8 +162,8 @@ plot_promediopalabras_cantidadtuits &lt;- ggplot(candidatos_sintesis,
                                                   colour=screen_name,
                                                   size= palabras_totales_emitidas)) +
   geom_point(alpha = 0.8) +
-  geom_text(aes(label= screen_name),hjust=0, vjust=0, size=4, colour=&quot;black&quot;) +
-  facet_wrap(~ Cargo)
+  geom_text(aes(label= screen_name),
+            hjust = 0, vjust = 1, size = 3, colour=&quot;black&quot;) 
 
 # un poquito de formato para nuestro gráfico
 
@@ -175,7 +176,7 @@ plot_promediopalabras_cantidadtuits &lt;- plot_promediopalabras_cantidadtuits %&
 
 # resultado: 
 plot_promediopalabras_cantidadtuits</code></pre>
-<p><img src="index_files/figure-html/palabras_tuits-1.png" width="1400" /></p>
+<p><img src="index_files/figure-html/palabras_tuits-1.png" width="700" /></p>
 <p>Vemos que hay candidatos que dijeron mucho en cada tuit, como Raúl Jalil, pero emitieron pocos tuits; otros, como A. R. Saa, emitieron muchos tuits pero fueron breves en cada uno de ellos (en promedio); finalmente, hay candidatos que hablaron muy poco, como A. Bogado, o mucho, como M. Macri, conforme a ambas medidas.</p>
 </div>
 <div id="de-la-cantidad-a-la-calidad" class="section level3">
@@ -199,7 +200,7 @@ wordcloud::comparison.cloud(matriz_cargos,
                             colors = c(&quot;lightblue&quot;, &quot;blue&quot;),
                             max.words = 100,
                             title.size=NULL)</code></pre>
-<p><img src="index_files/figure-html/nubes%20por%20distrito-1.png" width="1400" /></p>
+<p><img src="index_files/figure-html/nubes%20por%20distrito-1.png" width="700" /></p>
 <p>Como podríamos haber imaginado, los candidatos a gobernador utilizan más términos relativos al “territorio”: “vecinos”, “provincia”, “barrios”, “ciudad”, “villa”. Pero también a las “familias”, la “casa”, el “club”. En cambio, los candidatos a la presidencia apelan a la “nación”, a la “Argentina”, y, en principio, a temas de macroeconomía como los “impuestos” y la “deuda”.</p>
 <div id="términos-distinguidos-o-distinguidos-por-los-términos" class="section level5">
 <h5>Términos distinguidos, o distinguidos por los términos</h5>
@@ -244,7 +245,7 @@ plot_gobs_tfidf_tokentweet &lt;- ggplot(sliced_gobs_tfidf_tokentweet ,
   theme_clean() +
   coord_flip() +
   scale_x_reordered() + 
-  theme(strip.text = element_text(size=8),
+  theme(strip.text = element_text(size = 7),
         axis.text.y = element_text(size = 7, hjust = 0.8),
         axis.text.x = element_blank())  +
   labs(title = &quot;Términos más &#39;propios&#39; de cada candidato&quot;,
@@ -272,23 +273,23 @@ plot_presid_tfidf &lt;- ggplot(sliced_presid_tfidf,
                           aes(tokens, tf_idf, fill = screen_name)) +
   geom_col(show.legend = FALSE) +
   labs(x = NULL, y = &quot;tf-idf&quot;) +
-  facet_wrap(~screen_name, ncol = 2, scales = &quot;free&quot;) +
+  facet_wrap(~screen_name, ncol = 3, scales = &quot;free&quot;) +
   # un poco de formato
   theme_clean() +
   coord_flip() +
   scale_x_reordered() + 
   theme(strip.text = element_text(size=9),
-        axis.text.y = element_text(size = 8, hjust = 0.8),
+        axis.text.y = element_text(size = 7, hjust = 0.8),
         axis.text.x = element_blank())  +
   labs(title = &quot;Términos más &#39;propios&#39; de cada candidato&quot;,
        subtitle = &quot;a Presidente&quot;)</code></pre>
 <p>Veamos los resultados para los candidatos a Gobernador</p>
 <pre class="r"><code>plot_gobs_tfidf_tokentweet</code></pre>
-<p><img src="index_files/figure-html/tf_idf%20gobernador-1.png" width="1400" style="display: block; margin: auto;" /></p>
+<p><img src="index_files/figure-html/tf_idf%20gobernador-1.png" width="672" /></p>
 <p>Quizás era esperable: el discurso de los candidatos se distingüe conforme a su distrito de pertenencia. M. Lammens se dirije a los “porteños”, G. Insfrán a “Formosa” y los “formoseños”, A. Bonfatti a los “santafesinos”, a la ciudad de Rosario… etc.</p>
 <p>Algunas cosas más interesantes surjen de ver qué caracteriza a los candidatos a la presidencia.</p>
 <pre class="r"><code>plot_presid_tfidf</code></pre>
-<p><img src="index_files/figure-html/tf_idf%20presidente-1.png" width="1400" style="display: block; margin: auto;" /></p>
+<p><img src="index_files/figure-html/tf_idf%20presidente-1.png" width="672" /></p>
 <p>Los términos parecen ser indicativos de un estilo discursivo global.</p>
 <p>En algunos casos parecen ilustrar la construcción del “ethos” de los candidatos. Por ejemplo, J.L. Espert difunde muy activamente su costado “mediático”. R. Lavagna, en cambio, parece haberse posicionado por referencia a su gestión como ministro de economía a la salida de la crisis de 2001.</p>
 <p>En otros destaca el componente temporal: A. Fernández refiere claramente al futuro, M. Macri parece concentrarse en la política en sus detalles (y probablemente a lo hecho durante su gestión) - desde luego, esperable dado que era el Presidente en ejercicio -.</p>
@@ -318,10 +319,11 @@ candidatos_hashtags &lt;- candidatos_tokenizadas %&gt;%
 
 # de gobernadores
 
-plot_gobernador_hashtags &lt;- ggplot(candidatos_hashtags %&gt;% filter(Cargo==&quot;Gobernador&quot;), 
+plot_gobernador_hashtags &lt;- ggplot(candidatos_hashtags %&gt;%
+                                     filter(Cargo==&quot;Gobernador&quot;), 
                                    aes(label = hashtags, 
                                        size = n,
-                                       colour= Distrito)) +
+                                       colour = Distrito)) +
   geom_text_wordcloud() +
   facet_wrap(~screen_name, ncol = 3) +
   scale_size_area(max_size = 4) + 
@@ -329,20 +331,21 @@ plot_gobernador_hashtags &lt;- ggplot(candidatos_hashtags %&gt;% filter(Cargo==&
 
 # de presid
 
-plot_presid_hashtags &lt;- ggplot(candidatos_hashtags %&gt;% filter(Cargo==&quot;Presidente&quot;), 
+plot_presid_hashtags &lt;- ggplot(candidatos_hashtags %&gt;%
+                                 filter(Cargo==&quot;Presidente&quot;), 
                                    aes(label = hashtags, 
                                        size = n,
-                                       colour=screen_name)) +
+                                       colour = screen_name)) +
   geom_text_wordcloud() +
   facet_wrap(~screen_name, ncol = 3) +
   scale_size_area(max_size = 5) + 
   theme_clean()</code></pre>
 <p>Vemos que los candidatos no sólo utilizan distintos hashtags, sino que lo hacen con diferente intensidad, como indica el mayor o menor tamaño de los términos en la grilla.</p>
 <pre class="r"><code>plot_gobernador_hashtags</code></pre>
-<p><img src="index_files/figure-html/hashtags2-1.png" width="1400" /></p>
+<p><img src="index_files/figure-html/hashtags2-1.png" width="672" /></p>
 <p>Algo interesante es que varios candidatos a la presidencia tuvieron entre sus # más utilizados al del debate presidencial.</p>
 <pre class="r"><code>plot_presid_hashtags</code></pre>
-<p><img src="index_files/figure-html/hashtags3-1.png" width="3500" /></p>
+<p><img src="index_files/figure-html/hashtags3-1.png" width="672" /></p>
 <p>Hemos indagado visualmente en algunos de los términos más o menos utilizados por los candidatos.</p>
 <p>Pero nos ha quedado pendiente uno de los “tipos” de palabras más importantes en Twitter: las menciones, esto es, cuando un <em>twittero</em> utiliza el _<span class="citation">@_</span> para dirigirse o citar directamente a alguien. Estos nombres propios pueden decirnos algo acerca de las relaciones interpersonales entre nuestros candidatos. Por ello les hemos dedicado un post completo, que sugerimos leer a continuación.</p>
 <p>:fast_forward: <a href="../explorando_relaciones/">Seguir leyendo</a></p>
@@ -354,6 +357,6 @@ plot_presid_hashtags &lt;- ggplot(candidatos_hashtags %&gt;% filter(Cargo==&quot
 <hr />
 <ol>
 <li id="fn1"><p>Adicionalmente, como pueden ver en <a href="https://github.com/CVFH/Tuits_arg_2019/blob/master/exploracion_discursos.R">este script</a> y <a href="https://github.com/CVFH/Tuits_arg_2019/blob/master/images/ganadores_perdedores_ev_tiempo.png">este gráfico</a>, nos preguntamos si había alguna diferencia en la evolución de los tuits emitidos para los “ganadores” y los “perdedores” en las elecciones. Imaginamos que la baja en la emisión de tuits después de los comicios podía ser signo de que los candidatos no electos “tiraron la toalla”. Sin embargo, la inspección ocular desmiente, en principio, nuestras sospechas. Por otro lado, es interesante notar que los tuits emitidos por día no se corresponden con la cantidad de rts recibidos, como puede observarse al comparar el gráfico de arriba con <a href="https://github.com/CVFH/Tuits_arg_2019/blob/master/images/rts_dia_2019.png">este otro</a>. ¿Sorprendente? Para nada, recordemos que en la sección anterior vimos que una y otra medida no parecían ir de la mano.<a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>Para una explicación más completa, recomendamos la lectura de <a href="https://www.tidytextmining.com/tfidf.html">este capítulo</a><a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>Para una explicación más completa, recomendamos la lectura de <a href="https://www.tidytextmining.com/tfidf.html">este capítulo</a>.<a href="#fnref2" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
