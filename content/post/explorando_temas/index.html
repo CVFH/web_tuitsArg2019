@@ -1,0 +1,651 @@
+---
+title: "Explorando Temas"
+author: "Carolina Franco"
+date: "2021-01-26"
+tags: ["análisis", "temas"]
+weight: 8
+---
+
+<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections/anchor-sections.js"></script>
+<script src="index_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="index_files/twitter-widgets/widgets.js"></script>
+<script src="index_files/twitterwidget-binding/twitterwidget.js"></script>
+
+
+<p>Hemos hecho un largo recorrido. Teníamos en mente un interrogante amplio: <strong>¿Cuánto y qué expresaron los candidatos a las elecciones de 2019 en la Argentina?</strong></p>
+<p>Nuestra respuesta exploratoria ha tenido como necesario punto de partida la presentación del “esqueleto” y “la carne”: las <a href="../preparacion_funciones">funciones</a> y los <a href="../preparacion_datos/">datos</a> que pusieron en movimiento a nuestro análisis. Hasta aquí, este procedió en tres etapas. Primero, <a href="../explorando_popularidad/">exploramos visualmente las relaciones entre el desempeño de los candidatos en la red social y en las urnas</a>. En segundo lugar, hicimos lo propio con <a href="../explorando_palabras/">las palabras</a>: qué tan elocuentes fueron y qué términos han preferido nuestros candidatos. <a href="../explorando_relaciones">En el último y anterior post</a>, retuvimos un “tipo” de término muy especial: las <em>menciones</em>, con base en el cual diagramamos algunos de los vínculos que habilita el uso de <em>Twitter</em>.</p>
+<p>En este último post intentaremos profundizar en la mirada global acerca de lo dicho por los candidatos, y las similitudes y diferencias entre sus discursos.</p>
+<p>Nuestra pregunta es sencilla: <strong>¿de qué hablan los candidatos?</strong>, ¿a qué temas se refieren?. Responderla es un poco más difícil. En este post ensayamos, con diferentes grados de éxito, tres abordajes posibles.</p>
+<ol style="list-style-type: decimal">
+<li>En primer lugar, rastreamos ciertos “términos” cuya pertenencia adscribimos, manualmente (<em>arbitrariamente</em>), a ciertos “temas”.</li>
+<li>En segundo lugar, utilizamos la técnica de <em>topic modelling</em>.</li>
+<li>Finalmente, comentamos brevemente los intentos infructuosos por aplicar el <em>Análisis de Componentes Principales</em> a nuestros datos.</li>
+</ol>
+<p>¡a por ello!</p>
+<div id="preparando-la-mesa-de-trabajo" class="section level3">
+<h3>Preparando la mesa de trabajo</h3>
+<div id="apertura-de-librerías" class="section level4">
+<h4>Apertura de librerías</h4>
+<p>Una vez más activamos funciones propias y ajenas. Novedades en este post: el paquete <code></code> para graficar “sets paralelos” y, muy importante, los paquetes <code></code>, que nos permitirán ejecutar parte del análisis más adelante.</p>
+<pre class="r"><code>#paquetes
+
+library(readxl) # lectura de archivos excel
+library(ggplot2) # gráficos
+library(ggthemes) # temas de graficos
+library(reshape2)
+library(tm) # para DocumentTermMatrixs
+library(topicmodels) # para modelado de topicos
+library(ggbiplot) # para graficar PCA
+library(igraph) # para grafos
+library(pander)
+library(tidyverse)
+library(ggforce) # para graficos de sets paralelos
+library(twitterwidget) # para incluir tuits en Rmd 
+library(gt) # para formateo de tablas
+
+#propias
+
+source(&quot;https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/tuitsCandidatos.R&quot;, encoding = &quot;UTF-8&quot;) # para trabajar con bases de tuits</code></pre>
+</div>
+<div id="importación-de-datos" class="section level4">
+<h4>Importación de datos</h4>
+<pre class="r"><code># Temas por palabras ########
+# invocamos al script con las funciones correspondientes
+
+source(&quot;https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/preparacion_datos_tuits.R&quot;, encoding = &quot;UTF-8&quot;)
+
+# traemos datos
+datos_base &lt;- traerDatosTuits(&quot;base&quot;)
+joined_candidatos &lt;- traerDatosTuits(&quot;tot&quot;)</code></pre>
+</div>
+</div>
+<div id="rastreo-manual-de-temas-por-palabras" class="section level2">
+<h2>#1: Rastreo manual de temas por palabras</h2>
+<pre class="r"><code>temas_palabras &lt;- read_xlsx(&quot;temas_palabras.xlsx&quot;)</code></pre>
+<pre class="r"><code>candidatos_tokenizadas &lt;- joined_candidatos %&gt;% 
+tokenizarTextoTuits() %&gt;% 
+left_join(datos_base)</code></pre>
+<pre class="r"><code>temas_palabras_match_tokens &lt;- candidatos_tokenizadas %&gt;% 
+  limpiarTokens(palabras_web = TRUE, hashtags = TRUE, mentions = TRUE) %&gt;% 
+  select(screen_name, tweet_id, tokens)
+
+# calculando coincidencias
+
+for (columna in 1:ncol(temas_palabras)) {
+  
+  testear_coincidencias &lt;- na.omit(as.data.frame(temas_palabras[columna])) %&gt;% 
+    rename( palabras = colnames(temas_palabras[columna]) )
+  
+  new &lt;- ifelse( temas_palabras_match_tokens$tokens %in% testear_coincidencias$palabras, 
+                 &quot;1&quot;, 
+                 &quot;0&quot;)
+  
+  temas_palabras_match_tokens[ , ncol(temas_palabras_match_tokens) + 1] &lt;- new                  # Append new column
+  
+  colnames(temas_palabras_match_tokens)[ncol(temas_palabras_match_tokens)] &lt;- colnames(temas_palabras[columna])  # Rename column name
+}
+
+temas_palabras_match_tokens_long &lt;- temas_palabras_match_tokens %&gt;%
+  pivot_longer(!c(screen_name, tweet_id, tokens), # una fila para cada combinación tuit/token/tema
+               names_to = &quot;temas&quot;, values_to = &quot;count&quot;) %&gt;%  # con una columna (count) que indica si está presente el tema en ese token-tuit
+  filter(count==1) # nos quedamos sólo con los tokens asignados a un tema</code></pre>
+<pre class="r"><code># inspeccionando resultados / primera aproximacion
+
+# cantidad de coincidencias por tuit
+coincidencias_tweets &lt;- temas_palabras_match_tokens_long %&gt;% 
+  group_by(tweet_id) %&gt;% 
+  dplyr::summarise(cantidad_coincidencias = sum(as.integer(count))) %&gt;% 
+  left_join(joined_candidatos)
+
+# cantidad de coincidencias por tema por tuit
+ncoincidencias_tema_tweets &lt;- left_join(joined_candidatos %&gt;% 
+                                          filter(Campaña == 1 ),
+                                        temas_palabras_match_tokens_long %&gt;% 
+                                          dplyr::count(tweet_id, temas) 
+                                        ) %&gt;% 
+  select(tweet_id, screen_name, text, temas, n) %&gt;% 
+  dplyr::rename(coincidencias_tema_tuit = &quot;n&quot;)</code></pre>
+<pre class="r"><code># ejemplo: tuit con muchas coincidencias sobre un mismo tema
+
+ejemplo1 &lt;- ncoincidencias_tema_tweets %&gt;%  
+  arrange(desc(coincidencias_tema_tuit)) %&gt;% 
+  head(1)
+
+twitterwidget(as.character(ejemplo1$tweet_id))</code></pre>
+<div id="htmlwidget-1" style="width:672px;height:480px;" class="twitterwidget html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"twid":"1178396830478032896","pars":null},"evals":[],"jsHooks":[]}</script>
+<p>Con estos datos ya podemos explorar los temas más populares.</p>
+<pre class="r"><code># temas mas populares
+
+temas_populares &lt;- fct_count(ncoincidencias_tema_tweets$temas)
+
+head(temas_populares, 10) %&gt;% 
+  gt::gt() %&gt;% 
+  gt::tab_header(
+    title = &quot;Temas más populares entre los candidatos&quot;,
+    subtitle = &quot;(conteo manual)&quot;) %&gt;% 
+  gt::tab_style(
+    style=  cell_fill(color = &quot;#00BFFF&quot;, alpha = 0.5),
+    locations = cells_title(groups = c(&quot;title&quot;, &quot;subtitle&quot;))) %&gt;% 
+  gt::tab_style(
+    style=  cell_fill(color = &quot;#E9EDF1&quot;, alpha = 0.5),
+    locations = cells_body()) %&gt;% 
+  gt::tab_style(
+    style= cell_text(
+      color = &quot;#050505&quot;,
+      align = &quot;center&quot;,
+      v_align = &quot;middle&quot;,
+      weight = &quot;lighter&quot;),
+    locations = cells_body())</code></pre>
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#rxopqwewgs .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#rxopqwewgs .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#rxopqwewgs .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#rxopqwewgs .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#rxopqwewgs .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rxopqwewgs .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#rxopqwewgs .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#rxopqwewgs .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#rxopqwewgs .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#rxopqwewgs .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#rxopqwewgs .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#rxopqwewgs .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#rxopqwewgs .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#rxopqwewgs .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#rxopqwewgs .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#rxopqwewgs .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#rxopqwewgs .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#rxopqwewgs .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rxopqwewgs .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#rxopqwewgs .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rxopqwewgs .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#rxopqwewgs .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#rxopqwewgs .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rxopqwewgs .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#rxopqwewgs .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#rxopqwewgs .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#rxopqwewgs .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#rxopqwewgs .gt_left {
+  text-align: left;
+}
+
+#rxopqwewgs .gt_center {
+  text-align: center;
+}
+
+#rxopqwewgs .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#rxopqwewgs .gt_font_normal {
+  font-weight: normal;
+}
+
+#rxopqwewgs .gt_font_bold {
+  font-weight: bold;
+}
+
+#rxopqwewgs .gt_font_italic {
+  font-style: italic;
+}
+
+#rxopqwewgs .gt_super {
+  font-size: 65%;
+}
+
+#rxopqwewgs .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="rxopqwewgs" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  <thead class="gt_header">
+    <tr>
+      <th colspan="2" class="gt_heading gt_title gt_font_normal" style="background-color: rgba(0,191,255,0.5);">Temas más populares entre los candidatos</th>
+    </tr>
+    <tr>
+      <th colspan="2" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>(conteo manual)</th>
+    </tr>
+  </thead>
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">f</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">n</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">agropecuario</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">30</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">alumbrado</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">10</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">ambiente</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">16</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">caminos</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">112</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">catástrofes_naturales</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">9</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">competitividad</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">3</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">coparticipación</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">5</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">corrupción</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">48</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">cultura</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">112</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">ddhh</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">69</td>
+    </tr>
+  </tbody>
+  
+  
+</table></div>
+<pre class="r"><code># cantidad de temas por tuit
+ntemas_tweets &lt;- temas_palabras_match_tokens_long %&gt;% 
+  dplyr::count(tweet_id, temas) %&gt;% 
+  dplyr::mutate( tweet_id = as.factor(tweet_id))
+
+# unimos con base de datos
+cantidad_temas_tuit &lt;- left_join(joined_candidatos %&gt;% 
+                                   filter(Campaña == 1 ) %&gt;% 
+                                   dplyr::mutate(tweet_id = as.factor(tweet_id)),
+                                 fct_count(ntemas_tweets$tweet_id) %&gt;% 
+                                   dplyr::rename(tweet_id = &quot;f&quot;)) %&gt;% 
+  select(tweet_id, screen_name, text, n) %&gt;%
+  mutate_if(is.numeric, funs(ifelse(is.na(.), 0, .))) %&gt;% 
+  dplyr::rename(cantidad_temas_tuit = &quot;n&quot;)</code></pre>
+<pre class="r"><code># ejemplo tuit con muchos temas
+
+ejemplo2 &lt;- cantidad_temas_tuit  %&gt;%  
+  arrange(desc(cantidad_temas_tuit)) %&gt;% 
+  head(1)
+
+twitterwidget(as.character(ejemplo2$tweet_id))</code></pre>
+<div id="htmlwidget-2" style="width:672px;height:480px;" class="twitterwidget html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2">{"x":{"twid":"1186080446809067520","pars":null},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code># histograma descriptivo / cantidad de temas por tuit
+
+plot_cantidad_temas_tuit &lt;- cantidad_temas_tuit %&gt;% 
+  ggplot(aes(cantidad_temas_tuit)) +
+  geom_bar(fill = &quot;#0F92DA&quot;) +
+  theme_clean() +
+  labs(x = &quot;Cantidad de temas por tuit&quot;,
+       y = &quot;Cantidad de tuits asignados&quot;)</code></pre>
+<p>Para trabajar en lo que sigue nos quedaremos con los tuits que fueron asignados a un único tema.</p>
+<pre class="r"><code>tuits_con_unico_tema &lt;- ncoincidencias_tema_tweets  %&gt;% 
+  dplyr::mutate(tweet_id = as.factor(tweet_id)) %&gt;% 
+  left_join(cantidad_temas_tuit) %&gt;% 
+  filter(cantidad_temas_tuit == 1 )
+
+temas_en_tuits_con_unico_tema &lt;- fct_count(tuits_con_unico_tema$temas)</code></pre>
+<p>Ya estamos en condiciones de evaluar similitudes y diferencias entre los candidatos. Vamos a ensayar algunos ejercicios visuales.</p>
+<pre class="r"><code># temas preferidos por candidato
+
+# cuenta absoluta
+# ¿cuantos tuits sobre x tema emitio i candidato?
+
+temas_candidatos_absolutos &lt;- ncoincidencias_tema_tweets %&gt;% 
+  dplyr::count(screen_name, temas) %&gt;% 
+  na.omit(n) %&gt;% 
+  left_join(datos_base)
+
+plot_temas_candidatos_absolutos &lt;- temas_candidatos_absolutos %&gt;% 
+  dplyr::mutate(screen_name = as.factor(screen_name)) %&gt;% 
+  ggplot(aes(x = fct_reorder(screen_name, Distrito), y = temas, size= n, colour = Distrito)) +
+           geom_count() + 
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
+        legend.position = &quot;none&quot;) +
+  labs(x = &quot;&quot;, y = &quot;&quot;)</code></pre>
+<pre class="r"><code>plot_temas_candidatos_absolutos</code></pre>
+<p><img src="index_files/figure-html/plot_temas_candidatos_absolutos-1.png" width="672" /></p>
+<p>Quizás sea más claro graficar y calcular el peso relativo de cada tema para cada candidato. Lo hacemos a partir del código a continuación.</p>
+<pre class="r"><code># cuenta relativa
+# ¿qué proporción de los tuits emitidos por i candidato fueron a x tema?
+
+# eventualmente podemos hacer esta cuenta más atrás-
+# calculamos cantidad de tuits emitidos por candidato
+cantidad_tuits_candidato &lt;- joined_candidatos %&gt;% 
+  subset( Campaña == 1 ) %&gt;%  
+  dplyr::count(screen_name) %&gt;% 
+  rename(tuits_emitidos_totales = &quot;n&quot;)
+
+# unimos esta base para que la que consigna los temas por candidatos 
+# tenga una columna con el total de tuits emitidos
+
+temas_candidatos_relativos &lt;- temas_candidatos_absolutos %&gt;%
+  left_join(cantidad_tuits_candidato) %&gt;% 
+  dplyr::mutate(n_relativo = n/tuits_emitidos_totales*100)
+
+plot_temas_candidatos_relativos &lt;- temas_candidatos_relativos %&gt;% 
+  ggplot(aes(x = fct_reorder(screen_name, Cargo), y = n_relativo, fill = temas)) +
+  geom_col(position = &quot;stack&quot;) + 
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90)) + 
+  theme(legend.position = &quot;bottom&quot;,
+        legend.key.size = unit(0.4, &#39;cm&#39;), #change legend key size
+        legend.title = element_blank(),
+        legend.text = element_text(size=7)) + 
+  labs(title = &quot;Proporción de tutis dedicados a cada tema&quot;,
+       subtitle = &quot;por candidato&quot;,
+       x = &quot;&quot;,
+       y = &quot;%&quot;)</code></pre>
+<pre class="r"><code>plot_temas_candidatos_relativos</code></pre>
+<p><img src="index_files/figure-html/plot%20temas%20relativos-1.png" width="672" />
+Además podemos inspeccionar qué palabras para cada tema fueron las preferidas. Vamos con uno de los temas más referidos, vivienda.</p>
+<pre class="r"><code># y de hacer matches por palabras
+# hacemos para tema vivienda
+
+matches_vivienda &lt;- temas_palabras_match_tokens_long %&gt;% 
+  subset(temas == &quot;vivienda&quot;) %&gt;% 
+  dplyr::count(screen_name, tokens)
+
+matches_vivienda_paralell &lt;- matches_vivienda  %&gt;% 
+  gather_set_data(1:2)
+
+plot_matches_vivienda &lt;- ggplot(matches_vivienda_paralell,
+                   aes(x, id = id, split = y, value = n)) + #  INICIA GRAFICO
+  geom_parallel_sets(aes(fill = screen_name), alpha = 0.7, axis.width = 0.1, show.legend = FALSE) +
+  theme_minimal() +
+  geom_parallel_sets_axes(axis.width = 0.1, color = &quot;black&quot;, fill = &quot;gray20&quot;) +
+  geom_parallel_sets_labels(colour = &#39;white&#39;, angle= 0) +
+  theme_no_axes() +
+  theme(panel.background = element_rect(fill = &quot;gray20&quot;))</code></pre>
+<p>Veamos los resultados</p>
+<pre class="r"><code>plot_matches_vivienda</code></pre>
+<p><img src="index_files/figure-html/plot%20force-1.png" width="672" /></p>
+</div>

@@ -66,6 +66,7 @@ Por ejemplo, partimos del enlace:
 ...que contiene la siguiente tabla:
 
 ![](tabla.JPG)
+<img src="tabla.JPG" width="300">
 
 Extrajimos de esta manera los datos:
 

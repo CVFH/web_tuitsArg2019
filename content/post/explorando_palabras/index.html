@@ -32,7 +32,7 @@ library(ggforce) # para graficos de sets paralelos
 
 #propias
 
-source(&quot;https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/tuitsCandidatos.R&quot;, encoding = &quot;UTF-8&quot;) # para trabajar con bases de
+source(&quot;https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/tuitsCandidatos.R&quot;, encoding = &quot;UTF-8&quot;) # para trabajar con bases de tuits
 source(&quot;https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/funcionesGraficos.R&quot;, encoding = &quot;UTF-8&quot;) # para graficar</code></pre>
 </div>
 <div id="traemos-datos" class="section level4">
@@ -218,7 +218,7 @@ wordcloud::comparison.cloud(matriz_cargos,
 # tf_idf / gobernadores / tokens = tweets
 
 joined_gobernadores_tokentweets_tfidf &lt;- joined_gobernadores_tokentweets %&gt;%
-  limpiarTokens(palabras_web = TRUE, mentions = TRUE, hashtags = TRUE, , largo =TRUE) %&gt;%  
+  limpiarTokens(palabras_web = TRUE, mentions = TRUE, hashtags = TRUE, largo =TRUE) %&gt;%  
   # limpiamos la base 
   dplyr::count(screen_name, tokens, sort = TRUE) %&gt;% 
   # cálculo de tf_idf
@@ -327,7 +327,7 @@ plot_gobernador_hashtags &lt;- ggplot(candidatos_hashtags %&gt;%
   geom_text_wordcloud() +
   facet_wrap(~screen_name, ncol = 3) +
   scale_size_area(max_size = 4) + 
-  theme_clean()
+  theme_void()
 
 # de presid
 
@@ -339,7 +339,7 @@ plot_presid_hashtags &lt;- ggplot(candidatos_hashtags %&gt;%
   geom_text_wordcloud() +
   facet_wrap(~screen_name, ncol = 3) +
   scale_size_area(max_size = 5) + 
-  theme_clean()</code></pre>
+  theme_void()</code></pre>
 <p>Vemos que los candidatos no sólo utilizan distintos hashtags, sino que lo hacen con diferente intensidad, como indica el mayor o menor tamaño de los términos en la grilla.</p>
 <pre class="r"><code>plot_gobernador_hashtags</code></pre>
 <p><img src="index_files/figure-html/hashtags2-1.png" width="672" /></p>

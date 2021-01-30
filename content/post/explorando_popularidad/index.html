@@ -158,6 +158,7 @@ candidatos_rts_votos &lt;- plotPoint(candidatos_popu_ranking,
                                   log(Votos), 
         # utilizamos el log ya que hay mucha diferencia entre distritos
                                   colour= Distrito)) +
+  theme_clean()  + 
       labs(title = &quot; &quot;, 
          x = &quot;Log de rts totales obtenidos&quot;, 
          y = &quot;Log de votos obtenidos&quot;)
@@ -183,7 +184,7 @@ candidatos_rts_emitidos &lt;- plotPoint(candidatos_popu_ranking,
 <pre class="r"><code># Patchworks 
 # uniomos los gráficos para su presentación
 
-rtspromedio_porcentaje &lt;-  (presid_rtspromedio_porcentaje  / gobernadores_rtspromedio_porcentaje)  + 
+rtspromedio_porcentaje &lt;-  (presid_rtspromedio_porcentaje  | gobernadores_rtspromedio_porcentaje)  + 
   plot_annotation(
   title = &#39;Relación entre cantidad de Rts Promedio y Porcentaje de votos obtenido&#39;,
   caption = &quot;Fuente: elaboración propia&quot;)

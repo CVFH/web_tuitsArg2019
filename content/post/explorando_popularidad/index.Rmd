@@ -172,6 +172,7 @@ candidatos_rts_votos <- plotPoint(candidatos_popu_ranking,
                                   log(Votos), 
         # utilizamos el log ya que hay mucha diferencia entre distritos
                                   colour= Distrito)) +
+  theme_clean()  + 
       labs(title = " ", 
          x = "Log de rts totales obtenidos", 
          y = "Log de votos obtenidos")
@@ -202,7 +203,7 @@ Hemos hecho nuestros gráficos. Utilizamos el paquete `patchwork` para presentar
 # Patchworks 
 # uniomos los gráficos para su presentación
 
-rtspromedio_porcentaje <-  (presid_rtspromedio_porcentaje  / gobernadores_rtspromedio_porcentaje)  + 
+rtspromedio_porcentaje <-  (presid_rtspromedio_porcentaje  | gobernadores_rtspromedio_porcentaje)  + 
   plot_annotation(
   title = 'Relación entre cantidad de Rts Promedio y Porcentaje de votos obtenido',
   caption = "Fuente: elaboración propia")
