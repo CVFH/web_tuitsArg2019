@@ -2,23 +2,21 @@
 title: Explorando Relaciones
 author: ~
 date: '2021-01-29'
-slug: explorando-relaciones
+slug: explorando_relaciones
 categories: []
 tags: [análisis, relaciones]
 weight: 7
 ---
 
-En el [post anterior](../explorando_palabras/) dejamos a nuestro lector con una incógnita: ¿qué tanto se _"arroban"_, es decir, mencionan, nuestros candidatos entre sí? 
-
-Este breve post está destinado a explorar las relaciones entre nuestra muestra de _twitteros_ a partir de las menciones mutuas. :speech_balloon:
+En el [análisis anterior](../explorando_palabras/) dejamos a nuestro lector con una incógnita: ¿qué tanto se _"arroban"_, es decir, mencionan, nuestros candidatos entre sí? :speech_balloon: Con base en esta suerte de "citas", este breve post está destinado a explorar las comunidades que forma nuestra muestra de _twitteros_.
 
 ### Como siempre, los pasos previos
 
-Ya estará acostumbrado quien haya seguido el recorrido de lectura sugerido a estos pasos preparatorios: la activación de nuestras "herramientas", y la llamada a nuestros datos.
+Ya estará acostumbrado usted, lector, a estos pasos preparatorios: la activación de nuestras "herramientas" y la llamada a nuestros datos.
 
 #### Apertura de librerías
 
-Nuevamente, trabajamos con fuentes propias y oficiales. Particularmente útil nos será, en esta ocasión, el paquete `igraph`.
+Nuevamente, trabajamos con fuentes propias y oficiales. Particularmente útil nos será, en esta ocasión, el paquete `igraph`, para el cálculo y modelado de _grafos_.
 
 ```{r librerias, warning = FALSE, message = FALSE}
 
@@ -36,7 +34,7 @@ source("https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/tui
 
 #### Selección de datos
 
-Para este post, partiremos simplemente de la base de con los tuits emitidos por todos los candidatos.
+En esta ocasión, partiremos simplemente de la base de con los tuits emitidos por todos los candidatos.
 
 ```{r datos, warning = FALSE, message = FALSE}
 # invocamos al script con las funciones correspondientes
@@ -50,6 +48,8 @@ joined_candidatos <- traerDatosTuits("tot")
 ```
 
 ### Análisis
+
+Procederemos, primero, a oficiar algunas transformaciones en nuestros datos, a los fines de detectar y ordenar la clave de nuestro interés: las _menciones_. Luego, calcuaremos y mostraremos dos _grafos_ de comunidades de _twitteros_.
 
 #### En busca de las menciones
 
@@ -102,16 +102,15 @@ cuenta_menciones_mutuas <- candidatos_menciones %>%
 
 ```
 
-
 ### Dime a quién arrobas...
 
 Ahora sí, exploremos las relaciones que emergen entre nuestros candidatos a partir de las _mentions_.
 
-Para explorar esto visualmente nos valemos de la elaboración de un grado de relaciones. Este considera a cada nombre (cuenta de Twitter) como un "nodo" o vértice en una red, y contabiliza las relaciones existentes entre ellos (o edges). En nuestro caso, trabajamos con un grafo _dirigido_, es decir, que presume que las relaciones entre nodos no son simétricas, recíprocas: de que un candidato mencione a una cuenta no se sigue que esta cuenta haga lo mismo.
+Para explorar esto visualmente nos valemos de la elaboración de un _grafo_. Este considera a cada nombre (a cada cuenta de Twitter) como un "nodo" o vértice en una red, y contabiliza las relaciones existentes entre ellos (o _edges_; aquí, las veces que estas fueron "arrobadas"). En nuestro caso, trabajamos con un grafo _dirigido_, es decir, que presume que las relaciones entre nodos no son simétricas, no son recíprocas: de que un candidato mencione a una cuenta no se sigue que esta cuenta haga lo mismo.
 
 Veamos primero el grafo resultante de computar la totalidad de las menciones.
 
->  Recuerde el lector que filtramos las cuentas que fueron mencionadas una única vez.
+>  Como comentamos en el código arriba, tenga en cuenta el lector que filtramos las cuentas que fueron mencionadas una única vez, a los fines de hacer más "limpia" la presentación visual de los vínculos que nos interesan. 
 
 ```{r grafo1, warning=FALSE, message=FALSE}
 # GRAFOS
@@ -119,7 +118,8 @@ Veamos primero el grafo resultante de computar la totalidad de las menciones.
 
 grafo_menciones_dirigido_df <- graph.data.frame(d = cuenta_menciones_filtrado, directed = T)
 
-V(grafo_menciones_dirigido_df)$candidato <- as.factor(ifelse(V(grafo_menciones_dirigido_df)$name %in% datos_base$screen_name, "candidato", "otrx"))
+V(grafo_menciones_dirigido_df)$candidato <- as.factor(ifelse(V(grafo_menciones_dirigido_df)$name %in% datos_base$screen_name, "candidato", "otrx")) 
+# para colorear de manera diferente a los candidatos y a las cuentas de terceros
 
 colrs <- c("cornflowerblue", "darkgray" )
 
@@ -129,15 +129,12 @@ coords <- layout_in_circle(grafo_menciones_dirigido_df, order =
                              order(V(grafo_menciones_dirigido_df)))
 
 plot.igraph(grafo_menciones_dirigido_df,
-            #vertex.size=degree(grafo_menciones_dirigido_df,mode = "in")*2, # Tamaño de nodo
             edge.arrow.size=0.2, # tamaño de flecha de la arista
             edge.arrow.width=0.8, # ancho de flecha de la arista
             edge.color= "azure1" ,# color de arista
             # edge.curved = T, # arista curva,
             vertex.label.dist=2,
-            vertex.label.cex=degree(grafo_menciones_dirigido_df,mode = "in")*0.3,
-            #vertex.label.cex=0.4, # tamaño de las etiquetas de los nodos
-            #main="Cuentas que recibieron más menciones", 
+            vertex.label.cex=degree(grafo_menciones_dirigido_df,mode = "in")*0.3, # tamaño de las etiquetas de los nodos
             vertex.label.color = V(grafo_menciones_dirigido_df)$color , # color de etiquetas de nodos
             #vertex.label.family="arial",
             vertex.shape="none", 
@@ -148,14 +145,13 @@ plot.igraph(grafo_menciones_dirigido_df,
 ```
 
 
-Hay muchos nombres y la visualización no es del todo clara; con todo, podemos extraer algunas observaciones interesantes. Lo más destacado es el relativo aislamiento de A. Rodríguez Saá y C. Poggi, los dos candidatos de San Luis, respecto del resto de la red. Los puntanos se "cortan solos".
+Hay muchos nombres y la visualización no es del todo clara; con todo, podemos extraer algunas observaciones interesantes. Lo más destacado es el relativo aislamiento de A. Rodríguez Saá y C. Poggi, los dos candidatos de San Luis, respecto del resto de la red. Los puntanos se "cortan solos". Algo similar ocurre con los contendientes santafesinos, A. Bonfatti y O. Perotti.
 
-Otro punto destacado es la aparición de ciertos personajes: considérese el tamaño de la cuenta @CFKArgentina, de la expresidenta C. Fernández de Kirchner, que indica que fue muy mencionada. También, es notoria la presencia de medios de comunicación, como La Nación y Ámbito Financiero.
+Otro punto destacado es la aparición de ciertos personajes. El tamaño de la etiqueta @CFKArgentina, que pertenece a la actual vicepresidenta C. Fernández de Kirchner, es señal de que fue muy mencionada. También, es notoria la presencia de medios de comunicación, como La Nación y Ámbito Financiero.
 
-> La presencia destacada de los nombres de los candidatos, que hemos colorado en azul, desde ya, no sorprende. Por el carácter sesgado de nuestra muestra, estas cuentas son obviamente nodos dominantes.
+> La presencia destacada de los nombres de los candidatos, que hemos coloreado en azul, desde ya, no sorprende. Por el carácter sesgado de nuestra muestra, estas cuentas son obviamente _nodos_ dominantes.
 
-Veamos ahora las relaciones que entablaron nuestros candidatos entre sí.
-
+Veamos ahora las relaciones que entablaron nuestros candidatos entre sí, a partir de las menciones mutuas. 
 
 ```{r grafo2, warning=FALSE, message=FALSE}
 ## menciones mutuas ######
@@ -165,16 +161,13 @@ Veamos ahora las relaciones que entablaron nuestros candidatos entre sí.
 grafo_mutuas_dirigido_df <- graph.data.frame(d = cuenta_menciones_mutuas,directed = T)
 
 plot.igraph(grafo_mutuas_dirigido_df,
-            #vertex.size=degree(gd,mode = "in")*2, # Tamaño de nodo
             edge.arrow.size=0.2, # tamaño de flecha de la arista
             edge.arrow.width=0.8, # ancho de flecha de la arista
             edge.color="grey50", # color de arista
             #edge.curved = T, # arista curva
             vertex.label.cex=0.8, # tamaño de las etiquetas de los nodos
-            #main="Candidatos que recibieron más menciones", 
             vertex.label.color="#025CB8", # color de las etiquetas de los nodos
-            vertex.size=degree(grafo_mutuas_dirigido_df,mode = "in")*5,
-            #vertex.shape = "none",
+            vertex.size=degree(grafo_mutuas_dirigido_df,mode = "in")*5, # Tamaño de nodo
             vertex.color="#74D5F3", # color de nodos
             vertex.label.family="arial",
             vertex.frame.color= "grey80"
@@ -183,7 +176,11 @@ plot.igraph(grafo_mutuas_dirigido_df,
 
 Aquí hemos cambiado nuestra estrategia de visuaización. Seleccionamos un valor fijo para los nombres y ajustamos el tamaño del nodo (del círculo detrás :large_blue_circle:) conforme a su importancia relativa.
 
-Parece que los favoritos en la carrera electoral, A. Fernández y M. Macri, fueron las cuentas más citadas por los contendientes. Les siguen dos referentes de Cambiemos en ejercicio en los dos distritos más grandes del país: H. Larreta y M. E. Vidal. Por último, destaca nuevamente el aislamiento de los candidatos puntanos.
+Parece que los favoritos en la carrera electoral, A. Fernández y M. Macri, fueron las cuentas más citadas por los contendientes. Les siguen dos referentes de _Cambiemos_ en ejercicio en los dos distritos más grandes del país: H. Larreta y M. E. Vidal. Por último, destaca nuevamente el aislamiento de los candidatos puntanos.
+
+Cabe aquí un último alto aclaratorio: las _menciones_, es decir, el uso de "@" para referir a una cuenta, no son la única, y probablemente tampoco la más importante, forma de relacionarse que caracteriza a la red social _Twitter_. Dejamos para el futuro explorar, por ejemplo, los _retweets_ o los _favs_.
+
+---
 
 En este post nos hemos trabajado con apenas una palabra, pero de gran valor: las menciones :speech_balloon:. Con ellas, hemos explorado visualmente las relaciones que nuestros candidatos entablaron en Twitter durante la campaña de 2019.
 

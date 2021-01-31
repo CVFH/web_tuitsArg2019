@@ -44,9 +44,11 @@ datos_base %>%
   gt::tab_style(
     style=  cell_fill(color = "#00BFFF", alpha = 0.5),
     locations = cells_title(groups = c("title", "subtitle"))) %>% 
+  gt::tab_style(cell_fill(color = "#C0EEFF", alpha = 0.5),
+    locations = cells_body()) %>% 
   gt::tab_style(
-    style= cell_text(
-  color = "#0515A2",
+  style= cell_text(
+  color = "#0B0B0B",
   align = "center",
   v_align = "middle",
   weight = "lighter"),
@@ -90,8 +92,11 @@ votos_presid %>%
     style=  cell_fill(color = "#00BFFF", alpha = 0.5),
     locations = cells_title(groups = c("title", "subtitle"))) %>% 
   gt::tab_style(
+    style=  cell_fill(color = "#E9EDF1", alpha = 0.5),
+    locations = cells_body()) %>% 
+  gt::tab_style(
     style= cell_text(
-  color = "#0515A2",
+  color = "#050505",
   align = "center",
   v_align = "middle",
   weight = "lighter"),

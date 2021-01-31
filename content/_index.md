@@ -14,15 +14,16 @@ Proponemos el siguiente recorrido:
 :feet: En una primera etapa, que denominamos "preparatoria", presentamos nuestra "materia prima". Esta consta de:
 
 {{< ticks >}}
-* [Funciones](/post/preparacion_funciones/). Un post en el que consignamos las funciones ad hoc que desarrollamos para nuestro trabajo.
+* [Funciones](/post/preparacion_funciones/). Un post en el que consignamos las funciones _ad hoc_ que desarrollamos para nuestro trabajo.
 * [Datos](/post/preparacion_datos/). Una serie de post que exponen los pasos preliminares para hacer accesible la información de nuestro interés: [datos electorales](/post/preparacion_electorales/) y [datos de Twitter](/post/preparacion_tuits/)
 {{< /ticks >}}
 
-:feet: En la segunda etapa, pasamos a introducir el "análisis" propiamente dicho. Nos ocupamos de tres "tópicos": la popularidad, las palabras, y los temas que resultan de explorar los tuits emitidos por los candidatos a las elecciones de 2019 en la Argentina.
+:feet: En la segunda etapa, pasamos a introducir el "análisis" propiamente dicho. Nos ocupamos de cuatro "tópicos": la popularidad, las palabras, las relaciones y los temas que resultan de explorar los tuits emitidos por los candidatos a las elecciones de 2019 en la Argentina.
 
 {{< ticks >}}
 * [Explorando Popularidad](/post/explorando_popularidad/). Nuestra primera exploración ensaya relaciones entre el desempeño de los candidatos en Twitter y los resultados electorales. 
 * [Explorando Palabras](/post/explorando_palabras/). En segundo lugar, indagamos en medidas comparativas de las palabras utilizadas por nuestros emisores en la red social.
+* [Explorando Relaciones](/post/explorando_relaciones/). Tercero, diagramamos algunos grafos de las "comunidades" que parecen formar los contendientes con base en las citas e interpelaciones: las _menciones_.
 * [Explorando Temas](/post/explorando_temas/). Finalmente, intentamos rastrear acerca de qué cuestiones hablan o no nuestros candidatos, y las similitudes o diferencias entre ellos.
 {{< /ticks >}}
 

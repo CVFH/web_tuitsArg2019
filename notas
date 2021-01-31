@@ -1,46 +1,829 @@
-#notes
 
-#pagina de contexto. mapa cdad de electores. mapa cuadraditos facetar ppac distinto color para distritos elegidos o solo mostrar info en estos
 
-dim(): shows the dimensions of the data frame by row and column
-str(): shows the structure of the data frame
-summary(): provides summary statistics on the columns of the data frame
-colnames(): shows the name of each column in the data frame
-head(): shows the first 6 rows of the data frame
-tail(): shows the last 6 rows of the data frame
-View(): shows a spreadsheet-like display of the entire data frame
+y el :hash:1 y la :hash:2 de la Provincia de Buenos Aires son los que mas rts obtuvieron.
 
-agregar este cambio
+CAMBIAR THEME DE LOS GRAFICOS DE EXPLORANDO POPULARIDAD: QUEDAN FEOS EN PATCHWORK
 
-    select("created_at", 
-           "text", 
-           "rts", "fav_count", 
-           "tweet_id", 
-           "screen_name", "user_id", "description", 
-           "location", 
-           "mention_screen_names", 
-           "in_reply_to_screen_name")
-           
-select_columnas <- c("created_at", 
-           "text", 
-           "rts", "fav_count", 
-           "tweet_id", 
-           "screen_name", "user_id", "description", 
-           "location", 
-           "mention_screen_names", 
-           "in_reply_to_screen_name")
 
-# PROBAR PLOT POINT PLOT TEXT            
-# create the subset
-g1 <- subset(a, GeneName == "G1")
+explorando palabras
 
-# plot the data
-ggplot(a, aes(log10(Index1+1), Index2)) + geom_point(alpha=1/5) +  # this is the base plot
-  geom_point(data=g1, colour="red") +  # this adds a red point
-  geom_text(data=g1, label="G1", vjust=1) # this adds a label for the red point
+ cambiar y lab poner mayus
+a x lab borrar title
+
+
+De manera provisoria, exploraremos diferentes opciones. esta frase se va
+
+
+¿Cómo se disponen ahora nuestros datos? Veamos un ejemplo:
+
+Graficamos separadamente los candidatos a presidente y a gobernador. esta frase se va
+
+CORREGIR ESTE PARRAFO ES UN HORROR En este script exploramos varias combinaciones de cálculos interesantes, pero elejimos a nuestros fines en este post mostramos las palabras que mejor caracterizan a cada candidato a Gobernador, y los “términos de twitter” más propios de cada candidato a la presidencia.
+
+_al conjunto de tuits emitidos por los candidatos como un único “documento”_ todo esto en italica
+
+reredactar
+
+Hemos indagado visualmente en algunos de los términos más o menos utilizados por los candidatos.
+
+Pero nos ha quedado pendiente uno de los “tipos” de palabras más importantes en Twitter: las menciones, esto es, cuando un twittero utiliza el “@” para dirigirse o citar directamente a alguien. Estos nombres propios pueden decirnos algo acerca de las relaciones interpersonales entre nuestros candidatos. Por ello les hemos dedicado un post completo, que sugerimos leer a continuación.
+
+ta roto el enlace a explorando relaciones
+
+
+
+
+
+---------------------
+
+domingo
+
+-------------------------
+
+---
+title: Explorando Relaciones
+author: ~
+date: '2021-01-29'
+slug: explorando_relaciones
+categories: []
+tags: [análisis, relaciones]
+weight: 7
+---
+
+En el [análisis anterior](../explorando_palabras/) dejamos a nuestro lector con una incógnita: ¿qué tanto se _"arroban"_, es decir, mencionan, nuestros candidatos entre sí? :speech_balloon: Con base en esta suerte de "citas", este breve post está destinado a explorar las comunidades que forma nuestra muestra de _twitteros_.
+
+### Como siempre, los pasos previos
+
+Ya estará acostumbrado usted, lector, a estos pasos preparatorios: la activación de nuestras "herramientas" y la llamada a nuestros datos.
+
+#### Apertura de librerías
+
+Nuevamente, trabajamos con fuentes propias y oficiales. Particularmente útil nos será, en esta ocasión, el paquete `igraph`, para el cálculo y modelado de _grafos_.
+
+```{r librerias, warning = FALSE, message = FALSE}
+
+#paquetes
+
+library(tidyverse)
+library(tm) # para DocumentTermMatrixs
+library(igraph) # para grafos
+
+#propias
+
+source("https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/tuitsCandidatos.R", encoding = "UTF-8") # para trabajar con bases de tuits
+
+```
+
+#### Selección de datos
+
+En esta ocasión, partiremos simplemente de la base de con los tuits emitidos por todos los candidatos.
+
+```{r datos, warning = FALSE, message = FALSE}
+# invocamos al script con las funciones correspondientes
+
+source("https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/preparacion_datos_tuits.R", encoding = "UTF-8")
+
+# traemos datos
+datos_base <- traerDatosTuits("base")
+joined_candidatos <- traerDatosTuits("tot")
+
+```
+
+### Análisis
+
+Procederemos, primero, a oficiar algunas transformaciones en nuestros datos, a los fines de detectar y ordenar la clave de nuestro interés: las _menciones_. Luego, calcuaremos y mostraremos dos _grafos_ de comunidades de _twitteros_.
+
+#### En busca de las menciones
+
+Hacemos algunas transformaciones de los datos para obtener nuestros _data frames_ de menciones. Sacamos provecho a la variable `mention_screen_names`, que lista los "@" incorporados en el texto. _Tokenizando_ esta columna, obtenemos un vector con una única "cuenta mencionada" por fila.
+
+Nos interesa contabilizar dos tipos de menciones: cualquier cita o referencia que nuestros candidatos hayan hecho, y las menciones _mutuas_: las veces que se interpelaron entre sí. 
+
+```{r transformaciones, warning = FALSE, message = FALSE}
+# PREPARACION DE DATOS. #####
+
+# TODAS LAS MENCIONES
+
+# extraemos las cuentas mencionadas. cada una constituye una fila
+
+candidatos_menciones <- joined_candidatos %>% 
+  subset(Campaña==1) %>% 
+  mutate(mention_screen_names = as.character(mention_screen_names)) %>% 
+  unnest_tokens(tokens, mention_screen_names) %>% 
+  subset(!is.na(tokens)) 
+
+# contamos cuántas veces mencionó a cada cuenta (a cada tercero) 
+# cada uno de nuestros candidatos
+
+cuenta_menciones <- candidatos_menciones %>% 
+  dplyr::count(screen_name, tokens)
+
+# contamos las veces totales que fue mencionado cada tercero
+# esto lo hacemos para filtrar cuentas irrelevantes,
+# a los fines de mejorar la visualización más tarde
+
+cuenta_mencionados <- cuenta_menciones %>% 
+  dplyr::group_by(tokens) %>% 
+  dplyr::summarise(veces_totales_mencionado= sum(n)) 
+
+cuenta_menciones <- cuenta_menciones %>% 
+  left_join(cuenta_mencionados)
+
+cuenta_menciones_filtrado <- cuenta_menciones %>% 
+  filter(veces_totales_mencionado > 1)
+
+# MENCIONES MUTUAS
+
+# filtramos las menciones mutuas: los tokens (las cuentas mencionadas) que coincidan con los nombres de Twitter de los candidatos
+# repetimos la cuenta que hicimos antes: cuántas veces menciono cada quién a cada quién
+
+cuenta_menciones_mutuas <- candidatos_menciones %>% 
+  subset(tokens %in% datos_base$screen_name) %>%
+  dplyr::count(screen_name, tokens)
+
+
+```
+
+### Dime a quién arrobas...
+
+Ahora sí, exploremos las relaciones que emergen entre nuestros candidatos a partir de las _mentions_.
+
+Para explorar esto visualmente nos valemos de la elaboración de un _grafo_. Este considera a cada nombre (a cada cuenta de Twitter) como un "nodo" o vértice en una red, y contabiliza las relaciones existentes entre ellos (o _edges_; aquí, las veces que estas fueron "arrobadas"). En nuestro caso, trabajamos con un grafo _dirigido_, es decir, que presume que las relaciones entre nodos no son simétricas, no son recíprocas: de que un candidato mencione a una cuenta no se sigue que esta cuenta haga lo mismo.
+
+Veamos primero el grafo resultante de computar la totalidad de las menciones.
+
+>  Como comentamos en el código arriba, tenga en cuenta el lector que filtramos las cuentas que fueron mencionadas una única vez, a los fines de hacer más "limpia" la presentación visual de los vínculos que nos interesan. 
+
+```{r grafo1, warning=FALSE, message=FALSE}
+# GRAFOS
+## cualquier mencion #####
+
+grafo_menciones_dirigido_df <- graph.data.frame(d = cuenta_menciones_filtrado, directed = T)
+
+V(grafo_menciones_dirigido_df)$candidato <- as.factor(ifelse(V(grafo_menciones_dirigido_df)$name %in% datos_base$screen_name, "candidato", "otrx")) 
+# para colorear de manera diferente a los candidatos y a las cuentas de terceros
+
+colrs <- c("cornflowerblue", "darkgray" )
+
+V(grafo_menciones_dirigido_df)$color <- colrs[V(grafo_menciones_dirigido_df)$candidato]
+
+coords <- layout_in_circle(grafo_menciones_dirigido_df, order =
+                             order(V(grafo_menciones_dirigido_df)))
+
+plot.igraph(grafo_menciones_dirigido_df,
+            edge.arrow.size=0.2, # tamaño de flecha de la arista
+            edge.arrow.width=0.8, # ancho de flecha de la arista
+            edge.color= "azure1" ,# color de arista
+            # edge.curved = T, # arista curva,
+            vertex.label.dist=2,
+            vertex.label.cex=degree(grafo_menciones_dirigido_df,mode = "in")*0.3, # tamaño de las etiquetas de los nodos
+            vertex.label.color = V(grafo_menciones_dirigido_df)$color , # color de etiquetas de nodos
+            #vertex.label.family="arial",
+            vertex.shape="none", 
+            vertex.label=V(grafo_menciones_dirigido_df)$name,
+            #layout = coords
+            rescale = FALSE, ylim=c(-5,12),xlim=c(-5,11)#, asp = 0
+)
+```
+
+
+Hay muchos nombres y la visualización no es del todo clara; con todo, podemos extraer algunas observaciones interesantes. Lo más destacado es el relativo aislamiento de A. Rodríguez Saá y C. Poggi, los dos candidatos de San Luis, respecto del resto de la red. Los puntanos se "cortan solos". Algo similar ocurre con los contendientes santafesinos, A. Bonfatti y O. Perotti.
+
+Otro punto destacado es la aparición de ciertos personajes. El tamaño de la etiqueta @CFKArgentina, que pertenece a la actual vicepresidenta C. Fernández de Kirchner, es señal de que fue muy mencionada. También, es notoria la presencia de medios de comunicación, como La Nación y Ámbito Financiero.
+
+> La presencia destacada de los nombres de los candidatos, que hemos coloreado en azul, desde ya, no sorprende. Por el carácter sesgado de nuestra muestra, estas cuentas son obviamente _nodos_ dominantes.
+
+Veamos ahora las relaciones que entablaron nuestros candidatos entre sí, a partir de las menciones mutuas. 
+
+```{r grafo2, warning=FALSE, message=FALSE}
+## menciones mutuas ######
+
+# grafo dirigido
+
+grafo_mutuas_dirigido_df <- graph.data.frame(d = cuenta_menciones_mutuas,directed = T)
+
+plot.igraph(grafo_mutuas_dirigido_df,
+            edge.arrow.size=0.2, # tamaño de flecha de la arista
+            edge.arrow.width=0.8, # ancho de flecha de la arista
+            edge.color="grey50", # color de arista
+            #edge.curved = T, # arista curva
+            vertex.label.cex=0.8, # tamaño de las etiquetas de los nodos
+            vertex.label.color="#025CB8", # color de las etiquetas de los nodos
+            vertex.size=degree(grafo_mutuas_dirigido_df,mode = "in")*5, # Tamaño de nodo
+            vertex.color="#74D5F3", # color de nodos
+            vertex.label.family="arial",
+            vertex.frame.color= "grey80"
+)
+```
+
+Aquí hemos cambiado nuestra estrategia de visuaización. Seleccionamos un valor fijo para los nombres y ajustamos el tamaño del nodo (del círculo detrás :large_blue_circle:) conforme a su importancia relativa.
+
+Parece que los favoritos en la carrera electoral, A. Fernández y M. Macri, fueron las cuentas más citadas por los contendientes. Les siguen dos referentes de _Cambiemos_ en ejercicio en los dos distritos más grandes del país: H. Larreta y M. E. Vidal. Por último, destaca nuevamente el aislamiento de los candidatos puntanos.
+
+Cabe aquí un último alto aclaratorio: las _menciones_, es decir, el uso de "@" para referir a una cuenta, no son la única, y probablemente tampoco la más importante, forma de relacionarse que caracteriza a la red social _Twitter_. Dejamos para el futuro explorar, por ejemplo, los _retweets_ o los _favs_.
+
+---
+
+En este post nos hemos trabajado con apenas una palabra, pero de gran valor: las menciones :speech_balloon:. Con ellas, hemos explorado visualmente las relaciones que nuestros candidatos entablaron en Twitter durante la campaña de 2019.
+
+Pero todavía hay más para exprimir de la enorme cantidad de términos que circulan en la red. En el [próximo post](../explorando_temas/) intentaremos profundizar un poquito en los temas que prefirieron nuestros candidatos.
+
+Volver al [inicio :house:](/)
+
+-----------------------------
+
+---
+title: "Explorando Temas"
+author: "Carolina Franco"
+date: "2021-01-26"
+tags: ["análisis", "temas"]
+weight: 8
+---
+
+Hemos hecho un largo recorrido. Teníamos en mente un interrogante amplio: **¿Cuánto y qué expresaron los candidatos a las elecciones de 2019 en la Argentina?**
+
+El necesario punto de partida de nuestra respuesta exploratoria ha sido la presentación del "esqueleto" y "la carne": las [funciones](../preparacion_funciones/) y los [datos](../preparacion_datos/) que pusieron en movimiento a nuestro análisis. 
+
+Hasta aquí, este procedió en tres etapas. Primero, [exploramos visualmente las relaciones entre el desempeño de los candidatos en la red social y en las urnas](../explorando_popularidad/). En segundo lugar, hicimos lo propio con [las palabras](../explorando_palabras/): qué tan elocuentes fueron y qué términos prefirieron nuestros candidatos. [En el tercer y anterior post](../explorando_relaciones/), retuvimos un "tipo" de término muy especial: las _menciones_, con base en el cual diagramamos algunos de los vínculos o comunidades que habilita el uso de _Twitter_. 
+
+En esta última muestra de análisis intentaremos profundizar en la mirada global acerca de lo dicho por los candidatos, tratando de asir más similitudes y diferencias entre sus discursos. Nuestra pregunta es sencilla: **¿de qué hablan los candidatos?** ¿a qué temas se refieren?
+
+Responderla es un poco más difícil. En lo que sigue ensayaremos, con diferentes grados de éxito, tres abordajes posibles.
+
+1. En primer lugar, rastreamos términos cuya pertenencia adscribimos, manualmente (_arbitrariamente_), a ciertos "temas".
+2. En segundo lugar, utilizamos la técnica de _topic modelling_.
+3. Finalmente, comentaremos brevemente los intentos infructuosos por aplicar el _Análisis de Componentes Principales_ a nuestros datos.
+
+¡a por ello!
+
+### Preparando la mesa de trabajo 
+
+#### Apertura de librerías
+
+Una vez más activamos funciones propias y ajenas. Novedades para la ocasión: el paquete `ggforce` para graficar "sets paralelos" y, muy importante, `tm` y `topicmodels`, que nos permitirán ejecutar parte del análisis más adelante.
+
+```{r librerias, warning= FALSE, message= FALSE}
+#paquetes
+
+library(readxl) # lectura de archivos excel
+library(ggplot2) # gráficos
+library(ggthemes) # temas de graficos
+library(reshape2)
+library(tm) # para DocumentTermMatrixs
+library(topicmodels) # para modelado de topicos
+library(ggbiplot) # para graficar PCA
+library(igraph) # para grafos
+library(pander)
+library(tidyverse)
+library(ggforce) # para graficos de sets paralelos
+library(twitterwidget) # para incluir tuits en Rmd 
+library(gt) # para formateo de tablas
+
+#propias
+
+source("https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/tuitsCandidatos.R", encoding = "UTF-8") # para trabajar con bases de tuits
+```
+
+#### Importación de datos
+
+Y vengan los datos. Más adelante incorporaremos otra base de interés. Por ahora, traemos a `joined_candidatos`, el nombre que hemos puesto al agregado de los tuits emitidos por los contendientes en la carrera electoral.
+
+```{r datos, warning= FALSE, message= FALSE}
+# Temas por palabras 
+
+# invocamos al script con las funciones correspondientes
+
+source("https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/preparacion_datos_tuits.R", encoding = "UTF-8")
+
+# traemos datos
+
+datos_base <- traerDatosTuits("base")
+joined_candidatos <- traerDatosTuits("tot")
+```
+
+Ahora sí, pasemos a consignar nuestros intentos.
+
+## :hash: 1: Rastreo manual de temas por palabras
+
+Una primera forma de rastrear _acerca de qué_ se han pronunciado nuestros emisores es identificar "palabras clave" que podemos presumir asociadas a un determinado asunto. 
+
+Ahora bien, determinar qué palabras corresponden a qué temas no es tarea fácil. Trazar límites entre cuestiones implica encorsetar un objeto fluido, creativo y ambiguo como el lenguaje en categorías estancas y, en nuestro caso, abiertamente arbitrarias, ya que para este ejercicio hemos optado por definirlas _a priori_.
+
+En breve, utilizaremos una "lista de palabras" que consideramos usualmente asociadas a "temas", y veremos qué tanto coinciden o no los tuits de los candidatos con las palabras de esta lista y, por ende, con los asuntos o problemáticas previamente identificadas.
+
+> Sin dudas, existen técnicas menos arbitrarias para diagramar estos "listados de palabras". Se podría, por caso rastrearlos a partir de una muestra más reducida de nuestros propios datos, o, inversamente, en una base más amplia, como sean notas de prensa. A nuestros fines exploratorios, baste la estrategia elegida. 
+
+A continuación, importamos un _data frame_ cuyas variables son los "temas" que vamos a buscar, y cuyas observaciones constituyen los términos que asociamos a cada tema[^1]. Inspeccionamos cómo está estructurada más abajo. 
+
+```{r datos_palabras, warning= FALSE, message= FALSE}
+# importamos la base
+
+temas_palabras <- read_xlsx("temas_palabras.xlsx")
+
+# inspeccionamos la base
+
+str(temas_palabras)
+```
+
+Para identificar en qué medida los términos previamente identificados "aparecen" en los tuits, procederemos a descomponer estos últimos en palabras. Nuestro objetivo será, en el próximo paso, contabilizar las "coincidencias".
+
+```{r tokenizado, warning= FALSE, message= FALSE}
+candidatos_tokenizadas <- joined_candidatos %>% 
+tokenizarTextoTuits() %>% 
+left_join(datos_base)
+```
+
+Tenemos entonces dos conjuntos de datos:
+
+1. Temas asociados a listas de palabras.
+2. Una lista de palabras asociadas a tuits emitidos por los candidatos.
+
+En el código a continuación, procedemos de manera iterativa para rastrear las coincidencias entre ambos. 
+
+Para cada columna (cada tema) en `tema_palabras`, recorremos la lista de palabras extraída de la base con tuits de los candidatos. Durante cada vuelta de nuestro recorrido, añadiremos una nueva variable a esta última: sus filas contendrán un "1" si la palabra del tuit pertenece al asunto en cuestión, y un "0" si no hay coincidencias. 
+
+> Más abajo, una vez finalizadas todas las vueltas, y por ende rastreadas todas las posibles coincidencias, modificamos la disposición de nuestros datos con `pivot_longer`. De este modo, nuestra base resultante constituye un data frame cuyas observaciones (filas) son las combinatorias palabras-tema. Esta estructura nos resultó más adecuada al análisis posterior.
+
+```{r temas iteracion, warning= FALSE, message= FALSE}
+
+temas_palabras_match_tokens <- candidatos_tokenizadas %>% 
+  limpiarTokens(palabras_web = TRUE, hashtags = TRUE, mentions = TRUE) %>% 
+  select(screen_name, tweet_id, tokens)
+
+# calculando coincidencias
+
+for (columna in 1:ncol(temas_palabras)) {
   
+  testear_coincidencias <- na.omit(as.data.frame(temas_palabras[columna])) %>% 
+    rename( palabras = colnames(temas_palabras[columna]) )
   
-  Adicionalmente, como pueden ver en [este script]() y [este]() y [este otro]() gráficos
+  new <- ifelse( temas_palabras_match_tokens$tokens %in% testear_coincidencias$palabras, 
+                 "1", 
+                 "0")
   
+  temas_palabras_match_tokens[ , ncol(temas_palabras_match_tokens) + 1] <- new                  # Append new column
   
-  ver si se corrigio t del fuego NA
+  colnames(temas_palabras_match_tokens)[ncol(temas_palabras_match_tokens)] <- colnames(temas_palabras[columna])  # Rename column name
+}
+
+# hacemos matriz "long"
+
+temas_palabras_match_tokens_long <- temas_palabras_match_tokens %>%
+  pivot_longer(!c(screen_name, tweet_id, tokens), 
+               # una fila para cada combinación tuit/token/tema
+               names_to = "temas", values_to = "count") %>%  
+  # con una columna (count) que indica si está presente el tema en ese token-tuit
+  filter(count==1) 
+# nos quedamos sólo con los tokens asignados a un tema
+
+```
+
+Ahora sí, estamos en condiciones de inspeccionar los resultados.
+
+Rastrearemos primero cuántas coincidencias hubo por tuit. Recordemos que habíamos descompuesto los tuits en palabras, y buscado matches entre estas últimas y la lista definida previamente. Entonces, en un tuit puede haber desde ninguna o una única palabra asociada a un tema, hasta varias.
+
+```{r primera_inspeccion_temas, warning= FALSE, message= FALSE}
+# inspeccionando resultados / primera aproximacion
+
+# cantidad de coincidencias por tuit
+
+coincidencias_tweets <- temas_palabras_match_tokens_long %>% 
+  group_by(tweet_id) %>% 
+  dplyr::summarise(cantidad_coincidencias = sum(as.integer(count))) %>% 
+  left_join(joined_candidatos)
+
+# cantidad de coincidencias por tema por tuit
+
+ncoincidencias_tema_tweets <- left_join(joined_candidatos %>% 
+                                          filter(Campaña == 1 ),
+                                        temas_palabras_match_tokens_long %>% 
+                                          dplyr::count(tweet_id, temas) 
+                                        ) %>% 
+  select(tweet_id, screen_name, text, temas, n) %>% 
+  dplyr::rename(coincidencias_tema_tuit = "n")
+```
+
+Veamos un ejemplo de un tuit con múltiples coincidencias.
+
+```{r ejemplo1, warning= FALSE, message= FALSE}
+# ejemplo: tuit con muchas coincidencias sobre un mismo tema
+
+ejemplo1 <- ncoincidencias_tema_tweets %>%  
+  arrange(desc(coincidencias_tema_tuit)) %>% 
+  head(1)
+
+twitterwidget(as.character(ejemplo1$tweet_id))
+
+```
+
+Con estos datos ya podemos explorar los temas más populares. Es decir, los temas que tuvieron más cantidad de coincidencias.
+
+> Atención: recordemos que se trata de una cuenta abiertamente arbitraria. La cantidad de palabras que asociamos a cada tema es variable. Además, nada dice que todas sean igual de importantes en un sentido sustantivo. De todos modos, no está de más el ejercicio.
+
+```{r temas_populares, warning= FALSE, message= FALSE}
+# temas mas populares
+
+temas_populares <- fct_count(ncoincidencias_tema_tweets$temas) %>% 
+  arrange(desc(n)) %>% 
+  dplyr::rename(Tema = "f", "Cantidad de tuits" = "n")
+
+head(temas_populares, 10) %>% 
+  gt::gt() %>% 
+  gt::tab_header(
+    title = "Temas más populares entre los candidatos",
+    subtitle = "(conteo manual)") %>% 
+  gt::tab_style(
+    style=  cell_fill(color = "#00BFFF", alpha = 0.5),
+    locations = cells_title(groups = c("title", "subtitle"))) %>% 
+  gt::tab_style(
+    style=  cell_fill(color = "#E9EDF1", alpha = 0.5),
+    locations = cells_body()) %>% 
+  gt::tab_style(
+    style= cell_text(
+      color = "#050505",
+      align = "center",
+      v_align = "middle",
+      weight = "lighter"),
+    locations = cells_body())
+```
+
+Sigamos con algunos cálculos más relevantes a nuestros fines. Dada la anterior advertencia, y el origen de nuestros datos, encontramos más provechoso trabajar con los _tuits_ antes que con las palabras dispersas.
+
+Reuniremos otra vez las palabras en tutis, entonces, e identificaremos a qué temas fue asignado cada tuit con base en sus palabras. 
+
+```{r calculo_temas_tuit, warning= FALSE, message= FALSE}
+# cantidad de temas por tuit
+
+ntemas_tweets <- temas_palabras_match_tokens_long %>% 
+  dplyr::count(tweet_id, temas) %>% 
+  dplyr::mutate( tweet_id = as.factor(tweet_id))
+
+# unimos con base de datos
+
+cantidad_temas_tuit <- left_join(joined_candidatos %>% 
+                                   filter(Campaña == 1 ) %>% 
+                                   dplyr::mutate(tweet_id = as.factor(tweet_id)),
+                                 fct_count(ntemas_tweets$tweet_id) %>% 
+                                   dplyr::rename(tweet_id = "f")) %>% 
+  select(tweet_id, screen_name, text, n) %>%
+  mutate_if(is.numeric, funs(ifelse(is.na(.), 0, .))) %>% 
+  dplyr::rename(cantidad_temas_tuit = "n")
+```
+
+Cabe la posibilidad de que un único tuit haya sido asignado a más de un tema. Calculamos esto en el último tramo del código recién expuesto. Abajo exponemos el tuit asignado a más temas de nuestra base de datos. 
+
+```{r ejemplo2, warning= FALSE, message= FALSE}
+# ejemplo tuit con muchos temas
+
+ejemplo2 <- cantidad_temas_tuit  %>%  
+  arrange(desc(cantidad_temas_tuit)) %>% 
+  head(1)
+
+twitterwidget(as.character(ejemplo2$tweet_id))
+```
+
+Este tuit fue asignado a 7 temas: desocupación, obra pública, vivienda, deuda, educación, salud y seguridad. ¿No está tan errado, no?
+
+Veamos, en el agregado de nuestra base, a cuántos temas fue asignado cada tuit.
+
+```{r temas_tuit, warning= FALSE, message= FALSE}
+# histograma descriptivo / cantidad de temas por tuit
+
+plot_cantidad_temas_tuit <- cantidad_temas_tuit %>% 
+  ggplot(aes(cantidad_temas_tuit)) +
+  geom_bar(fill = "#0F92DA") +
+  theme_clean() +
+  labs(x = "Cantidad de temas por tuit",
+       y = "Cantidad de tuits asignados")
+
+plot_cantidad_temas_tuit
+```
+
+En el gráfico emerge una de las principales debilidades de este abordaje: un gran número de tuits no fue asignado a ningún tema. Hay margen para perfeccionar el desempeño de estos cálculos en el futuro. 
+
+En cualquier caso, para trabajar en lo que sigue nos quedaremos con los tuits que fueron asignados a un único tema. Hemos pasado de las palabras, a los tuits. Ahora, haremos el salto hacia los emisores, y algunas de las características que los definen. 
+
+```{r unico_tema, warning= FALSE, message= FALSE}
+tuits_con_unico_tema <- ncoincidencias_tema_tweets  %>% 
+  dplyr::mutate(tweet_id = as.factor(tweet_id)) %>% 
+  left_join(cantidad_temas_tuit) %>% 
+  filter(cantidad_temas_tuit == 1 )
+
+temas_en_tuits_con_unico_tema <- fct_count(tuits_con_unico_tema$temas)
+```
+
+Con esta base, podremos evaluar fácilmente algunas similitudes y diferencias entre los candidatos. Vamos a ensayar algunos ejercicios visuales.
+
+En primer lugar, identificamos cuántos tuits en relación a cada tema emitió cada candidato. Se trata de una cuenta en términos absolutos. 
+
+```{r temas_absolutos, warning= FALSE, message= FALSE}
+
+# temas preferidos por candidato
+
+# cuenta absoluta
+# ¿cuantos tuits sobre x tema emitio i candidato?
+
+temas_candidatos_absolutos <- ncoincidencias_tema_tweets %>% 
+  dplyr::count(screen_name, temas) %>% 
+  na.omit(n) %>% 
+  left_join(datos_base)
+
+plot_temas_candidatos_absolutos <- temas_candidatos_absolutos %>% 
+  dplyr::mutate(screen_name = as.factor(screen_name)) %>% 
+  ggplot(aes(x = fct_reorder(screen_name, Distrito), y = temas, size= n, colour = Distrito)) +
+           geom_count() + 
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
+        legend.position = "none") +
+  labs(x = "", y = "")
+
+```
+
+En el gráfico a continuación, la cantidad de tuits emitidos por cada candidato sobre cada tema está dado por el tamaño del círculo :black_circle:.
+
+```{r plot_temas_candidatos_absolutos, warning= FALSE, message= FALSE}
+plot_temas_candidatos_absolutos
+```
+
+Quizás sea más claro graficar y calcular el peso relativo de cada tema para cada candidato. Lo hacemos a partir del código a continuación.
+
+```{r temas_relativos, warning= FALSE, message= FALSE}
+# cuenta relativa
+# ¿qué proporción de los tuits emitidos por i candidato fueron a x tema?
+
+# eventualmente podemos hacer esta cuenta más atrás-
+# calculamos cantidad de tuits emitidos por candidato
+cantidad_tuits_candidato <- joined_candidatos %>% 
+  subset( Campaña == 1 ) %>%  
+  dplyr::count(screen_name) %>% 
+  rename(tuits_emitidos_totales = "n")
+
+# unimos esta base para que la que consigna los temas por candidatos 
+# tenga una columna con el total de tuits emitidos
+
+temas_candidatos_relativos <- temas_candidatos_absolutos %>%
+  left_join(cantidad_tuits_candidato) %>% 
+  dplyr::mutate(n_relativo = n/tuits_emitidos_totales*100)
+
+plot_temas_candidatos_relativos <- temas_candidatos_relativos %>% 
+  ggplot(aes(x = fct_reorder(screen_name, Cargo), y = n_relativo, fill = temas)) +
+  geom_col(position = "stack") + 
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90)) + 
+  theme(legend.position = "bottom",
+        legend.key.size = unit(0.4, 'cm'), #change legend key size
+        legend.title = element_blank(),
+        legend.text = element_text(size=7)) + 
+  labs(title = "Proporción de tutis dedicados a cada tema",
+       subtitle = "por candidato",
+       x = "",
+       y = "%")
+
+```
+
+En el gráfico que sigue, chequeamos qué proporción de los tuits emitidos por cada candidato corresponde a cada tema, según nuestras estimaciones. El "espacio en blanco" arriba de las barras indica cuántos tuits de los emitidos por cada candidato no fueron asignados a ninguna temática en particular. 
+
+```{r plot temas relativos, warning= FALSE, message= FALSE}
+plot_temas_candidatos_relativos
+```
+
+Finalmente, un último ejercicio que puede resultar interesante consiste en identificar, de la lista de términos previamente provista, cuáles fueron las palabras más mencionadas por tema. 
+
+Ensayamos el siguiente gráfico para la temática "vivienda", una de las más mencionadas por nuestros candidatos.
+
+```{r force, warning= FALSE, message= FALSE}
+
+# y de hacer matches por palabras
+# hacemos para tema vivienda
+
+matches_vivienda <- temas_palabras_match_tokens_long %>% 
+  subset(temas == "vivienda") %>% 
+  dplyr::count(screen_name, tokens)
+
+matches_vivienda_paralell <- matches_vivienda  %>% 
+  gather_set_data(1:2)
+
+plot_matches_vivienda <- ggplot(matches_vivienda_paralell,
+                   aes(x, id = id, split = y, value = n)) + #  INICIA GRAFICO
+  geom_parallel_sets(aes(fill = screen_name), alpha = 0.7, axis.width = 0.1, show.legend = FALSE) +
+  theme_minimal() +
+  geom_parallel_sets_axes(axis.width = 0.1, color = "lightgray", fill = "white") +
+  geom_parallel_sets_labels(colour = 'black', angle= 0) +
+  theme_no_axes() +
+  theme(panel.background = element_rect(fill = "white", colour = "white"))
+
+```
+
+En la representación visual que sigue, observamos algunas diferencias relevantes. Por ejemplo, dentro de este tópico, M. Lammens, candidato porteño, habla más sobre los "alquileres", mientras que candidatos de provincias del interior versan más sobre las "villas". La diferencia puede ser indicativa de la estructura demográfica de cada distirito, y/o de la agenda de políticas en discusión durante la campaña. 
+
+```{r plot force, warning= FALSE, message= FALSE}
+plot_matches_vivienda
+```
+
+Sería interesante repetir la tarea para otros asuntos. Pero, por ahora, consideramos que hemos exprimido suficientemente esta estrategica. Además, hemos hecho hincapié en sus múltiples debilidades. Ensayemos otra técnica.
+
+## :hash: 2: Topic modelling
+
+Dadas las mentadas limitaciones del primer abordaje propuesto, hemos ensayado propuestas menos "supervisadas". 
+
+Nuestro segundo intento por rastrear áreas o asuntos a los que refieren nuestros candidatos consiste en el modelado de tópicos o _topic modelling_, un método para la calsificación no supervisada de "documentos".
+
+Siguiendo la propuesta contenida en ["Text Mining with R. A tidy aproach"](https://www.tidytextmining.com/topicmodeling.html#by-word-assignments-augment), en esta sección aplicaremos el algoritmo LDA (_Latent Dirichlet allocation_) a nuestros datos. 
+
+> _"Latent Dirichlet allocation (LDA) es un método de ajuste de modelos de tópicos particularmente popular. Trata a cada documento como un mix de tópicos, y cada tópico como un mix de palabras. Esto permite que los documentos se "superpongan" en términos de contenido, en lugar de ser separados en grupos discretos (excluyentes), de manera que imita el uso típico del lenguaje natural."_ [^2]
+
+En nuestro caso, trataremos a cada tuit individual como un "documento". [En este script](https://github.com/CVFH/Tuits_arg_2019/blob/master/exploracion_discursos.R) experimentamos con diversas alternativas para el cómputo del algoritmo seleccionado. Aquí exponemos la opción que hallamos más convincente.
+
+Esta consta de dos decisiones de importancia. 
+
+1. Una vez más, para las estimaciones de nuestro interés, requerimos descomponer a cada tuit en sus términos constitutivos. En esta oportunidad hemos escogido separar a los tuits en "bigramas", unidades de dos palabras. 
+2. Debimos escoger la cantidad de tópicos que suponemos que subyacen a nuestros datos (el parámetro "k" en el código de abajo). Tras varios intentos, consideramos que con 8 tópicos obteníamos algunos resultados interesantes. 
+
+Nuestras elecciones han sido abiertamente arbitrarias. A futuro, otras implementaciones podrán proceder de manera más criteriosa o teóricamente fundada. 
+
+Exponemos enseguida el código utilizado para el análisis:
+
+```{r topics calculos, warning= FALSE, message= FALSE}
+# Topic modeling ######
+# con 8 temas y bigramas
+
+# preparando datos
+# LDA trabaja con estructura de matriz 
+
+candidatos_tokens_dtm <- joined_candidatos %>% 
+  tokenizarTextoTuits(tipo_token = "ngrams") %>% 
+  limpiarTokens(bigramas = TRUE, palabras_web = TRUE, hashtags = TRUE, mentions = TRUE) %>% 
+  subset(!str_detect(tokens, "NA NA")) %>% 
+  dplyr::count(tweet_id, tokens) %>%
+  cast_dtm(tweet_id, tokens, n)
+
+# aplicamos algoritmo
+
+candidatos_tokens_LDA <- LDA(candidatos_tokens_dtm, k = 8, control = list(seed = 1234))
+```
+
+Tras estas líneas, ya podemos experimentar con los resutlados obtenidos.
+
+La primera tarea consiste en intentar categorizar qué temas ha identificado nuestro algoritmo.
+
+Para ello, contrastamos las "beta" asignadas a cada bigrama: la medida en que cada par de términos está asociada a uno de los 8 "temas". Viendo cuáles son los bigramas más fuertemente vinculados a un tema, podemos tratar de deducir de qué va el asunto.
+
+```{r topics palabras, warning= FALSE, message= FALSE}
+#per-topic-per-word probabilities
+
+candidatos_tokens_topics <- tidy(candidatos_tokens_LDA, matrix = "beta")
+
+# nos quedamos con los términos principales
+
+candidatos_tokens_topics_top_terms <- candidatos_tokens_topics %>%
+  group_by(topic) %>%
+  top_n(15, beta) %>%
+  ungroup() %>%
+  arrange(topic, -beta) 
+
+# graficamos
+
+plot_topics_terminos <- candidatos_tokens_topics_top_terms  %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free", ncol = 4) +
+  scale_y_reordered() +
+  theme_clean() +
+  theme(strip.text = element_text(size = 7),
+        axis.text.y = element_text(size = 7, hjust = 0.8),
+        axis.text.x = element_blank())  +
+  labs(title = "Términos por temas",
+       subtitle = "Palabras más probablemente pertenecientes a un mismo tópico",
+       x = "beta",
+       y = "")
+
+plot_topics_terminos
+```
+
+Nuestros resultados no son grandiosos, pero nos permiten alguna que otra reflexión interesante. Por ejemplo, la educación parece ser un tema en sí mismo, de acuerdo con este algoritmo (5); parecería que también el "desarrollo" (6) y la seguridad social en un sentido amplio (4)y, más genéricamente, "el futuro" (2). 
+
+De todos modos, muchas palabras son o muy poco o demasiado específicas. Destacan sobre todo los nombres propios de lugares. Pueden estar ocurriendo dos cosas: o bien los "temas" hacen a la idiosincracia de cada lugar, o bien esta última enmascara otras similitudes.
+
+Futuras estimaciones podrán perfeccionar la aplicación de este algoritmo. De todos modos, juguemos un poco más de momento. 
+
+Una segunda tarea consiste en ver la probabilidad de que cada documento (recuérdese: cada tuit) pertenezca a cada uno de los 8 temas. Esto indica el coeficiente "gamma". 
+
+Cada documento posee 8 "gammas", uno para cada tema. Nosotros nos quedamos con el mayor de ellos, suponiendo que indica el tema al que pertenece el tuit en cuestión.
+
+```{r topics gamma, warning= FALSE, message= FALSE}
+# per-document-per-topic probabilities,  γ (“gamma”).
+
+candidatos_tuits_topics <- tidy(candidatos_tokens_LDA, matrix = "gamma") %>% 
+  dplyr::rename(tweet_id = "document") %>% 
+  left_join(joined_candidatos %>% dplyr::mutate(tweet_id = as.character(tweet_id) )) %>% 
+  select(tweet_id, topic, gamma, screen_name, fav_count, rts, created_at)
+
+# nos quedamos con el mayor gamma
+
+candidatos_tuits_topics_top <- candidatos_tuits_topics %>% 
+  group_by(tweet_id) %>% 
+  dplyr::summarise(gamma = max(gamma)) %>% 
+  left_join(candidatos_tuits_topics) %>% 
+  left_join(datos_base)
+```
+
+Ahora tenemos una base cuyas observaciones son tuits, y cada uno está asociado con cierto grado de probabilidad (gamma) a un tema. Con esto, podemos visualizar de manera agregada nuestros datos. 
+
+Veamos primero cuántos tuits por tema emitió cada candidato. Emergen algunas diferencias. Por ejemplo, A. Rodríguez Saá refiere mucho a los temas (1) y (2); A. Bonfatti, al (6); N. del Caño, al (5); C. Poggi al (5) y al (7). Nos excede extendernos en la interpretación de estas diferencias, cuestión acerca de la que no descartamos explayarnos en el futuro. 
+
+```{r topics plot sname, warning= FALSE, message= FALSE}
+#graficando.
+
+#agrupados por  screen name 
+candidatos_tuits_topics_top_grouped_sname <- candidatos_tuits_topics_top %>% 
+  dplyr::count(screen_name, topic)
+
+plot_topics_candidatos  <- candidatos_tuits_topics_top_grouped_sname %>% 
+  ggplot(aes(topic, n, colour= screen_name)) +
+  geom_point()  +
+  facet_wrap(~ screen_name, ncol = 3) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  labs(title= "Temas preferidos por los candidatos",
+       subtitle = "Medidos a partir de cantidad de tuits emitidos por candidato que probablemente están asociados a un tema",
+       x = "Cantidad de tuits",
+       "Tópicos")
+
+plot_topics_candidatos 
+```
+
+Otra posibilidad consiste en inspeccionar ocularmente cuántos tuits por tema fueron emitidos por los candidatos a Gobernador versus los candidatos a la Presidencia. Para este cálculo utilizamos una medida relativa: qué proporción del total de tutis emitidos por los candidatos a uno y otro cargo corresponden a cada uno de los 8 temas.
+
+```{r topics plot cargo, warning= FALSE, message= FALSE}
+#agrupados por cargo 
+
+# calculamos proporcionalmente
+tutis_totales_cargo <- joined_candidatos %>% 
+  filter(Campaña == 1) %>% 
+  dplyr::count(Cargo) %>% 
+  dplyr::rename(tuits_totales_cargo = "n")
+
+candidatos_tuits_topics_top_grouped_cargo <- candidatos_tuits_topics_top %>% 
+  dplyr::count(Cargo, topic) %>% 
+    left_join(tutis_totales_cargo) %>% 
+    dplyr::mutate(proporcion_tuits_topic_cargo = n/tuits_totales_cargo *100 )
+
+plot_topics_cargo <- candidatos_tuits_topics_top_grouped_cargo %>% 
+  ggplot(aes(topic, proporcion_tuits_topic_cargo, colour= Cargo)) +
+  geom_point(size = 3) +
+  theme_minimal() +
+  scale_x_continuous(breaks = seq(0, 8, 1)) +
+  labs(title= "Temas preferidos por los candidatos",
+       subtitle = "según la cartera a la que compiten",
+       x = "Tópicos",
+       y = "Cantidad de tuits",
+       colour = "") +
+  theme(legend.position = "bottom")
+
+plot_topics_cargo
+```
+
+Hay algunos hallazgos interesantes. Mientras que en el tema (6), que decíamos parecía designar al "desarrollo", no hay diferencias en la proporción de tuits que a este asunto destinan los candidatos a una u otra cartera, en otros se registra una atención dispar. Por ejemplo, los candidatos a Gobernador refieren más asiduamente que los candidatos a la Presidencia al tema (8). Inversamente, estos últimos se explayan proporcionalmente más en torno al tópico (3). De todos modos, las diferencias no son sustantivamente enormes. 
+
+Repliquemos este ejercicio pero clasificando, ahora, a los tuits conforme al timing de la campaña (es decir, a si fueron emitidos durante una campaña "desdoblada" o "simultánea").
+
+```{r topics plot tfecha, warning= FALSE, message= FALSE}
+#agrupados por tipo_fecha 
+
+tutis_totales_tfecha <- joined_candidatos %>% 
+  filter(Campaña==1) %>% 
+  dplyr::count(tipo_fecha) %>% 
+  dplyr::rename(tuits_totales_tfecha = "n")
+
+candidatos_tuits_topics_top_grouped_tfecha <- candidatos_tuits_topics_top %>% 
+  dplyr::count(tipo_fecha, topic) %>% 
+  left_join(tutis_totales_tfecha) %>% 
+  dplyr::mutate(proporcion_tuits_topic_tfecha = n/tuits_totales_tfecha*100 )
+
+plot_topics_tfecha <- candidatos_tuits_topics_top_grouped_tfecha %>% 
+  ggplot(aes(topic, proporcion_tuits_topic_tfecha, colour= tipo_fecha)) +
+  geom_point(size = 3) +
+  theme_minimal() +
+  scale_x_continuous(breaks = seq(0, 8, 1)) +
+  labs(title= "Temas preferidos por los candidatos",
+       subtitle = "según el calendario electoral",
+       x = "Tópicos",
+       y = "Cantidad de tuits",
+       colour = "") +
+  theme(legend.position = "bottom")
+
+plot_topics_tfecha
+``` 
+
+Aquí hay muchos tópicos que parecen consignar una atención proporcionalmente homogénea: sobre todo, el (2) y el (4); en menor medida, el (1), el (5) y el (6). Sí son mas notorias las diferencias entre los asuntos (3), más referido en las elecciones "simutláneas" y (7), más atendido en las desdobladas.
+
+La técnica de topic modelling parece prometedora, pero nuestra aplicación claramente deja bastante que desear. Esperamos a futuro refinar nuestro manejo de este algoritmo, a los fines de identificar de manera menos arbitraria los "temas" sobre los que versan los tuits de nuestros candidatos.
+
+## :hash: 3 : Análisis (fallido?) de componentes principales
+
+
+
+
+[^1]: Nótese que la base, definida previamente, contiene términos que serán inutilizados, ya que trabajaremos con palabras únicas. 
+[^2]: [La cita proviene del libro referido](https://www.tidytextmining.com/topicmodeling.html#by-word-assignments-augment). La traducción es propia.

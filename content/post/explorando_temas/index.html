@@ -14,20 +14,21 @@ weight: 8
 
 
 <p>Hemos hecho un largo recorrido. Teníamos en mente un interrogante amplio: <strong>¿Cuánto y qué expresaron los candidatos a las elecciones de 2019 en la Argentina?</strong></p>
-<p>Nuestra respuesta exploratoria ha tenido como necesario punto de partida la presentación del “esqueleto” y “la carne”: las <a href="../preparacion_funciones">funciones</a> y los <a href="../preparacion_datos/">datos</a> que pusieron en movimiento a nuestro análisis. Hasta aquí, este procedió en tres etapas. Primero, <a href="../explorando_popularidad/">exploramos visualmente las relaciones entre el desempeño de los candidatos en la red social y en las urnas</a>. En segundo lugar, hicimos lo propio con <a href="../explorando_palabras/">las palabras</a>: qué tan elocuentes fueron y qué términos han preferido nuestros candidatos. <a href="../explorando_relaciones">En el último y anterior post</a>, retuvimos un “tipo” de término muy especial: las <em>menciones</em>, con base en el cual diagramamos algunos de los vínculos que habilita el uso de <em>Twitter</em>.</p>
-<p>En este último post intentaremos profundizar en la mirada global acerca de lo dicho por los candidatos, y las similitudes y diferencias entre sus discursos.</p>
-<p>Nuestra pregunta es sencilla: <strong>¿de qué hablan los candidatos?</strong>, ¿a qué temas se refieren?. Responderla es un poco más difícil. En este post ensayamos, con diferentes grados de éxito, tres abordajes posibles.</p>
+<p>El necesario punto de partida de nuestra respuesta exploratoria ha sido la presentación del “esqueleto” y “la carne”: las <a href="../preparacion_funciones/">funciones</a> y los <a href="../preparacion_datos/">datos</a> que pusieron en movimiento a nuestro análisis.</p>
+<p>Hasta aquí, este procedió en tres etapas. Primero, <a href="../explorando_popularidad/">exploramos visualmente las relaciones entre el desempeño de los candidatos en la red social y en las urnas</a>. En segundo lugar, hicimos lo propio con <a href="../explorando_palabras/">las palabras</a>: qué tan elocuentes fueron y qué términos prefirieron nuestros candidatos. <a href="../explorando_relaciones/">En el tercer y anterior post</a>, retuvimos un “tipo” de término muy especial: las <em>menciones</em>, con base en el cual diagramamos algunos de los vínculos o comunidades que habilita el uso de <em>Twitter</em>.</p>
+<p>En esta última muestra de análisis intentaremos profundizar en la mirada global acerca de lo dicho por los candidatos, tratando de asir más similitudes y diferencias entre sus discursos. Nuestra pregunta es sencilla: <strong>¿de qué hablan los candidatos?</strong> ¿a qué temas se refieren?</p>
+<p>Responderla es un poco más difícil. En lo que sigue ensayaremos, con diferentes grados de éxito, tres abordajes posibles.</p>
 <ol style="list-style-type: decimal">
-<li>En primer lugar, rastreamos ciertos “términos” cuya pertenencia adscribimos, manualmente (<em>arbitrariamente</em>), a ciertos “temas”.</li>
+<li>En primer lugar, rastreamos términos cuya pertenencia adscribimos, manualmente (<em>arbitrariamente</em>), a ciertos “temas”.</li>
 <li>En segundo lugar, utilizamos la técnica de <em>topic modelling</em>.</li>
-<li>Finalmente, comentamos brevemente los intentos infructuosos por aplicar el <em>Análisis de Componentes Principales</em> a nuestros datos.</li>
+<li>Finalmente, comentaremos brevemente los intentos infructuosos por aplicar el <em>Análisis de Componentes Principales</em> a nuestros datos.</li>
 </ol>
 <p>¡a por ello!</p>
 <div id="preparando-la-mesa-de-trabajo" class="section level3">
 <h3>Preparando la mesa de trabajo</h3>
 <div id="apertura-de-librerías" class="section level4">
 <h4>Apertura de librerías</h4>
-<p>Una vez más activamos funciones propias y ajenas. Novedades en este post: el paquete <code></code> para graficar “sets paralelos” y, muy importante, los paquetes <code></code>, que nos permitirán ejecutar parte del análisis más adelante.</p>
+<p>Una vez más activamos funciones propias y ajenas. Novedades para la ocasión: el paquete <code>ggforce</code> para graficar “sets paralelos” y, muy importante, <code>tm</code> y <code>topicmodels</code>, que nos permitirán ejecutar parte del análisis más adelante.</p>
 <pre class="r"><code>#paquetes
 
 library(readxl) # lectura de archivos excel
@@ -50,22 +51,92 @@ source(&quot;https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Module
 </div>
 <div id="importación-de-datos" class="section level4">
 <h4>Importación de datos</h4>
-<pre class="r"><code># Temas por palabras ########
+<p>Y vengan los datos. Más adelante incorporaremos otra base de interés. Por ahora, traemos a <code>joined_candidatos</code>, el nombre que hemos puesto al agregado de los tuits emitidos por los contendientes en la carrera electoral.</p>
+<pre class="r"><code># Temas por palabras 
+
 # invocamos al script con las funciones correspondientes
 
 source(&quot;https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/preparacion_datos_tuits.R&quot;, encoding = &quot;UTF-8&quot;)
 
 # traemos datos
+
 datos_base &lt;- traerDatosTuits(&quot;base&quot;)
-joined_candidatos &lt;- traerDatosTuits(&quot;tot&quot;)</code></pre>
+joined_candidatos &lt;- traerDatosTuits(&quot;tot&quot;) %&gt;% 
+  left_join(datos_base)</code></pre>
+<p>Ahora sí, pasemos a consignar nuestros intentos.</p>
 </div>
 </div>
-<div id="rastreo-manual-de-temas-por-palabras" class="section level2">
-<h2>#1: Rastreo manual de temas por palabras</h2>
-<pre class="r"><code>temas_palabras &lt;- read_xlsx(&quot;temas_palabras.xlsx&quot;)</code></pre>
+<div id="hash-1-rastreo-manual-de-temas-por-palabras" class="section level2">
+<h2>:hash: 1: Rastreo manual de temas por palabras</h2>
+<p>Una primera forma de rastrear <em>acerca de qué</em> se han pronunciado nuestros emisores es identificar “palabras clave” que podemos presumir asociadas a un determinado asunto.</p>
+<p>Ahora bien, determinar qué palabras corresponden a qué temas no es tarea fácil. Trazar límites entre cuestiones implica encorsetar un objeto fluido, creativo y ambiguo como el lenguaje en categorías estancas y, en nuestro caso, abiertamente arbitrarias, ya que para este ejercicio hemos optado por definirlas <em>a priori</em>.</p>
+<p>En breve, utilizaremos una “lista de palabras” que consideramos usualmente asociadas a “temas”, y veremos qué tanto coinciden o no los tuits de los candidatos con las palabras de esta lista y, por ende, con los asuntos o problemáticas previamente identificadas.</p>
+<blockquote>
+<p>Sin dudas, existen técnicas menos arbitrarias para diagramar estos “listados de palabras”. Se podría, por caso rastrearlos a partir de una muestra más reducida de nuestros propios datos, o, inversamente, en una base más amplia, como sean notas de prensa. A nuestros fines exploratorios, baste la estrategia elegida.</p>
+</blockquote>
+<p>A continuación, importamos un <em>data frame</em> cuyas variables son los “temas” que vamos a buscar, y cuyas observaciones constituyen los términos que asociamos a cada tema<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Inspeccionamos cómo está estructurada más abajo.</p>
+<pre class="r"><code># importamos la base
+
+temas_palabras &lt;- read_xlsx(&quot;temas_palabras.xlsx&quot;)
+
+# inspeccionamos la base
+
+str(temas_palabras)</code></pre>
+<pre><code>## tibble [102 x 40] (S3: tbl_df/tbl/data.frame)
+##  $ agropecuario         : chr [1:102] &quot;aceituna&quot; &quot;aceituno&quot; &quot;agropecuaria&quot; &quot;agropecuario&quot; ...
+##  $ industria            : chr [1:102] &quot;industria&quot; &quot;industrial&quot; &quot;fábrica&quot; &quot;fábricas&quot; ...
+##  $ mineria              : chr [1:102] &quot;carbón&quot; &quot;cobre&quot; &quot;hierro&quot; &quot;litio&quot; ...
+##  $ adicciones           : chr [1:102] &quot;abstinencia&quot; &quot;adicción&quot; &quot;adicto&quot; &quot;adictos&quot; ...
+##  $ alumbrado            : chr [1:102] &quot;iluminación&quot; &quot;luminaria&quot; &quot;luminarias&quot; &quot;alumbrado&quot; ...
+##  $ caminos              : chr [1:102] &quot;acera&quot; &quot;aceras&quot; &quot;adoquin&quot; &quot;adoquinado&quot; ...
+##  $ competitividad       : chr [1:102] &quot;competitiva&quot; &quot;competitividad&quot; &quot;competitivo&quot; NA ...
+##  $ coparticipación      : chr [1:102] &quot;coparticipa&quot; &quot;coparticipación&quot; &quot;coparticipable&quot; &quot;coparticipables&quot; ...
+##  $ corrupción           : chr [1:102] &quot;afana&quot; &quot;anti ético&quot; &quot;antietico&quot; &quot;anti-ético&quot; ...
+##  $ cultura              : chr [1:102] &quot;arte&quot; &quot;artes&quot; &quot;artista&quot; &quot;artistas&quot; ...
+##  $ deporte              : chr [1:102] &quot;ajedrez&quot; &quot;atleta&quot; &quot;atletas&quot; &quot;atletico&quot; ...
+##  $ ddhh                 : chr [1:102] &quot;abuelas de plaza de mayo&quot; &quot;amnistía&quot; &quot;dd.hh.&quot; &quot;ddhh&quot; ...
+##  $ servicios_agua       : chr [1:102] &quot;agua&quot; &quot;alcantarilla&quot; &quot;alcantarillado&quot; &quot;cloaca&quot; ...
+##  $ catástrofes_naturales: chr [1:102] &quot;inundaciones&quot; &quot;inundacion&quot; &quot;incendios forestales&quot; &quot;incendio forestal&quot; ...
+##  $ desocupación         : chr [1:102] &quot;cesante&quot; &quot;cesantes&quot; &quot;cesantía&quot; &quot;cesantías&quot; ...
+##  $ educación            : chr [1:102] &quot;alfabetización&quot; &quot;alfabetizar&quot; &quot;alumna&quot; &quot;alumnas&quot; ...
+##  $ electoral            : chr [1:102] &quot;balotaje&quot; &quot;ballotage&quot; &quot;boleta&quot; &quot;boletas&quot; ...
+##  $ energía              : chr [1:102] &quot;axion&quot; &quot;barrick gold&quot; &quot;British Petroleum&quot; &quot;btu&quot; ...
+##  $ género               : chr [1:102] &quot;feminazi&quot; &quot;femicidio&quot; &quot;feminicidio&quot; &quot;feminista&quot; ...
+##  $ higiene              : chr [1:102] &quot;aseo&quot; &quot;barren&quot; &quot;barrer&quot; &quot;barrido&quot; ...
+##  $ inflación            : chr [1:102] &quot;deflación&quot; &quot;hiperinflacion&quot; &quot;indec&quot; &quot;inflación&quot; ...
+##  $ telecomunicaciones   : chr [1:102] &quot;satelite&quot; &quot;telecomunicaciones&quot; &quot;fibra optica&quot; &quot;espectro radioelectrico&quot; ...
+##  $ obra_pública         : chr [1:102] &quot;infraestructura&quot; &quot;mantenimiento&quot; &quot;mejoras&quot; &quot;mejora&quot; ...
+##  $ comercio             : chr [1:102] &quot;balance comercial&quot; &quot;balanza comercial&quot; &quot;deficit comercial&quot; &quot;superavit comercial&quot; ...
+##  $ inversion            : chr [1:102] &quot;inversión&quot; &quot;inversiones&quot; &quot;inversionista&quot; &quot;inversor&quot; ...
+##  $ jubilaciones         : chr [1:102] &quot;82% móvil&quot; &quot;adulto mayor&quot; &quot;afjp&quot; &quot;anses&quot; ...
+##  $ justicia             : chr [1:102] &quot;calumnia&quot; &quot;camara civil&quot; &quot;camara comercial&quot; &quot;camaristas&quot; ...
+##  $ vivienda             : chr [1:102] &quot;alquiler&quot; &quot;alquileres&quot; &quot;casa propia&quot; &quot;crédito hipotecario&quot; ...
+##  $ turismo              : chr [1:102] &quot;ecoturismo&quot; &quot;agroturismo&quot; &quot;enoturismo&quot; &quot;tour&quot; ...
+##  $ transporte           : chr [1:102] &quot;Aerolineas Argentinas&quot; &quot;low cost&quot; &quot;aeroparque&quot; &quot;aeropuerto&quot; ...
+##  $ tc                   : chr [1:102] &quot;atraso cambiario&quot; &quot;cepo&quot; &quot;compra de dolares&quot; &quot;compran dolares&quot; ...
+##  $ impuestos            : chr [1:102] &quot;abl&quot; &quot;Afip&quot; &quot;deficit fiscal&quot; &quot;gasto publico&quot; ...
+##  $ seguridad            : chr [1:102] &quot;armas&quot; &quot;arma blanca&quot; &quot;asaltante&quot; &quot;asaltantes&quot; ...
+##  $ salud                : chr [1:102] &quot;ambulancia&quot; &quot;ambulancias&quot; &quot;asistencia medica&quot; &quot;ayuda medica&quot; ...
+##  $ rrii                 : chr [1:102] &quot;acuerdo bilateral&quot; &quot;acuerdos bilaterales&quot; &quot;acuerdo multilateral&quot; &quot;acuerdos multilaterales&quot; ...
+##  $ pobreza              : chr [1:102] &quot;desigualdad&quot; &quot;desnutrid&quot; &quot;desnutricion&quot; &quot;distribución del ingreso&quot; ...
+##  $ gobierno_abierto     : chr [1:102] &quot;abrirse al ciudadano&quot; &quot;acceso a la información&quot; &quot;app&quot; &quot;apps&quot; ...
+##  $ narcotráfico         : chr [1:102] &quot;cargamento&quot; &quot;cocaína&quot; &quot;crimen organizado&quot; &quot;dea&quot; ...
+##  $ ambiente             : chr [1:102] &quot;ambiental&quot; &quot;ambientales&quot; &quot;ambientalista&quot; &quot;area protegida&quot; ...
+##  $ deuda                : chr [1:102] &quot;deuda&quot; &quot;financiamiento&quot; &quot;default&quot; &quot;acreedor&quot; ...</code></pre>
+<p>Para identificar en qué medida los términos previamente identificados “aparecen” en los tuits, procederemos a descomponer estos últimos en palabras. Nuestro objetivo será, en el próximo paso, contabilizar las “coincidencias”.</p>
 <pre class="r"><code>candidatos_tokenizadas &lt;- joined_candidatos %&gt;% 
 tokenizarTextoTuits() %&gt;% 
 left_join(datos_base)</code></pre>
+<p>Tenemos entonces dos conjuntos de datos:</p>
+<ol style="list-style-type: decimal">
+<li>Temas asociados a listas de palabras.</li>
+<li>Una lista de palabras asociadas a tuits emitidos por los candidatos.</li>
+</ol>
+<p>En el código a continuación, procedemos de manera iterativa para rastrear las coincidencias entre ambos.</p>
+<p>Para cada columna (cada tema) en <code>tema_palabras</code>, recorremos la lista de palabras extraída de la base con tuits de los candidatos. Durante cada vuelta de nuestro recorrido, añadiremos una nueva variable a esta última: sus filas contendrán un “1” si la palabra del tuit pertenece al asunto en cuestión, y un “0” si no hay coincidencias.</p>
+<blockquote>
+<p>Más abajo, una vez finalizadas todas las vueltas, y por ende rastreadas todas las posibles coincidencias, modificamos la disposición de nuestros datos con <code>pivot_longer</code>. De este modo, nuestra base resultante constituye un data frame cuyas observaciones (filas) son las combinatorias palabras-tema. Esta estructura nos resultó más adecuada al análisis posterior.</p>
+</blockquote>
 <pre class="r"><code>temas_palabras_match_tokens &lt;- candidatos_tokenizadas %&gt;% 
   limpiarTokens(palabras_web = TRUE, hashtags = TRUE, mentions = TRUE) %&gt;% 
   select(screen_name, tweet_id, tokens)
@@ -86,19 +157,28 @@ for (columna in 1:ncol(temas_palabras)) {
   colnames(temas_palabras_match_tokens)[ncol(temas_palabras_match_tokens)] &lt;- colnames(temas_palabras[columna])  # Rename column name
 }
 
+# hacemos matriz &quot;long&quot;
+
 temas_palabras_match_tokens_long &lt;- temas_palabras_match_tokens %&gt;%
-  pivot_longer(!c(screen_name, tweet_id, tokens), # una fila para cada combinación tuit/token/tema
-               names_to = &quot;temas&quot;, values_to = &quot;count&quot;) %&gt;%  # con una columna (count) que indica si está presente el tema en ese token-tuit
-  filter(count==1) # nos quedamos sólo con los tokens asignados a un tema</code></pre>
+  pivot_longer(!c(screen_name, tweet_id, tokens), 
+               # una fila para cada combinación tuit/token/tema
+               names_to = &quot;temas&quot;, values_to = &quot;count&quot;) %&gt;%  
+  # con una columna (count) que indica si está presente el tema en ese token-tuit
+  filter(count==1) 
+# nos quedamos sólo con los tokens asignados a un tema</code></pre>
+<p>Ahora sí, estamos en condiciones de inspeccionar los resultados.</p>
+<p>Rastrearemos primero cuántas coincidencias hubo por tuit. Recordemos que habíamos descompuesto los tuits en palabras, y buscado matches entre estas últimas y la lista definida previamente. Entonces, en un tuit puede haber desde ninguna o una única palabra asociada a un tema, hasta varias.</p>
 <pre class="r"><code># inspeccionando resultados / primera aproximacion
 
 # cantidad de coincidencias por tuit
+
 coincidencias_tweets &lt;- temas_palabras_match_tokens_long %&gt;% 
   group_by(tweet_id) %&gt;% 
   dplyr::summarise(cantidad_coincidencias = sum(as.integer(count))) %&gt;% 
   left_join(joined_candidatos)
 
 # cantidad de coincidencias por tema por tuit
+
 ncoincidencias_tema_tweets &lt;- left_join(joined_candidatos %&gt;% 
                                           filter(Campaña == 1 ),
                                         temas_palabras_match_tokens_long %&gt;% 
@@ -106,6 +186,7 @@ ncoincidencias_tema_tweets &lt;- left_join(joined_candidatos %&gt;%
                                         ) %&gt;% 
   select(tweet_id, screen_name, text, temas, n) %&gt;% 
   dplyr::rename(coincidencias_tema_tuit = &quot;n&quot;)</code></pre>
+<p>Veamos un ejemplo de un tuit con múltiples coincidencias.</p>
 <pre class="r"><code># ejemplo: tuit con muchas coincidencias sobre un mismo tema
 
 ejemplo1 &lt;- ncoincidencias_tema_tweets %&gt;%  
@@ -115,10 +196,15 @@ ejemplo1 &lt;- ncoincidencias_tema_tweets %&gt;%
 twitterwidget(as.character(ejemplo1$tweet_id))</code></pre>
 <div id="htmlwidget-1" style="width:672px;height:480px;" class="twitterwidget html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{"x":{"twid":"1178396830478032896","pars":null},"evals":[],"jsHooks":[]}</script>
-<p>Con estos datos ya podemos explorar los temas más populares.</p>
+<p>Con estos datos ya podemos explorar los temas más populares. Es decir, los temas que tuvieron más cantidad de coincidencias.</p>
+<blockquote>
+<p>Atención: recordemos que se trata de una cuenta abiertamente arbitraria. La cantidad de palabras que asociamos a cada tema es variable. Además, nada dice que todas sean igual de importantes en un sentido sustantivo. De todos modos, no está de más el ejercicio.</p>
+</blockquote>
 <pre class="r"><code># temas mas populares
 
-temas_populares &lt;- fct_count(ncoincidencias_tema_tweets$temas)
+temas_populares &lt;- fct_count(ncoincidencias_tema_tweets$temas) %&gt;% 
+  arrange(desc(n)) %&gt;% 
+  dplyr::rename(Tema = &quot;f&quot;, &quot;Cantidad de tuits&quot; = &quot;n&quot;)
 
 head(temas_populares, 10) %&gt;% 
   gt::gt() %&gt;% 
@@ -142,7 +228,7 @@ head(temas_populares, 10) %&gt;%
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#rxopqwewgs .gt_table {
+#jdobzlmuhh .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -167,7 +253,7 @@ head(temas_populares, 10) %&gt;%
   border-left-color: #D3D3D3;
 }
 
-#rxopqwewgs .gt_heading {
+#jdobzlmuhh .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -179,7 +265,7 @@ head(temas_populares, 10) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#rxopqwewgs .gt_title {
+#jdobzlmuhh .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -189,7 +275,7 @@ head(temas_populares, 10) %&gt;%
   border-bottom-width: 0;
 }
 
-#rxopqwewgs .gt_subtitle {
+#jdobzlmuhh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -199,13 +285,13 @@ head(temas_populares, 10) %&gt;%
   border-top-width: 0;
 }
 
-#rxopqwewgs .gt_bottom_border {
+#jdobzlmuhh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rxopqwewgs .gt_col_headings {
+#jdobzlmuhh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -220,7 +306,7 @@ head(temas_populares, 10) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#rxopqwewgs .gt_col_heading {
+#jdobzlmuhh .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -240,7 +326,7 @@ head(temas_populares, 10) %&gt;%
   overflow-x: hidden;
 }
 
-#rxopqwewgs .gt_column_spanner_outer {
+#jdobzlmuhh .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -252,15 +338,15 @@ head(temas_populares, 10) %&gt;%
   padding-right: 4px;
 }
 
-#rxopqwewgs .gt_column_spanner_outer:first-child {
+#jdobzlmuhh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rxopqwewgs .gt_column_spanner_outer:last-child {
+#jdobzlmuhh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rxopqwewgs .gt_column_spanner {
+#jdobzlmuhh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -272,7 +358,7 @@ head(temas_populares, 10) %&gt;%
   width: 100%;
 }
 
-#rxopqwewgs .gt_group_heading {
+#jdobzlmuhh .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -294,7 +380,7 @@ head(temas_populares, 10) %&gt;%
   vertical-align: middle;
 }
 
-#rxopqwewgs .gt_empty_group_heading {
+#jdobzlmuhh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -309,15 +395,15 @@ head(temas_populares, 10) %&gt;%
   vertical-align: middle;
 }
 
-#rxopqwewgs .gt_from_md > :first-child {
+#jdobzlmuhh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rxopqwewgs .gt_from_md > :last-child {
+#jdobzlmuhh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rxopqwewgs .gt_row {
+#jdobzlmuhh .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -336,7 +422,7 @@ head(temas_populares, 10) %&gt;%
   overflow-x: hidden;
 }
 
-#rxopqwewgs .gt_stub {
+#jdobzlmuhh .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -348,7 +434,7 @@ head(temas_populares, 10) %&gt;%
   padding-left: 12px;
 }
 
-#rxopqwewgs .gt_summary_row {
+#jdobzlmuhh .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -358,7 +444,7 @@ head(temas_populares, 10) %&gt;%
   padding-right: 5px;
 }
 
-#rxopqwewgs .gt_first_summary_row {
+#jdobzlmuhh .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -368,7 +454,7 @@ head(temas_populares, 10) %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#rxopqwewgs .gt_grand_summary_row {
+#jdobzlmuhh .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -378,7 +464,7 @@ head(temas_populares, 10) %&gt;%
   padding-right: 5px;
 }
 
-#rxopqwewgs .gt_first_grand_summary_row {
+#jdobzlmuhh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -388,11 +474,11 @@ head(temas_populares, 10) %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#rxopqwewgs .gt_striped {
+#jdobzlmuhh .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rxopqwewgs .gt_table_body {
+#jdobzlmuhh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -401,7 +487,7 @@ head(temas_populares, 10) %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#rxopqwewgs .gt_footnotes {
+#jdobzlmuhh .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -415,13 +501,13 @@ head(temas_populares, 10) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#rxopqwewgs .gt_footnote {
+#jdobzlmuhh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#rxopqwewgs .gt_sourcenotes {
+#jdobzlmuhh .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -435,46 +521,46 @@ head(temas_populares, 10) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#rxopqwewgs .gt_sourcenote {
+#jdobzlmuhh .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#rxopqwewgs .gt_left {
+#jdobzlmuhh .gt_left {
   text-align: left;
 }
 
-#rxopqwewgs .gt_center {
+#jdobzlmuhh .gt_center {
   text-align: center;
 }
 
-#rxopqwewgs .gt_right {
+#jdobzlmuhh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rxopqwewgs .gt_font_normal {
+#jdobzlmuhh .gt_font_normal {
   font-weight: normal;
 }
 
-#rxopqwewgs .gt_font_bold {
+#jdobzlmuhh .gt_font_bold {
   font-weight: bold;
 }
 
-#rxopqwewgs .gt_font_italic {
+#jdobzlmuhh .gt_font_italic {
   font-style: italic;
 }
 
-#rxopqwewgs .gt_super {
+#jdobzlmuhh .gt_super {
   font-size: 65%;
 }
 
-#rxopqwewgs .gt_footnote_marks {
+#jdobzlmuhh .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="rxopqwewgs" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="jdobzlmuhh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="2" class="gt_heading gt_title gt_font_normal" style="background-color: rgba(0,191,255,0.5);">Temas más populares entre los candidatos</th>
@@ -485,61 +571,65 @@ head(temas_populares, 10) %&gt;%
   </thead>
   <thead class="gt_col_headings">
     <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">f</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">n</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Tema</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Cantidad de tuits</th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
     <tr>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">agropecuario</td>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">30</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2460</td>
     </tr>
     <tr>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">alumbrado</td>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">10</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">educación</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">277</td>
     </tr>
     <tr>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">ambiente</td>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">16</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">obra_pública</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">258</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">electoral</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">196</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">vivienda</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">174</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">salud</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">164</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">gobierno_abierto</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">142</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">seguridad</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">113</td>
     </tr>
     <tr>
       <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">caminos</td>
       <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">112</td>
     </tr>
     <tr>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">catástrofes_naturales</td>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">9</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">competitividad</td>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">3</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">coparticipación</td>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">5</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">corrupción</td>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">48</td>
-    </tr>
-    <tr>
       <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">cultura</td>
       <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">112</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">ddhh</td>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">69</td>
     </tr>
   </tbody>
   
   
 </table></div>
+<p>Sigamos con algunos cálculos más relevantes a nuestros fines. Dada la anterior advertencia, y el origen de nuestros datos, encontramos más provechoso trabajar con los <em>tuits</em> antes que con las palabras dispersas.</p>
+<p>Reuniremos otra vez las palabras en tutis, entonces, e identificaremos a qué temas fue asignado cada tuit con base en sus palabras.</p>
 <pre class="r"><code># cantidad de temas por tuit
+
 ntemas_tweets &lt;- temas_palabras_match_tokens_long %&gt;% 
   dplyr::count(tweet_id, temas) %&gt;% 
   dplyr::mutate( tweet_id = as.factor(tweet_id))
 
 # unimos con base de datos
+
 cantidad_temas_tuit &lt;- left_join(joined_candidatos %&gt;% 
                                    filter(Campaña == 1 ) %&gt;% 
                                    dplyr::mutate(tweet_id = as.factor(tweet_id)),
@@ -548,6 +638,7 @@ cantidad_temas_tuit &lt;- left_join(joined_candidatos %&gt;%
   select(tweet_id, screen_name, text, n) %&gt;%
   mutate_if(is.numeric, funs(ifelse(is.na(.), 0, .))) %&gt;% 
   dplyr::rename(cantidad_temas_tuit = &quot;n&quot;)</code></pre>
+<p>Cabe la posibilidad de que un único tuit haya sido asignado a más de un tema. Calculamos esto en el último tramo del código recién expuesto. Abajo exponemos el tuit asignado a más temas de nuestra base de datos.</p>
 <pre class="r"><code># ejemplo tuit con muchos temas
 
 ejemplo2 &lt;- cantidad_temas_tuit  %&gt;%  
@@ -557,6 +648,8 @@ ejemplo2 &lt;- cantidad_temas_tuit  %&gt;%
 twitterwidget(as.character(ejemplo2$tweet_id))</code></pre>
 <div id="htmlwidget-2" style="width:672px;height:480px;" class="twitterwidget html-widget"></div>
 <script type="application/json" data-for="htmlwidget-2">{"x":{"twid":"1186080446809067520","pars":null},"evals":[],"jsHooks":[]}</script>
+<p>Este tuit fue asignado a 7 temas: desocupación, obra pública, vivienda, deuda, educación, salud y seguridad. ¿No está tan errado, no?</p>
+<p>Veamos, en el agregado de nuestra base, a cuántos temas fue asignado cada tuit.</p>
 <pre class="r"><code># histograma descriptivo / cantidad de temas por tuit
 
 plot_cantidad_temas_tuit &lt;- cantidad_temas_tuit %&gt;% 
@@ -564,15 +657,20 @@ plot_cantidad_temas_tuit &lt;- cantidad_temas_tuit %&gt;%
   geom_bar(fill = &quot;#0F92DA&quot;) +
   theme_clean() +
   labs(x = &quot;Cantidad de temas por tuit&quot;,
-       y = &quot;Cantidad de tuits asignados&quot;)</code></pre>
-<p>Para trabajar en lo que sigue nos quedaremos con los tuits que fueron asignados a un único tema.</p>
+       y = &quot;Cantidad de tuits asignados&quot;)
+
+plot_cantidad_temas_tuit</code></pre>
+<p><img src="index_files/figure-html/temas_tuit-1.png" width="672" /></p>
+<p>En el gráfico emerge una de las principales debilidades de este abordaje: un gran número de tuits no fue asignado a ningún tema. Hay margen para perfeccionar el desempeño de estos cálculos en el futuro.</p>
+<p>En cualquier caso, para trabajar en lo que sigue nos quedaremos con los tuits que fueron asignados a un único tema. Hemos pasado de las palabras, a los tuits. Ahora, haremos el salto hacia los emisores, y algunas de las características que los definen.</p>
 <pre class="r"><code>tuits_con_unico_tema &lt;- ncoincidencias_tema_tweets  %&gt;% 
   dplyr::mutate(tweet_id = as.factor(tweet_id)) %&gt;% 
   left_join(cantidad_temas_tuit) %&gt;% 
   filter(cantidad_temas_tuit == 1 )
 
 temas_en_tuits_con_unico_tema &lt;- fct_count(tuits_con_unico_tema$temas)</code></pre>
-<p>Ya estamos en condiciones de evaluar similitudes y diferencias entre los candidatos. Vamos a ensayar algunos ejercicios visuales.</p>
+<p>Con esta base, podremos evaluar fácilmente algunas similitudes y diferencias entre los candidatos. Vamos a ensayar algunos ejercicios visuales.</p>
+<p>En primer lugar, identificamos cuántos tuits en relación a cada tema emitió cada candidato. Se trata de una cuenta en términos absolutos.</p>
 <pre class="r"><code># temas preferidos por candidato
 
 # cuenta absoluta
@@ -591,6 +689,7 @@ plot_temas_candidatos_absolutos &lt;- temas_candidatos_absolutos %&gt;%
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
         legend.position = &quot;none&quot;) +
   labs(x = &quot;&quot;, y = &quot;&quot;)</code></pre>
+<p>En el gráfico a continuación, la cantidad de tuits emitidos por cada candidato sobre cada tema está dado por el tamaño del círculo :black_circle:.</p>
 <pre class="r"><code>plot_temas_candidatos_absolutos</code></pre>
 <p><img src="index_files/figure-html/plot_temas_candidatos_absolutos-1.png" width="672" /></p>
 <p>Quizás sea más claro graficar y calcular el peso relativo de cada tema para cada candidato. Lo hacemos a partir del código a continuación.</p>
@@ -624,9 +723,11 @@ plot_temas_candidatos_relativos &lt;- temas_candidatos_relativos %&gt;%
        subtitle = &quot;por candidato&quot;,
        x = &quot;&quot;,
        y = &quot;%&quot;)</code></pre>
+<p>En el gráfico que sigue, chequeamos qué proporción de los tuits emitidos por cada candidato corresponde a cada tema, según nuestras estimaciones. El “espacio en blanco” arriba de las barras indica cuántos tuits de los emitidos por cada candidato no fueron asignados a ninguna temática en particular.</p>
 <pre class="r"><code>plot_temas_candidatos_relativos</code></pre>
-<p><img src="index_files/figure-html/plot%20temas%20relativos-1.png" width="672" />
-Además podemos inspeccionar qué palabras para cada tema fueron las preferidas. Vamos con uno de los temas más referidos, vivienda.</p>
+<p><img src="index_files/figure-html/plot%20temas%20relativos-1.png" width="672" /></p>
+<p>Finalmente, un último ejercicio que puede resultar interesante consiste en identificar, de la lista de términos previamente provista, cuáles fueron las palabras más mencionadas por tema.</p>
+<p>Ensayamos el siguiente gráfico para la temática “vivienda”, una de las más mencionadas por nuestros candidatos.</p>
 <pre class="r"><code># y de hacer matches por palabras
 # hacemos para tema vivienda
 
@@ -641,11 +742,187 @@ plot_matches_vivienda &lt;- ggplot(matches_vivienda_paralell,
                    aes(x, id = id, split = y, value = n)) + #  INICIA GRAFICO
   geom_parallel_sets(aes(fill = screen_name), alpha = 0.7, axis.width = 0.1, show.legend = FALSE) +
   theme_minimal() +
-  geom_parallel_sets_axes(axis.width = 0.1, color = &quot;black&quot;, fill = &quot;gray20&quot;) +
-  geom_parallel_sets_labels(colour = &#39;white&#39;, angle= 0) +
+  geom_parallel_sets_axes(axis.width = 0.1, color = &quot;lightgray&quot;, fill = &quot;white&quot;) +
+  geom_parallel_sets_labels(colour = &#39;black&#39;, angle= 0) +
   theme_no_axes() +
-  theme(panel.background = element_rect(fill = &quot;gray20&quot;))</code></pre>
-<p>Veamos los resultados</p>
+  theme(panel.background = element_rect(fill = &quot;white&quot;, colour = &quot;white&quot;))</code></pre>
+<p>En la representación visual que sigue, observamos algunas diferencias relevantes. Por ejemplo, dentro de este tópico, M. Lammens, candidato porteño, habla más sobre los “alquileres”, mientras que candidatos de provincias del interior versan más sobre las “villas”. La diferencia puede ser indicativa de la estructura demográfica de cada distirito, y/o de la agenda de políticas en discusión durante la campaña.</p>
 <pre class="r"><code>plot_matches_vivienda</code></pre>
 <p><img src="index_files/figure-html/plot%20force-1.png" width="672" /></p>
+<p>Sería interesante repetir la tarea para otros asuntos. Pero, por ahora, consideramos que hemos exprimido suficientemente esta estrategica. Además, hemos hecho hincapié en sus múltiples debilidades. Ensayemos otra técnica.</p>
+</div>
+<div id="hash-2-topic-modelling" class="section level2">
+<h2>:hash: 2: Topic modelling</h2>
+<p>Dadas las mentadas limitaciones del primer abordaje propuesto, hemos ensayado propuestas menos “supervisadas”.</p>
+<p>Nuestro segundo intento por rastrear áreas o asuntos a los que refieren nuestros candidatos consiste en el modelado de tópicos o <em>topic modelling</em>, un método para la calsificación no supervisada de “documentos”.</p>
+<p>Siguiendo la propuesta contenida en <a href="https://www.tidytextmining.com/topicmodeling.html#by-word-assignments-augment">“Text Mining with R. A tidy aproach”</a>, en esta sección aplicaremos el algoritmo LDA (<em>Latent Dirichlet allocation</em>) a nuestros datos.</p>
+<blockquote>
+<p><em>“Latent Dirichlet allocation (LDA) es un método de ajuste de modelos de tópicos particularmente popular. Trata a cada documento como un mix de tópicos, y cada tópico como un mix de palabras. Esto permite que los documentos se”superpongan" en términos de contenido, en lugar de ser separados en grupos discretos (excluyentes), de manera que imita el uso típico del lenguaje natural."</em> <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+</blockquote>
+<p>En nuestro caso, trataremos a cada tuit individual como un “documento”. <a href="https://github.com/CVFH/Tuits_arg_2019/blob/master/exploracion_discursos.R">En este script</a> experimentamos con diversas alternativas para el cómputo del algoritmo seleccionado. Aquí exponemos la opción que hallamos más convincente.</p>
+<p>Esta consta de dos decisiones de importancia.</p>
+<ol style="list-style-type: decimal">
+<li>Una vez más, para las estimaciones de nuestro interés, requerimos descomponer a cada tuit en sus términos constitutivos. En esta oportunidad hemos escogido separar a los tuits en “bigramas”, unidades de dos palabras.</li>
+<li>Debimos escoger la cantidad de tópicos que suponemos que subyacen a nuestros datos (el parámetro “k” en el código de abajo). Tras varios intentos, consideramos que con 8 tópicos obteníamos algunos resultados interesantes.</li>
+</ol>
+<p>Nuestras elecciones han sido abiertamente arbitrarias. A futuro, otras implementaciones podrán proceder de manera más criteriosa o teóricamente fundada.</p>
+<p>Exponemos enseguida el código utilizado para el análisis:</p>
+<pre class="r"><code># Topic modeling ######
+# con 8 temas y bigramas
+
+# preparando datos
+# LDA trabaja con estructura de matriz 
+
+candidatos_tokens_dtm &lt;- joined_candidatos %&gt;% 
+  tokenizarTextoTuits(tipo_token = &quot;ngrams&quot;) %&gt;% 
+  limpiarTokens(bigramas = TRUE, palabras_web = TRUE, hashtags = TRUE, mentions = TRUE) %&gt;% 
+  subset(!str_detect(tokens, &quot;NA NA&quot;)) %&gt;% 
+  dplyr::count(tweet_id, tokens) %&gt;%
+  cast_dtm(tweet_id, tokens, n)
+
+# aplicamos algoritmo
+
+candidatos_tokens_LDA &lt;- LDA(candidatos_tokens_dtm, k = 8, control = list(seed = 1234))</code></pre>
+<p>Tras estas líneas, ya podemos experimentar con los resutlados obtenidos.</p>
+<p>La primera tarea consiste en intentar categorizar qué temas ha identificado nuestro algoritmo.</p>
+<p>Para ello, contrastamos las “beta” asignadas a cada bigrama: la medida en que cada par de términos está asociada a uno de los 8 “temas”. Viendo cuáles son los bigramas más fuertemente vinculados a un tema, podemos tratar de deducir de qué va el asunto.</p>
+<pre class="r"><code>#per-topic-per-word probabilities
+
+candidatos_tokens_topics &lt;- tidy(candidatos_tokens_LDA, matrix = &quot;beta&quot;)
+
+# nos quedamos con los términos principales
+
+candidatos_tokens_topics_top_terms &lt;- candidatos_tokens_topics %&gt;%
+  group_by(topic) %&gt;%
+  top_n(15, beta) %&gt;%
+  ungroup() %&gt;%
+  arrange(topic, -beta) 
+
+# graficamos
+
+plot_topics_terminos &lt;- candidatos_tokens_topics_top_terms  %&gt;%
+  mutate(term = reorder_within(term, beta, topic)) %&gt;%
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = &quot;free&quot;, ncol = 4) +
+  scale_y_reordered() +
+  theme_clean() +
+  theme(strip.text = element_text(size = 7),
+        axis.text.y = element_text(size = 7, hjust = 0.8),
+        axis.text.x = element_blank())  +
+  labs(title = &quot;Términos por temas&quot;,
+       subtitle = &quot;Palabras más probablemente pertenecientes a un mismo tópico&quot;,
+       x = &quot;beta&quot;,
+       y = &quot;&quot;)
+
+plot_topics_terminos</code></pre>
+<p><img src="index_files/figure-html/topics%20palabras-1.png" width="672" /></p>
+<p>Nuestros resultados no son grandiosos, pero nos permiten alguna que otra reflexión interesante. Por ejemplo, la educación parece ser un tema en sí mismo, de acuerdo con este algoritmo (5); parecería que también el “desarrollo” (6) y la seguridad social en un sentido amplio (4)y, más genéricamente, “el futuro” (2).</p>
+<p>De todos modos, muchas palabras son o muy poco o demasiado específicas. Destacan sobre todo los nombres propios de lugares. Pueden estar ocurriendo dos cosas: o bien los “temas” hacen a la idiosincracia de cada lugar, o bien esta última enmascara otras similitudes.</p>
+<p>Futuras estimaciones podrán perfeccionar la aplicación de este algoritmo. De todos modos, juguemos un poco más de momento.</p>
+<p>Una segunda tarea consiste en ver la probabilidad de que cada documento (recuérdese: cada tuit) pertenezca a cada uno de los 8 temas. Esto indica el coeficiente “gamma”.</p>
+<p>Cada documento posee 8 “gammas”, uno para cada tema. Nosotros nos quedamos con el mayor de ellos, suponiendo que indica el tema al que pertenece el tuit en cuestión.</p>
+<pre class="r"><code># per-document-per-topic probabilities,  γ (“gamma”).
+
+candidatos_tuits_topics &lt;- tidy(candidatos_tokens_LDA, matrix = &quot;gamma&quot;) %&gt;% 
+  dplyr::rename(tweet_id = &quot;document&quot;) %&gt;% 
+  left_join(joined_candidatos %&gt;% dplyr::mutate(tweet_id = as.character(tweet_id) )) %&gt;% 
+  select(tweet_id, topic, gamma, screen_name, fav_count, rts, created_at)
+
+# nos quedamos con el mayor gamma
+
+candidatos_tuits_topics_top &lt;- candidatos_tuits_topics %&gt;% 
+  group_by(tweet_id) %&gt;% 
+  dplyr::summarise(gamma = max(gamma)) %&gt;% 
+  left_join(candidatos_tuits_topics) %&gt;% 
+  left_join(datos_base)</code></pre>
+<p>Ahora tenemos una base cuyas observaciones son tuits, y cada uno está asociado con cierto grado de probabilidad (gamma) a un tema. Con esto, podemos visualizar de manera agregada nuestros datos.</p>
+<p>Veamos primero cuántos tuits por tema emitió cada candidato. Emergen algunas diferencias. Por ejemplo, A. Rodríguez Saá refiere mucho a los temas (1) y (2); A. Bonfatti, al (6); N. del Caño, al (5); C. Poggi al (5) y al (7). Nos excede extendernos en la interpretación de estas diferencias, cuestión acerca de la que no descartamos explayarnos en el futuro.</p>
+<pre class="r"><code>#graficando.
+
+#agrupados por  screen name 
+candidatos_tuits_topics_top_grouped_sname &lt;- candidatos_tuits_topics_top %&gt;% 
+  dplyr::count(screen_name, topic)
+
+plot_topics_candidatos  &lt;- candidatos_tuits_topics_top_grouped_sname %&gt;% 
+  ggplot(aes(topic, n, colour= screen_name)) +
+  geom_point()  +
+  facet_wrap(~ screen_name, ncol = 3) +
+  theme_minimal() +
+  theme(legend.position = &quot;none&quot;) +
+  labs(title= &quot;Temas preferidos por los candidatos&quot;,
+       subtitle = &quot;Medidos a partir de cantidad de tuits emitidos por candidato que probablemente están asociados a un tema&quot;,
+       x = &quot;Cantidad de tuits&quot;,
+       &quot;Tópicos&quot;)
+
+plot_topics_candidatos </code></pre>
+<p><img src="index_files/figure-html/topics%20plot%20sname-1.png" width="672" /></p>
+<p>Otra posibilidad consiste en inspeccionar ocularmente cuántos tuits por tema fueron emitidos por los candidatos a Gobernador versus los candidatos a la Presidencia. Para este cálculo utilizamos una medida relativa: qué proporción del total de tutis emitidos por los candidatos a uno y otro cargo corresponden a cada uno de los 8 temas.</p>
+<pre class="r"><code>#agrupados por cargo 
+
+# calculamos proporcionalmente
+tutis_totales_cargo &lt;- joined_candidatos %&gt;% 
+  filter(Campaña==1) %&gt;% 
+  dplyr::count(Cargo) %&gt;% 
+  dplyr::rename(tuits_totales_cargo = &quot;n&quot;)
+
+candidatos_tuits_topics_top_grouped_cargo &lt;- candidatos_tuits_topics_top %&gt;% 
+  dplyr::count(Cargo, topic) %&gt;% 
+    left_join(tutis_totales_cargo) %&gt;% 
+    dplyr::mutate(proporcion_tuits_topic_cargo = n/tuits_totales_cargo *100)
+
+plot_topics_cargo &lt;- candidatos_tuits_topics_top_grouped_cargo %&gt;% 
+  ggplot(aes(topic, proporcion_tuits_topic_cargo, colour= Cargo)) +
+  geom_point(size = 3) +
+  theme_minimal() +
+  scale_x_continuous(breaks = seq(0, 8, 1)) +
+  labs(title= &quot;Temas preferidos por los candidatos&quot;,
+       subtitle = &quot;según la cartera a la que compiten&quot;,
+       x = &quot;Tópicos&quot;,
+       y = &quot;Cantidad de tuits&quot;,
+       colour = &quot;&quot;) +
+  theme(legend.position = &quot;bottom&quot;)
+
+plot_topics_cargo</code></pre>
+<p><img src="index_files/figure-html/topics%20plot%20cargo-1.png" width="672" /></p>
+<p>Hay algunos hallazgos interesantes. Mientras que en el tema (6), que decíamos parecía designar al “desarrollo”, no hay diferencias en la proporción de tuits que a este asunto destinan los candidatos a una u otra cartera, en otros se registra una atención dispar. Por ejemplo, los candidatos a Gobernador refieren más asiduamente que los candidatos a la Presidencia al tema (8). Inversamente, estos últimos se explayan proporcionalmente más en torno al tópico (3). De todos modos, las diferencias no son sustantivamente enormes.</p>
+<p>Repliquemos este ejercicio pero clasificando, ahora, a los tuits conforme al timing de la campaña (es decir, a si fueron emitidos durante una campaña “desdoblada” o “simultánea”).</p>
+<pre class="r"><code>#agrupados por tipo_fecha 
+
+tutis_totales_tfecha &lt;- joined_candidatos %&gt;% 
+  filter(Campaña==1) %&gt;% 
+  dplyr::count(tipo_fecha) %&gt;% 
+  dplyr::rename(tuits_totales_tfecha = &quot;n&quot;)
+
+candidatos_tuits_topics_top_grouped_tfecha &lt;- candidatos_tuits_topics_top %&gt;% 
+  dplyr::count(tipo_fecha, topic) %&gt;% 
+  left_join(tutis_totales_tfecha) %&gt;% 
+  dplyr::mutate(proporcion_tuits_topic_tfecha = n/tuits_totales_tfecha*100 )
+
+plot_topics_tfecha &lt;- candidatos_tuits_topics_top_grouped_tfecha %&gt;% 
+  ggplot(aes(topic, proporcion_tuits_topic_tfecha, colour= tipo_fecha)) +
+  geom_point(size = 3) +
+  theme_minimal() +
+  scale_x_continuous(breaks = seq(0, 8, 1)) +
+  labs(title= &quot;Temas preferidos por los candidatos&quot;,
+       subtitle = &quot;según el calendario electoral&quot;,
+       x = &quot;Tópicos&quot;,
+       y = &quot;Cantidad de tuits&quot;,
+       colour = &quot;&quot;) +
+  theme(legend.position = &quot;bottom&quot;)
+
+plot_topics_tfecha</code></pre>
+<p><img src="index_files/figure-html/topics%20plot%20tfecha-1.png" width="672" /></p>
+<p>Aquí hay muchos tópicos que parecen consignar una atención proporcionalmente homogénea: sobre todo, el (2) y el (4); en menor medida, el (1), el (5) y el (6). Sí son mas notorias las diferencias entre los asuntos (3), más referido en las elecciones “simutláneas” y (7), más atendido en las desdobladas.</p>
+<p>La técnica de topic modelling parece prometedora, pero nuestra aplicación claramente deja bastante que desear. Esperamos a futuro refinar nuestro manejo de este algoritmo, a los fines de identificar de manera menos arbitraria los “temas” sobre los que versan los tuits de nuestros candidatos.</p>
+</div>
+<div id="hash-3-análisis-fallido-de-componentes-principales" class="section level2">
+<h2>:hash: 3 : Análisis (fallido?) de componentes principales</h2>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Nótese que la base, definida previamente, contiene términos que serán inutilizados, ya que trabajaremos con palabras únicas.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p><a href="https://www.tidytextmining.com/topicmodeling.html#by-word-assignments-augment">La cita proviene del libro referido</a>. La traducción es propia.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
