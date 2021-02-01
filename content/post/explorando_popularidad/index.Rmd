@@ -66,7 +66,7 @@ votos_presid <- traerDatosElectorales("presid")
 
 ## Análisis
 
-### Medidas de la popularidad en Twitter. 
+### Medidas de la popularidad en Twitter.
 
 Primero vamos a calcular algunas medidas de la "popularidad" de nuestros candidatos en Twitter: los rts y favs obtenidos, en promedio y en total. 
 
@@ -140,7 +140,8 @@ gobernadores_rtspromedio_porcentaje <-  plotPointText(gobernadores_popu_ranking,
            Porcentaje, 
            colour = Distrito), 
        aes(label = screen_name)) %>% 
-  formatPlot(plottitle = "a Gobernador", xlabel = "", ylabel = "") 
+  formatPlot(plottitle = "a Gobernador", xlabel = "", ylabel = "") + 
+  theme(panel.background = element_rect(colour = "white", fill = "white"))
 
 # Presidente
 
@@ -153,7 +154,8 @@ presid_rtspromedio_porcentaje <- plotPointText(presid_popu_ranking,
        aes(label = screen_name)) %>%  
     formatPlot(plottitle = "a Presidente", 
          xlabel = "Rts obtenidos promedio", 
-         ylabel = "% de votos obtenidos")
+         ylabel = "% de votos obtenidos") + 
+  theme(panel.background = element_rect(colour = "white", fill = "white"))
 
 
 # TODOS LOS CANDIDATOS
@@ -175,7 +177,8 @@ candidatos_rts_votos <- plotPoint(candidatos_popu_ranking,
   theme_clean()  + 
       labs(title = " ", 
          x = "Log de rts totales obtenidos", 
-         y = "Log de votos obtenidos")
+         y = "Log de votos obtenidos") + 
+  theme(panel.background = element_rect(colour = "white", fill = "white"))
 
 candidatos_rtspromedio_votos <- plotPoint(candidatos_popu_ranking, 
                                aes(Votos,
@@ -183,7 +186,8 @@ candidatos_rtspromedio_votos <- plotPoint(candidatos_popu_ranking,
                                    colour= Distrito)) %>% 
   formatPlot(plottitle = "", 
              xlabel = "Rts obtenidos promedio",
-             ylabel = "Votos obtenidos")
+             ylabel = "Votos obtenidos") + 
+  theme(panel.background = element_rect(colour = "white", fill = "white"))
 
 # Twitter con twitter: relaciones entre cantidad de tuits emitidos y votos obtenidos
 
@@ -232,7 +236,7 @@ Desde luego, esto es esperable: las provincias tienen poblaciones de tamaños mu
 desempeño_totcandidatos
 ```
 
-Parece haber un vínculo positivo entre el desempeño en la red social y en las urnas. Sin embargo, también puede que sea bastante débil: la diagonal está dada, en buena medida, por el diferente tamaño de los distritos. Así, los dos primeros candidatos a nivel nacional y el #1 y la #2 de la Provincia de Buenos Aires son los que mas rts obtuvieron. Pero dentro de cada distrito, los candidatos de Cambiemos se ubican debajo de la recta de ajuste entre rts y votos obtenidos, mientras que los del Frente de Todxs se posicionan algo por encima. 
+Parece haber un vínculo positivo entre el desempeño en la red social y en las urnas. Sin embargo, también puede que sea bastante débil: la diagonal está dada, en buena medida, por el diferente tamaño de los distritos. Así, los dos primeros candidatos a nivel nacional y el :hash: 1 y la :hash: 2 de la Provincia de Buenos Aires son los que mas rts obtuvieron. Pero dentro de cada distrito, los candidatos de Cambiemos se ubican debajo de la recta de ajuste entre rts y votos obtenidos, mientras que los del Frente de Todxs se posicionan algo por encima. 
 
 En cualquier caso, también es cierto que el resto de los candidatos a la presidencia obtuvo rts más o menos proporcionales a sus resultados electorales.
 

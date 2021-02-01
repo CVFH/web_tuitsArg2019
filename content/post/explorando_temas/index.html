@@ -66,8 +66,8 @@ joined_candidatos &lt;- traerDatosTuits(&quot;tot&quot;) %&gt;%
 <p>Ahora sí, pasemos a consignar nuestros intentos.</p>
 </div>
 </div>
-<div id="hash-1-rastreo-manual-de-temas-por-palabras" class="section level2">
-<h2>:hash: 1: Rastreo manual de temas por palabras</h2>
+<div id="rastreo-manual-de-temas-por-palabras" class="section level2">
+<h2>1: Rastreo manual de temas por palabras</h2>
 <p>Una primera forma de rastrear <em>acerca de qué</em> se han pronunciado nuestros emisores es identificar “palabras clave” que podemos presumir asociadas a un determinado asunto.</p>
 <p>Ahora bien, determinar qué palabras corresponden a qué temas no es tarea fácil. Trazar límites entre cuestiones implica encorsetar un objeto fluido, creativo y ambiguo como el lenguaje en categorías estancas y, en nuestro caso, abiertamente arbitrarias, ya que para este ejercicio hemos optado por definirlas <em>a priori</em>.</p>
 <p>En breve, utilizaremos una “lista de palabras” que consideramos usualmente asociadas a “temas”, y veremos qué tanto coinciden o no los tuits de los candidatos con las palabras de esta lista y, por ende, con los asuntos o problemáticas previamente identificadas.</p>
@@ -204,7 +204,8 @@ twitterwidget(as.character(ejemplo1$tweet_id))</code></pre>
 
 temas_populares &lt;- fct_count(ncoincidencias_tema_tweets$temas) %&gt;% 
   arrange(desc(n)) %&gt;% 
-  dplyr::rename(Tema = &quot;f&quot;, &quot;Cantidad de tuits&quot; = &quot;n&quot;)
+  dplyr::rename(Tema = &quot;f&quot;, &quot;Cantidad de tuits&quot; = &quot;n&quot;) %&gt;% 
+  na.omit()
 
 head(temas_populares, 10) %&gt;% 
   gt::gt() %&gt;% 
@@ -228,7 +229,7 @@ head(temas_populares, 10) %&gt;%
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#jdobzlmuhh .gt_table {
+#lnkdcqeobm .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -253,7 +254,7 @@ head(temas_populares, 10) %&gt;%
   border-left-color: #D3D3D3;
 }
 
-#jdobzlmuhh .gt_heading {
+#lnkdcqeobm .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -265,7 +266,7 @@ head(temas_populares, 10) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#jdobzlmuhh .gt_title {
+#lnkdcqeobm .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -275,7 +276,7 @@ head(temas_populares, 10) %&gt;%
   border-bottom-width: 0;
 }
 
-#jdobzlmuhh .gt_subtitle {
+#lnkdcqeobm .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -285,13 +286,13 @@ head(temas_populares, 10) %&gt;%
   border-top-width: 0;
 }
 
-#jdobzlmuhh .gt_bottom_border {
+#lnkdcqeobm .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jdobzlmuhh .gt_col_headings {
+#lnkdcqeobm .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -306,7 +307,7 @@ head(temas_populares, 10) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#jdobzlmuhh .gt_col_heading {
+#lnkdcqeobm .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -326,7 +327,7 @@ head(temas_populares, 10) %&gt;%
   overflow-x: hidden;
 }
 
-#jdobzlmuhh .gt_column_spanner_outer {
+#lnkdcqeobm .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -338,15 +339,15 @@ head(temas_populares, 10) %&gt;%
   padding-right: 4px;
 }
 
-#jdobzlmuhh .gt_column_spanner_outer:first-child {
+#lnkdcqeobm .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jdobzlmuhh .gt_column_spanner_outer:last-child {
+#lnkdcqeobm .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jdobzlmuhh .gt_column_spanner {
+#lnkdcqeobm .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -358,7 +359,7 @@ head(temas_populares, 10) %&gt;%
   width: 100%;
 }
 
-#jdobzlmuhh .gt_group_heading {
+#lnkdcqeobm .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -380,7 +381,7 @@ head(temas_populares, 10) %&gt;%
   vertical-align: middle;
 }
 
-#jdobzlmuhh .gt_empty_group_heading {
+#lnkdcqeobm .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -395,15 +396,15 @@ head(temas_populares, 10) %&gt;%
   vertical-align: middle;
 }
 
-#jdobzlmuhh .gt_from_md > :first-child {
+#lnkdcqeobm .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jdobzlmuhh .gt_from_md > :last-child {
+#lnkdcqeobm .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jdobzlmuhh .gt_row {
+#lnkdcqeobm .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -422,7 +423,7 @@ head(temas_populares, 10) %&gt;%
   overflow-x: hidden;
 }
 
-#jdobzlmuhh .gt_stub {
+#lnkdcqeobm .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -434,7 +435,7 @@ head(temas_populares, 10) %&gt;%
   padding-left: 12px;
 }
 
-#jdobzlmuhh .gt_summary_row {
+#lnkdcqeobm .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -444,7 +445,7 @@ head(temas_populares, 10) %&gt;%
   padding-right: 5px;
 }
 
-#jdobzlmuhh .gt_first_summary_row {
+#lnkdcqeobm .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -454,7 +455,7 @@ head(temas_populares, 10) %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#jdobzlmuhh .gt_grand_summary_row {
+#lnkdcqeobm .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -464,7 +465,7 @@ head(temas_populares, 10) %&gt;%
   padding-right: 5px;
 }
 
-#jdobzlmuhh .gt_first_grand_summary_row {
+#lnkdcqeobm .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -474,11 +475,11 @@ head(temas_populares, 10) %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#jdobzlmuhh .gt_striped {
+#lnkdcqeobm .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jdobzlmuhh .gt_table_body {
+#lnkdcqeobm .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -487,7 +488,7 @@ head(temas_populares, 10) %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#jdobzlmuhh .gt_footnotes {
+#lnkdcqeobm .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -501,13 +502,13 @@ head(temas_populares, 10) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#jdobzlmuhh .gt_footnote {
+#lnkdcqeobm .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#jdobzlmuhh .gt_sourcenotes {
+#lnkdcqeobm .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -521,46 +522,46 @@ head(temas_populares, 10) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#jdobzlmuhh .gt_sourcenote {
+#lnkdcqeobm .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#jdobzlmuhh .gt_left {
+#lnkdcqeobm .gt_left {
   text-align: left;
 }
 
-#jdobzlmuhh .gt_center {
+#lnkdcqeobm .gt_center {
   text-align: center;
 }
 
-#jdobzlmuhh .gt_right {
+#lnkdcqeobm .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jdobzlmuhh .gt_font_normal {
+#lnkdcqeobm .gt_font_normal {
   font-weight: normal;
 }
 
-#jdobzlmuhh .gt_font_bold {
+#lnkdcqeobm .gt_font_bold {
   font-weight: bold;
 }
 
-#jdobzlmuhh .gt_font_italic {
+#lnkdcqeobm .gt_font_italic {
   font-style: italic;
 }
 
-#jdobzlmuhh .gt_super {
+#lnkdcqeobm .gt_super {
   font-size: 65%;
 }
 
-#jdobzlmuhh .gt_footnote_marks {
+#lnkdcqeobm .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="jdobzlmuhh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="lnkdcqeobm" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="2" class="gt_heading gt_title gt_font_normal" style="background-color: rgba(0,191,255,0.5);">Temas más populares entre los candidatos</th>
@@ -576,10 +577,6 @@ head(temas_populares, 10) %&gt;%
     </tr>
   </thead>
   <tbody class="gt_table_body">
-    <tr>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2460</td>
-    </tr>
     <tr>
       <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">educación</td>
       <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">277</td>
@@ -615,6 +612,10 @@ head(temas_populares, 10) %&gt;%
     <tr>
       <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">cultura</td>
       <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">112</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">deporte</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">88</td>
     </tr>
   </tbody>
   
@@ -657,7 +658,8 @@ plot_cantidad_temas_tuit &lt;- cantidad_temas_tuit %&gt;%
   geom_bar(fill = &quot;#0F92DA&quot;) +
   theme_clean() +
   labs(x = &quot;Cantidad de temas por tuit&quot;,
-       y = &quot;Cantidad de tuits asignados&quot;)
+       y = &quot;Cantidad de tuits asignados&quot;) +
+  scale_x_continuous(breaks = seq(0, 7, 1))
 
 plot_cantidad_temas_tuit</code></pre>
 <p><img src="index_files/figure-html/temas_tuit-1.png" width="672" /></p>
@@ -751,8 +753,8 @@ plot_matches_vivienda &lt;- ggplot(matches_vivienda_paralell,
 <p><img src="index_files/figure-html/plot%20force-1.png" width="672" /></p>
 <p>Sería interesante repetir la tarea para otros asuntos. Pero, por ahora, consideramos que hemos exprimido suficientemente esta estrategica. Además, hemos hecho hincapié en sus múltiples debilidades. Ensayemos otra técnica.</p>
 </div>
-<div id="hash-2-topic-modelling" class="section level2">
-<h2>:hash: 2: Topic modelling</h2>
+<div id="topic-modelling" class="section level2">
+<h2>2: Topic modelling</h2>
 <p>Dadas las mentadas limitaciones del primer abordaje propuesto, hemos ensayado propuestas menos “supervisadas”.</p>
 <p>Nuestro segundo intento por rastrear áreas o asuntos a los que refieren nuestros candidatos consiste en el modelado de tópicos o <em>topic modelling</em>, un método para la calsificación no supervisada de “documentos”.</p>
 <p>Siguiendo la propuesta contenida en <a href="https://www.tidytextmining.com/topicmodeling.html#by-word-assignments-augment">“Text Mining with R. A tidy aproach”</a>, en esta sección aplicaremos el algoritmo LDA (<em>Latent Dirichlet allocation</em>) a nuestros datos.</p>
@@ -879,7 +881,7 @@ plot_topics_cargo &lt;- candidatos_tuits_topics_top_grouped_cargo %&gt;%
   labs(title= &quot;Temas preferidos por los candidatos&quot;,
        subtitle = &quot;según la cartera a la que compiten&quot;,
        x = &quot;Tópicos&quot;,
-       y = &quot;Cantidad de tuits&quot;,
+       y = &quot;Proporción de tuits&quot;,
        colour = &quot;&quot;) +
   theme(legend.position = &quot;bottom&quot;)
 
@@ -907,22 +909,87 @@ plot_topics_tfecha &lt;- candidatos_tuits_topics_top_grouped_tfecha %&gt;%
   labs(title= &quot;Temas preferidos por los candidatos&quot;,
        subtitle = &quot;según el calendario electoral&quot;,
        x = &quot;Tópicos&quot;,
-       y = &quot;Cantidad de tuits&quot;,
+       y = &quot;Proporción de tuits&quot;,
        colour = &quot;&quot;) +
   theme(legend.position = &quot;bottom&quot;)
 
 plot_topics_tfecha</code></pre>
 <p><img src="index_files/figure-html/topics%20plot%20tfecha-1.png" width="672" /></p>
 <p>Aquí hay muchos tópicos que parecen consignar una atención proporcionalmente homogénea: sobre todo, el (2) y el (4); en menor medida, el (1), el (5) y el (6). Sí son mas notorias las diferencias entre los asuntos (3), más referido en las elecciones “simutláneas” y (7), más atendido en las desdobladas.</p>
-<p>La técnica de topic modelling parece prometedora, pero nuestra aplicación claramente deja bastante que desear. Esperamos a futuro refinar nuestro manejo de este algoritmo, a los fines de identificar de manera menos arbitraria los “temas” sobre los que versan los tuits de nuestros candidatos.</p>
+<p>La técnica de <em>topic modelling</em> parece prometedora, pero nuestra aplicación claramente deja bastante que desear. Esperamos a futuro refinar nuestro manejo de este algoritmo, a los fines de identificar de manera menos arbitraria los “temas” sobre los que versan los tuits de nuestros candidatos.</p>
 </div>
-<div id="hash-3-análisis-fallido-de-componentes-principales" class="section level2">
-<h2>:hash: 3 : Análisis (fallido?) de componentes principales</h2>
+<div id="análisis-fallido-de-componentes-principales" class="section level2">
+<h2>3 : Análisis (fallido?) de componentes principales</h2>
+<p>Una última estrategia que quisimos poner a prueba en la búsqueda de una respuesta a nuestras interrogantes consistió en el <em>análisis de componentes principales</em> (PCA por su sigla en inglés). La técnica ya ha sido empleada en la clasificación de documentos de texto en general, y de tuits en particular. ¿Por qué no inspeccionar nuestra muestra bajo esta lupa?</p>
+<p>Nuestros conocimientos en la materia son más que incipientes, pero, apoyándonos en trabajos previos<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>, nos las arreglamos para aplicar el comando <code>prcomp()</code> a nuestros datos e interpretar los resultados. Sin embargo, estos nos resultaron decepcionantes. Desconocemos si “somos nosotros o son ellos”: si la técnica resulta inadecuada a la estructura de nuestros datos, o si nuestra estimación ha sido poco sofisticada.</p>
+<p>En cualquier caso, como dicen que de los errores también se aprende, comentamos brevemente a nuestro lector las operaciones realizadas.</p>
+<p>En esta oportunidad no debimos incorporar ninguna medida <em>a priori</em> de cuáles o cuántos temas ocupaban a los tuiteos de nuestros candidatos. De manera similar al <em>topic modelling</em>, el <em>PCA</em> trabja sobre una matriz de documentos / términos, pero el cálculo que hicimos carecía de restricciones en términos de la “cantidad de temas” a buscar (<code>k</code> en el comando <code>LDA</code>).</p>
+<p>Sí nos enfrentamos, nuevamente, a la disyuntiva: ¿cuáles son nuestros “documentos”? ¿cada tuit o el discurso de los candidatos en Twitter tomado en su globalidad?</p>
+<p>Ensayamos estimaciones con ambas alternativas.</p>
+<p>Consideremos primero al discurso de cada emisor como un único documento.
+He aquí el código empleado, del que se sigue el gráfico a continuación:</p>
+<pre class="r"><code># preparamos datos en tokens tidy
+candidatos_tokentweets  &lt;- joined_candidatos %&gt;% 
+tokenizarTextoTuits(tipo_token = &quot;tweets&quot;) %&gt;%  
+left_join(datos_base)
+
+# preparamos matriz de datos 
+candidatos_tokentweet_dtm &lt;- candidatos_tokentweets %&gt;% 
+  limpiarTokens() %&gt;% 
+  dplyr::count(screen_name, tokens) %&gt;% 
+  cast_dtm(screen_name, tokens, n)
+
+# PCA
+
+# con este comando extrajimos los resultados:
+pca_res &lt;- prcomp(candidatos_tokentweet_dtm, scale=TRUE)
+
+# diversas medidas de resumen (no mostramos aquí)
+# summary(pca_res)
+# pca_res$x[1:5,1:3]
+# pca_res$center[1:5]
+# head(pca_res$scale^2, n=5)
+
+# cálculo de varianza explicada por cada componente
+
+var_explained &lt;- pca_res$sdev^2/sum(pca_res$sdev^2)
+# var_explained[1:5]
+
+# ploteamos resultados
+pca_res$x %&gt;% 
+  as.data.frame %&gt;%
+  rownames_to_column(&quot;screen_name&quot;) %&gt;%
+  ggplot(aes(x = PC1,y = PC2)) +  
+  # nos quedamos con los primeros dos componentes principales
+  geom_point(aes(color=screen_name),size = 4) +
+  geom_text(aes(label=screen_name)) +
+  labs(x=paste0(&quot;PC1: &quot;,round(var_explained[1]*100,1),&quot;%&quot;),
+       y=paste0(&quot;PC2: &quot;,round(var_explained[2]*100,1),&quot;%&quot;)) +
+  theme_clean() + 
+  theme(legend.position=&quot;none&quot;) </code></pre>
+<p><img src="index_files/figure-html/pca1-1.png" width="672" /></p>
+<p>El gráfico muestra la posición de nuestros documentos (los candidatos) respecto de los dos primeros componentes que resultaron de las estimaciones. ¿Qué ha ocurrido? Sencillamente, cada candidato en sí mismo explica un componente. Es decir, la variabilidad en nuestros datos estaría explicada por la idiosincrasia de cada uno de los documentos imputados en el cálculo.</p>
+<p>Veamos ahora qué ocurre si calificamos a cada tuit único como un documento único.
+Para proceder, haríamos algo como el código que sigue:</p>
+<pre class="r"><code>candidatos_tokentweet_dtmv2 &lt;- candidatos_tokentweets %&gt;% 
+  limpiarTokens() %&gt;% 
+  count(tweet_id, tokens) %&gt;% 
+  cast_dtm(tweet_id, tokens, n)
+
+# PCA
+pca_resv2 &lt;- prcomp(candidatos_tokentweet_dtmv2, scale=TRUE)</code></pre>
+<p>Pero… no lo hacemos: no pudimos procesar semejante matriz de datos :fire:.
+Intentamos varias estrategias de limpieza y reducción de la complejidad de nuestra base. En el “mejor” de los casos (¡la PC no se rompió! :trollface:), los resultados sugirieron que nuestros datos estaban organizados en torno a más de 300 componentes, que explicaban menos de un 1% de varianza cada uno.
+Claramente, el cálculo no es muy informativo acerca de si y cuáles “variables subyacentes” explican la variabilidad en nuestros datos.</p>
+<hr />
+<p>Hemos transitado un largo camino: partiendo de simples pero abundantes piezas de datos y de funciones, hemos tratado de asir qué tan populares y elocuentes, y qué relaciones y temas abordaron los candidatos a las elecciones de 2019 en la Argentina. Hemos intentado mantener un equilibrio entre la exposición del código y el relato de nuestras operaciones, poniendo en relieve algunos de los resultados alcanzados. Sin dudas, queda mucho por trabajar. Las últimas líneas de este último post son claro ejemplo de ello. Agradecemos la compañía de nuestro lector :clap:, y le invitamos a que haga críticas y devoluciones :pencil2: que nos perimtan seguir construyendo sobre este trabajo :raised_hands:.</p>
+<p>Volver al <a href="/">inicio :house:</a></p>
 </div>
 <div class="footnotes">
 <hr />
 <ol>
 <li id="fn1"><p>Nótese que la base, definida previamente, contiene términos que serán inutilizados, ya que trabajaremos con palabras únicas.<a href="#fnref1" class="footnote-back">↩</a></p></li>
 <li id="fn2"><p><a href="https://www.tidytextmining.com/topicmodeling.html#by-word-assignments-augment">La cita proviene del libro referido</a>. La traducción es propia.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p><a href="https://cmdlinetips.com/2019/04/introduction-to-pca-with-r-using-prcomp/">Esta entrada</a> fue particularmente útil, también agradecemos al <a href="https://www.tuqmano.com/">Tuq</a> por su asesoramiento.<a href="#fnref3" class="footnote-back">↩</a></p></li>
 </ol>
 </div>

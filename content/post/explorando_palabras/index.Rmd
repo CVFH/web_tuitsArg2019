@@ -77,10 +77,10 @@ Atendamos a la primera parte de nuestro interrogante. Algo interesante de ver es
 
 ```{r elocuencia, warning = FALSE, message = FALSE}
 linea_fecha <- ggplot(joined_candidatos %>%  
-                         filter(year(created_at) == 2019 ) %>% 
-                        # filtramos el año electoral
-                         arrange(tipo_fecha), 
-                       aes(x = date(created_at), fill = tipo_fecha)) +
+                        filter(year(created_at) == 2019 ) %>% 
+                        # filtramos el año electoral 
+                        arrange(tipo_fecha), 
+                      aes(x = date(created_at), fill = tipo_fecha)) +
   geom_histogram(position = "identity", bins = 24, alpha = 0.5)  +
   facet_wrap(~Cargo, ncol = 2) + 
   # vemos separadamente candidatos a presidente y a gobernador
@@ -89,10 +89,10 @@ linea_fecha <- ggplot(joined_candidatos %>%
         axis.text.x = element_text(angle = 90)) +
   scale_x_date(date_breaks = "1 month", date_labels = "%b") +
   labs(title = "Evolución de la emisión de tuits en el tiempo",
-         subtitle = "durante el 2019",
-         y = "cantidad de tuits emitidos",
-         x = "fecha",
-         fill = "")
+       subtitle = "durante el 2019",
+       y = "Cantidad de tuits emitidos",
+       x = "",
+       fill = "")
 
 linea_fecha
 ```
@@ -107,7 +107,7 @@ En adelante, buena parte de nuestro trabajo se basará en la descomposición de 
 
 Para operar las transformaciones necesarias, nos valemos de funciones definidas previamente, [tal como hemos explicado](../preparacion_funciones/). Apliquémoslas, entonces. 
 
-De manera provisoria, exploraremos diferentes opciones. Tenemos diferentes vías para arribar a los mismos resultados; hemos explorado con bases separadas para candidatos a gobernador y a presidente, y hemos aplicado a cada base diferentes tipos de _"tokenización"_. A continuación presentamos únicamente el código que da origen a las bases que utilizaremos después. 
+Tenemos diferentes vías para arribar a los mismos resultados; además, hemos ensayado análisis con bases separadas para candidatos a gobernador y a presidente, y hemos aplicado a cada base diferentes tipos de _"tokenización"_. A continuación presentamos únicamente el código que da origen a las bases que utilizaremos después.[^2] 
 
 ```{r tokenizando, warning = FALSE, message = FALSE}
 
@@ -135,7 +135,7 @@ candidatos_tokenizadas <- rbind(joined_gobernadores_tokenizadas,
 ```
 
 ¿Cómo se disponen nuestros datos ahora?
-Veamos un ejemplo
+Veamos un ejemplo:
 
 ```{r tokenizando ejemplo, warning = FALSE, message = FALSE}
 str(candidatos_tokenizadas)
@@ -143,7 +143,7 @@ str(candidatos_tokenizadas)
 
 > Nótese que la columna "tokens" contiene solamente términos individuales. Y que nuestro _data frame_ contiene "apenas"... 128.093 observaciones.
 
-Ya podemos seguir explorando :mag: . Para continuar con la pregunta que nos convocaba, _"¿cuánto hablan nuestros candidatos?"_, podemos diagramar la relación entre las palabras y los tuits emitidos. Graficamos separadamente los candidatos a presidente y a gobernador.
+Ya podemos seguir explorando :mag:. Para continuar con la pregunta que nos convocaba, _"¿cuánto hablan nuestros candidatos?"_, podemos diagramar la relación entre las palabras y los tuits emitidos. 
 
 ```{r palabras_tuits, warning = FALSE, message = FALSE, dpi = 100}
 
@@ -193,7 +193,7 @@ plot_promediopalabras_cantidadtuits <- plot_promediopalabras_cantidadtuits %>%
 plot_promediopalabras_cantidadtuits
 ```
 
-Vemos que hay candidatos que dijeron mucho en cada tuit, como Raúl Jalil, pero emitieron pocos tuits; otros, como A. R. Saa, emitieron muchos tuits pero fueron breves en cada uno de ellos (en promedio); finalmente, hay candidatos que hablaron muy poco, como A. Bogado, o mucho, como M. Macri, conforme a ambas medidas.
+Vemos que hay candidatos que dijeron mucho en cada tuit, como R. Jalil, pero emitieron pocos tuits; otros, como A. R. Saa, emitieron muchos tuits pero fueron breves en cada uno de ellos (en promedio); finalmente, hay candidatos que hablaron muy poco, como A. Bogado, o mucho, como M. Macri, conforme a ambas medidas.
 
 ### De la cantidad a la calidad
 
@@ -226,13 +226,13 @@ Como podríamos haber imaginado, los candidatos a gobernador utilizan más térm
 
 #### Términos distinguidos, o distinguidos por los términos
 
-Una medida comparativa interesante es el cálculo de _term frequency - inverse document frequency_ (o sencillamente **tf-idf**), que estima qué tan "particulares" son los términos utilizados por un hablante[^2].
+Una medida comparativa interesante es el cálculo de "_term frequency - inverse document frequency_" (o sencillamente **tf-idf**), que estima qué tan "particulares" son los términos utilizados por un hablante[^3].
 
-En [este script]() exploramos varias combinaciones de cálculos interesantes, pero elejimos a nuestros fines en este post mostramos las _palabras_ que mejor caracterizan a cada candidato a Gobernador, y los "términos de twitter" más propios de cada candidato a la presidencia. 
+Hemos jugado con distintas maneras de ejecutar este cálculo, que quedaron consignadas en [este script](https://github.com/CVFH/Tuits_arg_2019/blob/master/exploracion_discursos.R). Aquí hemos decidido mostrar las _palabras_ que mejor caracterizan a cada candidato a Gobernador, y los _"términos de twitter"_ más propios de cada candidato a la Presidencia (uno y otro tipo de "unidades textuales mínimas" son el resultado de dos procesos de "descomposición en tokens" ligeramente diferentes). 
 
 > Nótese que debimos limpiar las bases "tokenizadas". De no hacerlo, las palabras más propias de cada candidato eran los hashtagas de la propia campaña. Veremos cuáles son estos enseguida.
 
-> Nótese también que aquí estamos tratando **al conjunto de tuits** emitidos por los candidatos como un único "documento". Para otro tipo de cálculos, resulta más pertinente tomar a cada tuit único en calidad de documento independiente. 
+> Nótese también que aquí estamos tratando _al conjunto de tuits emitidos por los candidatos como un único "documento"_. Para otro tipo de cálculos, resulta más pertinente tomar a cada tuit único en calidad de documento independiente. 
 
 
 ```{r tf_idf, message = FALSE, warning = FALSE}
@@ -310,7 +310,7 @@ plot_presid_tfidf <- ggplot(sliced_presid_tfidf,
        subtitle = "a Presidente")
 ```
 
-Veamos los resultados para los candidatos a Gobernador
+Veamos los resultados para los candidatos a Gobernador:
 
 ```{r tf_idf gobernador, warning= FALSE}
 plot_gobs_tfidf_tokentweet
@@ -395,9 +395,9 @@ plot_presid_hashtags
 ```
 
 
-Hemos indagado visualmente en algunos de los términos más o menos utilizados por los candidatos.
+Hemos inspeccionado cuánto han hablado los condentientes en las elecciones de 2019 en la Argentina. También hemos indagado visualmente en qué términos han preferido nuestros candidatos y en qué :hash: emplearon con mayor entusiasmo. 
 
-Pero nos ha quedado pendiente uno de los "tipos" de palabras más importantes en Twitter: las menciones, esto es, cuando un _twittero_ utiliza el "@" para dirigirse o citar directamente a alguien. Estos nombres propios pueden decirnos algo acerca de las relaciones interpersonales entre nuestros candidatos. Por ello les hemos dedicado un post completo, que sugerimos leer a continuación.
+Ahora bien, hemos desatendido a uno de los "tipos" de palabras más importantes en Twitter: las menciones; esto es, los nombres de cuentas precedidas por un "@", que un _twittero_ utiliza para dirigirse o citar a un tercero. Estos nombres propios pueden decirnos algo acerca de las relaciones interpersonales entre nuestros candidatos. Por ello, les hemos dedicado un post completo, que sugerimos leer a continuación.
 
 :fast_forward: [Seguir leyendo](../explorando_relaciones/)
 
@@ -405,4 +405,5 @@ Volver [al inicio :house:](/)
 
 
 [^1]: Adicionalmente, como pueden ver en [este script](https://github.com/CVFH/Tuits_arg_2019/blob/master/exploracion_discursos.R) y [este gráfico](https://github.com/CVFH/Tuits_arg_2019/blob/master/images/ganadores_perdedores_ev_tiempo.png), nos preguntamos si había alguna diferencia en la evolución de los tuits emitidos para los "ganadores" y los "perdedores" en las elecciones. Imaginamos que la baja en la emisión de tuits después de los comicios podía ser signo de que los candidatos no electos "tiraron la toalla". Sin embargo, la inspección ocular desmiente, en principio, nuestras sospechas. Por otro lado, es interesante notar que los tuits emitidos por día no se corresponden con la cantidad de rts recibidos, como puede observarse al comparar el gráfico de arriba con [este otro](https://github.com/CVFH/Tuits_arg_2019/blob/master/images/rts_dia_2019.png). ¿Sorprendente? Para nada, recordemos que en la sección anterior vimos que una y otra medida no parecían ir de la mano. 
-[^2]: Para una explicación más completa, recomendamos la lectura de [este capítulo](https://www.tidytextmining.com/tfidf.html).
+[^2]: A los curiosos, invitamos a considerar [el script original](https://github.com/CVFH/Tuits_arg_2019/blob/master/exploracion_discursos.R), donde han quedado registradas las alternativas. 
+[^3]: Para una explicación más completa, recomendamos la lectura de [este capítulo](https://www.tidytextmining.com/tfidf.html).

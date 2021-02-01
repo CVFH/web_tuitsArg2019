@@ -68,10 +68,10 @@ joined_candidatos &lt;- joined_candidatos %&gt;%
 <h3>Elocuencia de los candidatos</h3>
 <p>Atendamos a la primera parte de nuestro interrogante. Algo interesante de ver es cómo evoluciona la emisión de tuits en el tiempo. Para eso, elaboramos el gráfico a continuación.</p>
 <pre class="r"><code>linea_fecha &lt;- ggplot(joined_candidatos %&gt;%  
-                         filter(year(created_at) == 2019 ) %&gt;% 
-                        # filtramos el año electoral
-                         arrange(tipo_fecha), 
-                       aes(x = date(created_at), fill = tipo_fecha)) +
+                        filter(year(created_at) == 2019 ) %&gt;% 
+                        # filtramos el año electoral 
+                        arrange(tipo_fecha), 
+                      aes(x = date(created_at), fill = tipo_fecha)) +
   geom_histogram(position = &quot;identity&quot;, bins = 24, alpha = 0.5)  +
   facet_wrap(~Cargo, ncol = 2) + 
   # vemos separadamente candidatos a presidente y a gobernador
@@ -80,10 +80,10 @@ joined_candidatos &lt;- joined_candidatos %&gt;%
         axis.text.x = element_text(angle = 90)) +
   scale_x_date(date_breaks = &quot;1 month&quot;, date_labels = &quot;%b&quot;) +
   labs(title = &quot;Evolución de la emisión de tuits en el tiempo&quot;,
-         subtitle = &quot;durante el 2019&quot;,
-         y = &quot;cantidad de tuits emitidos&quot;,
-         x = &quot;fecha&quot;,
-         fill = &quot;&quot;)
+       subtitle = &quot;durante el 2019&quot;,
+       y = &quot;Cantidad de tuits emitidos&quot;,
+       x = &quot;&quot;,
+       fill = &quot;&quot;)
 
 linea_fecha</code></pre>
 <p><img src="index_files/figure-html/elocuencia-1.png" width="672" /></p>
@@ -92,7 +92,7 @@ linea_fecha</code></pre>
 <p>Es hora de transformar nuestra base de datos. Hasta aquí, cada tuit ha constituido una “observación”, es decir, una fila, un dato.</p>
 <p>En adelante, buena parte de nuestro trabajo se basará en la descomposición de estos tuits en sus elementos constituyentes: las palabras.</p>
 <p>Para operar las transformaciones necesarias, nos valemos de funciones definidas previamente, <a href="../preparacion_funciones/">tal como hemos explicado</a>. Apliquémoslas, entonces.</p>
-<p>De manera provisoria, exploraremos diferentes opciones. Tenemos diferentes vías para arribar a los mismos resultados; hemos explorado con bases separadas para candidatos a gobernador y a presidente, y hemos aplicado a cada base diferentes tipos de <em>“tokenización”</em>. A continuación presentamos únicamente el código que da origen a las bases que utilizaremos después.</p>
+<p>Tenemos diferentes vías para arribar a los mismos resultados; además, hemos ensayado análisis con bases separadas para candidatos a gobernador y a presidente, y hemos aplicado a cada base diferentes tipos de <em>“tokenización”</em>. A continuación presentamos únicamente el código que da origen a las bases que utilizaremos después.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 <pre class="r"><code># TRANSFORMACIONES DE LOS DATOS 
 
 # Tokenizando ######
@@ -115,7 +115,7 @@ candidatos_tokenizadas &lt;- rbind(joined_gobernadores_tokenizadas,
                                 joined_presid_tokenizadas) %&gt;% 
   left_join(datos_base)</code></pre>
 <p>¿Cómo se disponen nuestros datos ahora?
-Veamos un ejemplo</p>
+Veamos un ejemplo:</p>
 <pre class="r"><code>str(candidatos_tokenizadas)</code></pre>
 <pre><code>## &#39;data.frame&#39;:    128093 obs. of  10 variables:
 ##  $ screen_name: chr  &quot;Kicillofok&quot; &quot;Kicillofok&quot; &quot;Kicillofok&quot; &quot;Kicillofok&quot; ...
@@ -131,7 +131,7 @@ Veamos un ejemplo</p>
 <blockquote>
 <p>Nótese que la columna “tokens” contiene solamente términos individuales. Y que nuestro <em>data frame</em> contiene “apenas”… 128.093 observaciones.</p>
 </blockquote>
-<p>Ya podemos seguir explorando :mag: . Para continuar con la pregunta que nos convocaba, <em>“¿cuánto hablan nuestros candidatos?”</em>, podemos diagramar la relación entre las palabras y los tuits emitidos. Graficamos separadamente los candidatos a presidente y a gobernador.</p>
+<p>Ya podemos seguir explorando :mag:. Para continuar con la pregunta que nos convocaba, <em>“¿cuánto hablan nuestros candidatos?”</em>, podemos diagramar la relación entre las palabras y los tuits emitidos.</p>
 <pre class="r"><code># preparamos los datos a graficar
 
 # obtenemos las medidas deseadas: cantidad de palabras emitidas por nuestros candidatos
@@ -177,7 +177,7 @@ plot_promediopalabras_cantidadtuits &lt;- plot_promediopalabras_cantidadtuits %&
 # resultado: 
 plot_promediopalabras_cantidadtuits</code></pre>
 <p><img src="index_files/figure-html/palabras_tuits-1.png" width="700" /></p>
-<p>Vemos que hay candidatos que dijeron mucho en cada tuit, como Raúl Jalil, pero emitieron pocos tuits; otros, como A. R. Saa, emitieron muchos tuits pero fueron breves en cada uno de ellos (en promedio); finalmente, hay candidatos que hablaron muy poco, como A. Bogado, o mucho, como M. Macri, conforme a ambas medidas.</p>
+<p>Vemos que hay candidatos que dijeron mucho en cada tuit, como R. Jalil, pero emitieron pocos tuits; otros, como A. R. Saa, emitieron muchos tuits pero fueron breves en cada uno de ellos (en promedio); finalmente, hay candidatos que hablaron muy poco, como A. Bogado, o mucho, como M. Macri, conforme a ambas medidas.</p>
 </div>
 <div id="de-la-cantidad-a-la-calidad" class="section level3">
 <h3>De la cantidad a la calidad</h3>
@@ -205,13 +205,13 @@ wordcloud::comparison.cloud(matriz_cargos,
 </div>
 <div id="términos-distinguidos-o-distinguidos-por-los-términos" class="section level4">
 <h4>Términos distinguidos, o distinguidos por los términos</h4>
-<p>Una medida comparativa interesante es el cálculo de <em>term frequency - inverse document frequency</em> (o sencillamente <strong>tf-idf</strong>), que estima qué tan “particulares” son los términos utilizados por un hablante<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
-<p>En <a href="">este script</a> exploramos varias combinaciones de cálculos interesantes, pero elejimos a nuestros fines en este post mostramos las <em>palabras</em> que mejor caracterizan a cada candidato a Gobernador, y los “términos de twitter” más propios de cada candidato a la presidencia.</p>
+<p>Una medida comparativa interesante es el cálculo de “<em>term frequency - inverse document frequency</em>” (o sencillamente <strong>tf-idf</strong>), que estima qué tan “particulares” son los términos utilizados por un hablante<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
+<p>Hemos jugado con distintas maneras de ejecutar este cálculo, que quedaron consignadas en <a href="https://github.com/CVFH/Tuits_arg_2019/blob/master/exploracion_discursos.R">este script</a>. Aquí hemos decidido mostrar las <em>palabras</em> que mejor caracterizan a cada candidato a Gobernador, y los <em>“términos de twitter”</em> más propios de cada candidato a la Presidencia (uno y otro tipo de “unidades textuales mínimas” son el resultado de dos procesos de “descomposición en tokens” ligeramente diferentes).</p>
 <blockquote>
 <p>Nótese que debimos limpiar las bases “tokenizadas”. De no hacerlo, las palabras más propias de cada candidato eran los hashtagas de la propia campaña. Veremos cuáles son estos enseguida.</p>
 </blockquote>
 <blockquote>
-<p>Nótese también que aquí estamos tratando <strong>al conjunto de tuits</strong> emitidos por los candidatos como un único “documento”. Para otro tipo de cálculos, resulta más pertinente tomar a cada tuit único en calidad de documento independiente.</p>
+<p>Nótese también que aquí estamos tratando <em>al conjunto de tuits emitidos por los candidatos como un único “documento”</em>. Para otro tipo de cálculos, resulta más pertinente tomar a cada tuit único en calidad de documento independiente.</p>
 </blockquote>
 <pre class="r"><code># a gobernador
 
@@ -284,7 +284,7 @@ plot_presid_tfidf &lt;- ggplot(sliced_presid_tfidf,
         axis.text.x = element_blank())  +
   labs(title = &quot;Términos más &#39;propios&#39; de cada candidato&quot;,
        subtitle = &quot;a Presidente&quot;)</code></pre>
-<p>Veamos los resultados para los candidatos a Gobernador</p>
+<p>Veamos los resultados para los candidatos a Gobernador:</p>
 <pre class="r"><code>plot_gobs_tfidf_tokentweet</code></pre>
 <p><img src="index_files/figure-html/tf_idf%20gobernador-1.png" width="672" /></p>
 <p>Quizás era esperable: el discurso de los candidatos se distingüe conforme a su distrito de pertenencia. M. Lammens se dirije a los “porteños”, G. Insfrán a “Formosa” y los “formoseños”, A. Bonfatti a los “santafesinos”, a la ciudad de Rosario… etc.</p>
@@ -346,8 +346,8 @@ plot_presid_hashtags &lt;- ggplot(candidatos_hashtags %&gt;%
 <p>Algo interesante es que varios candidatos a la presidencia tuvieron entre sus # más utilizados al del debate presidencial.</p>
 <pre class="r"><code>plot_presid_hashtags</code></pre>
 <p><img src="index_files/figure-html/hashtags3-1.png" width="672" /></p>
-<p>Hemos indagado visualmente en algunos de los términos más o menos utilizados por los candidatos.</p>
-<p>Pero nos ha quedado pendiente uno de los “tipos” de palabras más importantes en Twitter: las menciones, esto es, cuando un <em>twittero</em> utiliza el “@” para dirigirse o citar directamente a alguien. Estos nombres propios pueden decirnos algo acerca de las relaciones interpersonales entre nuestros candidatos. Por ello les hemos dedicado un post completo, que sugerimos leer a continuación.</p>
+<p>Hemos inspeccionado cuánto han hablado los condentientes en las elecciones de 2019 en la Argentina. También hemos indagado visualmente en qué términos han preferido nuestros candidatos y en qué :hash: emplearon con mayor entusiasmo.</p>
+<p>Ahora bien, hemos desatendido a uno de los “tipos” de palabras más importantes en Twitter: las menciones; esto es, los nombres de cuentas precedidas por un “@”, que un <em>twittero</em> utiliza para dirigirse o citar a un tercero. Estos nombres propios pueden decirnos algo acerca de las relaciones interpersonales entre nuestros candidatos. Por ello, les hemos dedicado un post completo, que sugerimos leer a continuación.</p>
 <p>:fast_forward: <a href="../explorando_relaciones/">Seguir leyendo</a></p>
 <p>Volver <a href="/">al inicio :house:</a></p>
 </div>
@@ -357,6 +357,7 @@ plot_presid_hashtags &lt;- ggplot(candidatos_hashtags %&gt;%
 <hr />
 <ol>
 <li id="fn1"><p>Adicionalmente, como pueden ver en <a href="https://github.com/CVFH/Tuits_arg_2019/blob/master/exploracion_discursos.R">este script</a> y <a href="https://github.com/CVFH/Tuits_arg_2019/blob/master/images/ganadores_perdedores_ev_tiempo.png">este gráfico</a>, nos preguntamos si había alguna diferencia en la evolución de los tuits emitidos para los “ganadores” y los “perdedores” en las elecciones. Imaginamos que la baja en la emisión de tuits después de los comicios podía ser signo de que los candidatos no electos “tiraron la toalla”. Sin embargo, la inspección ocular desmiente, en principio, nuestras sospechas. Por otro lado, es interesante notar que los tuits emitidos por día no se corresponden con la cantidad de rts recibidos, como puede observarse al comparar el gráfico de arriba con <a href="https://github.com/CVFH/Tuits_arg_2019/blob/master/images/rts_dia_2019.png">este otro</a>. ¿Sorprendente? Para nada, recordemos que en la sección anterior vimos que una y otra medida no parecían ir de la mano.<a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>Para una explicación más completa, recomendamos la lectura de <a href="https://www.tidytextmining.com/tfidf.html">este capítulo</a>.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>A los curiosos, invitamos a considerar <a href="https://github.com/CVFH/Tuits_arg_2019/blob/master/exploracion_discursos.R">el script original</a>, donde han quedado registradas las alternativas.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>Para una explicación más completa, recomendamos la lectura de <a href="https://www.tidytextmining.com/tfidf.html">este capítulo</a>.<a href="#fnref3" class="footnote-back">↩</a></p></li>
 </ol>
 </div>

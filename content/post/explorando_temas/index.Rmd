@@ -70,7 +70,7 @@ joined_candidatos <- traerDatosTuits("tot") %>%
 
 Ahora sí, pasemos a consignar nuestros intentos.
 
-## :hash: 1: Rastreo manual de temas por palabras
+## 1: Rastreo manual de temas por palabras
 
 Una primera forma de rastrear _acerca de qué_ se han pronunciado nuestros emisores es identificar "palabras clave" que podemos presumir asociadas a un determinado asunto. 
 
@@ -192,7 +192,8 @@ Con estos datos ya podemos explorar los temas más populares. Es decir, los tema
 
 temas_populares <- fct_count(ncoincidencias_tema_tweets$temas) %>% 
   arrange(desc(n)) %>% 
-  dplyr::rename(Tema = "f", "Cantidad de tuits" = "n")
+  dplyr::rename(Tema = "f", "Cantidad de tuits" = "n") %>% 
+  na.omit()
 
 head(temas_populares, 10) %>% 
   gt::gt() %>% 
@@ -261,7 +262,8 @@ plot_cantidad_temas_tuit <- cantidad_temas_tuit %>%
   geom_bar(fill = "#0F92DA") +
   theme_clean() +
   labs(x = "Cantidad de temas por tuit",
-       y = "Cantidad de tuits asignados")
+       y = "Cantidad de tuits asignados") +
+  scale_x_continuous(breaks = seq(0, 7, 1))
 
 plot_cantidad_temas_tuit
 ```
@@ -389,7 +391,7 @@ plot_matches_vivienda
 
 Sería interesante repetir la tarea para otros asuntos. Pero, por ahora, consideramos que hemos exprimido suficientemente esta estrategica. Además, hemos hecho hincapié en sus múltiples debilidades. Ensayemos otra técnica.
 
-## :hash: 2: Topic modelling
+## 2: Topic modelling
 
 Dadas las mentadas limitaciones del primer abordaje propuesto, hemos ensayado propuestas menos "supervisadas". 
 
@@ -544,7 +546,7 @@ plot_topics_cargo <- candidatos_tuits_topics_top_grouped_cargo %>%
   labs(title= "Temas preferidos por los candidatos",
        subtitle = "según la cartera a la que compiten",
        x = "Tópicos",
-       y = "Cantidad de tuits",
+       y = "Proporción de tuits",
        colour = "") +
   theme(legend.position = "bottom")
 
@@ -576,7 +578,7 @@ plot_topics_tfecha <- candidatos_tuits_topics_top_grouped_tfecha %>%
   labs(title= "Temas preferidos por los candidatos",
        subtitle = "según el calendario electoral",
        x = "Tópicos",
-       y = "Cantidad de tuits",
+       y = "Proporción de tuits",
        colour = "") +
   theme(legend.position = "bottom")
 
@@ -585,12 +587,93 @@ plot_topics_tfecha
 
 Aquí hay muchos tópicos que parecen consignar una atención proporcionalmente homogénea: sobre todo, el (2) y el (4); en menor medida, el (1), el (5) y el (6). Sí son mas notorias las diferencias entre los asuntos (3), más referido en las elecciones "simutláneas" y (7), más atendido en las desdobladas.
 
-La técnica de topic modelling parece prometedora, pero nuestra aplicación claramente deja bastante que desear. Esperamos a futuro refinar nuestro manejo de este algoritmo, a los fines de identificar de manera menos arbitraria los "temas" sobre los que versan los tuits de nuestros candidatos.
+La técnica de _topic modelling_ parece prometedora, pero nuestra aplicación claramente deja bastante que desear. Esperamos a futuro refinar nuestro manejo de este algoritmo, a los fines de identificar de manera menos arbitraria los "temas" sobre los que versan los tuits de nuestros candidatos.
 
-## :hash: 3 : Análisis (fallido?) de componentes principales
+## 3 : Análisis (fallido?) de componentes principales
 
+Una última estrategia que quisimos poner a prueba en la búsqueda de una respuesta a nuestras interrogantes consistió en el _análisis de componentes principales_ (PCA por su sigla en inglés). La técnica ya ha sido empleada en la clasificación de documentos de texto en general, y de tuits en particular. ¿Por qué no inspeccionar nuestra muestra bajo esta lupa?
 
+Nuestros conocimientos en la materia son más que incipientes, pero, apoyándonos en trabajos previos[^3], nos las arreglamos para aplicar el comando `prcomp()` a nuestros datos e interpretar los resultados. Sin embargo, estos nos resultaron decepcionantes. Desconocemos si "somos nosotros o son ellos": si la técnica resulta inadecuada a la estructura de nuestros datos, o si nuestra estimación ha sido poco sofisticada. 
 
+En cualquier caso, como dicen que de los errores también se aprende, comentamos brevemente a nuestro lector las operaciones realizadas.
+
+En esta oportunidad no debimos incorporar ninguna medida _a priori_ de cuáles o cuántos temas ocupaban a los tuiteos de nuestros candidatos. De manera similar al _topic modelling_, el _PCA_ trabja sobre una matriz de documentos / términos, pero el cálculo que hicimos carecía de restricciones en términos de la "cantidad de temas" a buscar (`k` en el comando `LDA`). 
+
+Sí nos enfrentamos, nuevamente, a la disyuntiva: ¿cuáles son nuestros "documentos"? ¿cada tuit o el discurso de los candidatos en Twitter tomado en su globalidad?
+
+Ensayamos estimaciones con ambas alternativas. 
+
+Consideremos primero al discurso de cada emisor como un único documento. 
+He aquí el código empleado, del que se sigue el gráfico a continuación:
+
+```{r pca1, warning= FALSE, message= FALSE}
+# preparamos datos en tokens tidy
+candidatos_tokentweets  <- joined_candidatos %>% 
+tokenizarTextoTuits(tipo_token = "tweets") %>%  
+left_join(datos_base)
+
+# preparamos matriz de datos 
+candidatos_tokentweet_dtm <- candidatos_tokentweets %>% 
+  limpiarTokens() %>% 
+  dplyr::count(screen_name, tokens) %>% 
+  cast_dtm(screen_name, tokens, n)
+
+# PCA
+
+# con este comando extrajimos los resultados:
+pca_res <- prcomp(candidatos_tokentweet_dtm, scale=TRUE)
+
+# diversas medidas de resumen (no mostramos aquí)
+# summary(pca_res)
+# pca_res$x[1:5,1:3]
+# pca_res$center[1:5]
+# head(pca_res$scale^2, n=5)
+
+# cálculo de varianza explicada por cada componente
+
+var_explained <- pca_res$sdev^2/sum(pca_res$sdev^2)
+# var_explained[1:5]
+
+# ploteamos resultados
+pca_res$x %>% 
+  as.data.frame %>%
+  rownames_to_column("screen_name") %>%
+  ggplot(aes(x = PC1,y = PC2)) +  
+  # nos quedamos con los primeros dos componentes principales
+  geom_point(aes(color=screen_name),size = 4) +
+  geom_text(aes(label=screen_name)) +
+  labs(x=paste0("PC1: ",round(var_explained[1]*100,1),"%"),
+       y=paste0("PC2: ",round(var_explained[2]*100,1),"%")) +
+  theme_clean() + 
+  theme(legend.position="none") 
+
+```
+
+El gráfico muestra la posición de nuestros documentos (los candidatos) respecto de los dos primeros componentes que resultaron de las estimaciones. ¿Qué ha ocurrido? Sencillamente, cada candidato en sí mismo explica un componente. Es decir, la variabilidad en nuestros datos estaría explicada por la idiosincrasia de cada uno de los documentos imputados en el cálculo. 
+
+Veamos ahora qué ocurre si calificamos a cada tuit único como un documento único. 
+Para proceder, haríamos algo como el código que sigue: 
+
+```{r pca2, eval=FALSE, warning= FALSE, message= FALSE}
+candidatos_tokentweet_dtmv2 <- candidatos_tokentweets %>% 
+  limpiarTokens() %>% 
+  count(tweet_id, tokens) %>% 
+  cast_dtm(tweet_id, tokens, n)
+
+# PCA
+pca_resv2 <- prcomp(candidatos_tokentweet_dtmv2, scale=TRUE)
+```
+
+Pero... no lo hacemos: no pudimos procesar semejante matriz de datos :fire:. 
+Intentamos varias estrategias de limpieza y reducción de la complejidad de nuestra base. En el "mejor" de los casos (¡la PC no se rompió! :trollface:), los resultados sugirieron que nuestros datos estaban organizados en torno a más de 300 componentes, que explicaban menos de un 1% de varianza cada uno.
+Claramente, el cálculo no es muy informativo acerca de si y cuáles "variables subyacentes" explican la variabilidad en nuestros datos.
+
+---
+
+Hemos transitado un largo camino: partiendo de simples pero abundantes piezas de datos y de funciones, hemos tratado de asir qué tan populares y elocuentes, y qué relaciones y temas abordaron los candidatos a las elecciones de 2019 en la Argentina. Hemos intentado mantener un equilibrio entre la exposición del código y el relato de nuestras operaciones, poniendo en relieve algunos de los resultados alcanzados. Sin dudas, queda mucho por trabajar. Las últimas líneas de este último post son claro ejemplo de ello. Agradecemos la compañía de nuestro lector :clap:, y le invitamos a que haga críticas y devoluciones :pencil2: que nos perimtan seguir construyendo sobre este trabajo :raised_hands:.
+
+Volver al [inicio :house:](/)
 
 [^1]: Nótese que la base, definida previamente, contiene términos que serán inutilizados, ya que trabajaremos con palabras únicas. 
 [^2]: [La cita proviene del libro referido](https://www.tidytextmining.com/topicmodeling.html#by-word-assignments-augment). La traducción es propia.
+[^3]: [Esta entrada](https://cmdlinetips.com/2019/04/introduction-to-pca-with-r-using-prcomp/) fue particularmente útil, también agradecemos al [Tuq](https://www.tuqmano.com/) por su asesoramiento. 

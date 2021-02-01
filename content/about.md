@@ -31,7 +31,7 @@ El origen de este trabajo es un proyecto de `r`, _TuitsArg2019_. Iremos refirien
 Me llamo Carolina Franco. Soy Lic. en Cs. de la Comunicación social de la Universidad de Buenos Aires. Actualmente soy becaria doctoral del CONICET. En este marco, estoy completando mis estudios de posgrado en Ciencia Política en la Universidad Torcuato di Tella, donde se dicta el curso que da origen a este proyecto.  
 
 {{< expandable label="Más?" level="2" >}}
-Les dejo mi [CV]() y un enlace a mi [Linkedin](https://www.linkedin.com/in/carolina-franco-h%C3%A4ntzsch-8956918a/)
+Les dejo mi [CV](../images/CV_Franco_Carolina.pdf) y un enlace a mi [Linkedin](https://www.linkedin.com/in/carolina-franco-h%C3%A4ntzsch-8956918a/)
 {{< /expandable >}}
 
 

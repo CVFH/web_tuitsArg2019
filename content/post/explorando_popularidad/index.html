@@ -126,7 +126,8 @@ gobernadores_rtspromedio_porcentaje &lt;-  plotPointText(gobernadores_popu_ranki
            Porcentaje, 
            colour = Distrito), 
        aes(label = screen_name)) %&gt;% 
-  formatPlot(plottitle = &quot;a Gobernador&quot;, xlabel = &quot;&quot;, ylabel = &quot;&quot;) 
+  formatPlot(plottitle = &quot;a Gobernador&quot;, xlabel = &quot;&quot;, ylabel = &quot;&quot;) + 
+  theme(panel.background = element_rect(colour = &quot;white&quot;, fill = &quot;white&quot;))
 
 # Presidente
 
@@ -139,7 +140,8 @@ presid_rtspromedio_porcentaje &lt;- plotPointText(presid_popu_ranking,
        aes(label = screen_name)) %&gt;%  
     formatPlot(plottitle = &quot;a Presidente&quot;, 
          xlabel = &quot;Rts obtenidos promedio&quot;, 
-         ylabel = &quot;% de votos obtenidos&quot;)
+         ylabel = &quot;% de votos obtenidos&quot;) + 
+  theme(panel.background = element_rect(colour = &quot;white&quot;, fill = &quot;white&quot;))
 
 
 # TODOS LOS CANDIDATOS
@@ -161,7 +163,8 @@ candidatos_rts_votos &lt;- plotPoint(candidatos_popu_ranking,
   theme_clean()  + 
       labs(title = &quot; &quot;, 
          x = &quot;Log de rts totales obtenidos&quot;, 
-         y = &quot;Log de votos obtenidos&quot;)
+         y = &quot;Log de votos obtenidos&quot;) + 
+  theme(panel.background = element_rect(colour = &quot;white&quot;, fill = &quot;white&quot;))
 
 candidatos_rtspromedio_votos &lt;- plotPoint(candidatos_popu_ranking, 
                                aes(Votos,
@@ -169,7 +172,8 @@ candidatos_rtspromedio_votos &lt;- plotPoint(candidatos_popu_ranking,
                                    colour= Distrito)) %&gt;% 
   formatPlot(plottitle = &quot;&quot;, 
              xlabel = &quot;Rts obtenidos promedio&quot;,
-             ylabel = &quot;Votos obtenidos&quot;)
+             ylabel = &quot;Votos obtenidos&quot;) + 
+  theme(panel.background = element_rect(colour = &quot;white&quot;, fill = &quot;white&quot;))
 
 # Twitter con twitter: relaciones entre cantidad de tuits emitidos y votos obtenidos
 
@@ -204,7 +208,7 @@ desempeño_totcandidatos &lt;-  (candidatos_rtspromedio_votos |  candidatos_rts_
 <p>Desde luego, esto es esperable: las provincias tienen poblaciones de tamaños muy diferentes (y por ende, podemos suponer, un mayor o un menor “público” dispuestos a dar rt a su candidato preferido). Entonces, veamos qué sucede si comparamos el desempeño en la red social con la cantidad de votos absolutos.</p>
 <pre class="r"><code>desempeño_totcandidatos</code></pre>
 <p><img src="index_files/figure-html/g2-1.png" width="672" /></p>
-<p>Parece haber un vínculo positivo entre el desempeño en la red social y en las urnas. Sin embargo, también puede que sea bastante débil: la diagonal está dada, en buena medida, por el diferente tamaño de los distritos. Así, los dos primeros candidatos a nivel nacional y el #1 y la #2 de la Provincia de Buenos Aires son los que mas rts obtuvieron. Pero dentro de cada distrito, los candidatos de Cambiemos se ubican debajo de la recta de ajuste entre rts y votos obtenidos, mientras que los del Frente de Todxs se posicionan algo por encima.</p>
+<p>Parece haber un vínculo positivo entre el desempeño en la red social y en las urnas. Sin embargo, también puede que sea bastante débil: la diagonal está dada, en buena medida, por el diferente tamaño de los distritos. Así, los dos primeros candidatos a nivel nacional y el :hash: 1 y la :hash: 2 de la Provincia de Buenos Aires son los que mas rts obtuvieron. Pero dentro de cada distrito, los candidatos de Cambiemos se ubican debajo de la recta de ajuste entre rts y votos obtenidos, mientras que los del Frente de Todxs se posicionan algo por encima.</p>
 <p>En cualquier caso, también es cierto que el resto de los candidatos a la presidencia obtuvo rts más o menos proporcionales a sus resultados electorales.</p>
 <p>Esto sugiere que sería interesante explorar de manera más sofisticada las relaciones entre el partido de los candidatos, su distrito de pertenencia, la cantidad de votos obtenidos, etc.</p>
 <p>¿Y qué hay de la propia actividad en la red social?</p>
