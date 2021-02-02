@@ -106,7 +106,7 @@ Para leer datos de la web:
 * `limpiarTokens`: recibe un df con tuits "tokenizados" y ofrece distintas opciones para "limpiarlos": extraer ciertas palabras muy utilizadas e "insignificantes" (para lo que nos valemos del paquete [stopwords](https://www.rdocumentation.org/packages/stopwords)), y deshacernos de palabras demasiado cortas, enlaces, mentions y/o hasthags.
 {{< /ticks >}}
 
-{{< expandable label = "¿Cómo fueron hechas?"  level="2"  >}}
+{{< expandable label="¿Cómo fueron hechas? "  level="2"  >}}
 Para conocer el detalle de estas funciones :mag:, seguir [:arrow_right: este enlace](https://github.com/CVFH/Tuits_arg_2019/blob/master/Modules/tuitsCandidatos.R).
 {{< /expandable >}}
 
@@ -117,7 +117,7 @@ Hemos simplificado algunas tareas adicionales. Destacamos en particular tres fun
 Las tres se sustentan en la gramática de [ggplot](https://ggplot2.tidyverse.org/). Pueden [explorar :mag: el código aquí](https://github.com/CVFH/Tuits_arg_2019/blob/master/Modules/funcionesGraficos.R).
 Finalmente, hemos optado por "envolver" las operaciones de preparación de nuestros datos en dos funciones respectivas: `traerDatosElectorales` y `traerDatosTuits`, como explicaremos a partir de la [próxima sección](../preparacion_datos/), que te invitamos a seguir leyendo :eyeglasses:.
 
-O podés optar por [volver al inicio :house:](/) y seguir de largo hacia el [análisis](../tags/análisis/)
+O podés optar por [volver al inicio :house:](/) y seguir de largo hacia el [análisis](../tags/análisis/).
 
 [^1]: [Como veremos enseguida](../preparacion_datos/), nuestro proyecto ha hecho uso de múltiples y diversas bases de datos. Su adecuado nos requería repetir una gran cantidad de operaciones, por lo que decidimos sistematizar las funciones que presentaremos a continuación... y, de allí en adelante, fuimos desarrollando algunas adicionales. 
 [^2]: La enumeración sale de [una clase de MétodosCiPol](https://tuqmano.github.io/MetodosCiPol/Clase03/Clase3.html#26).
