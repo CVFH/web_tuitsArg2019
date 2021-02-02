@@ -96,7 +96,7 @@ Para leer datos de la web:
 {{< ticks >}}
 * `determinarTuitsCampaña`: recibe un df con tuits (del que se espera que haya una columna que consigne la fecha de su emisión) y dos parámetros: la fecha de inicio y la de fin de la campaña. Crea una variable que indica si el tuit fue emitido o no durante la campaña.
 * `seleccionarTextoTuits`: recibe un df con tuits y, opcionalmente, un parámetro para seleccionar columnas. Formatea la columna que contiene el texto del tuit a tipo _character_ y acota el data frame a las columnas seleccionads.
-* `transformarEnlacesTwitter`: recibe un df con tuits y transforma ciertos carácteres del texto de los tuits, a los fines de identificarlos facilmente a la hora de analizar el texto. En concreto, busca los enlaces, los hashtags (:hash:) y las menciones (@).
+* `transformarEnlacesTwitter`: recibe un df con tuits y transforma ciertos carácteres del texto de los tuits, a los fines de identificarlos facilmente a la hora de analizar el texto. En concreto, busca los enlaces, los hashtags (#) y las menciones (@).
 {{< /ticks >}}
 
 #### Funciones "agregadas"
