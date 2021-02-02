@@ -210,7 +210,7 @@ traerDatosTuits <- function(tipo_dato){
 
 :tada: :tada: :tada: listos para su análisis!!! :tada: :tada: :tada:
 
-Te invitamos a comenzar la lectura de nuestros resultados desde [este post[(../explorando_popularidad/). También podés [volver al inicio :house:)(/).
+Te invitamos a comenzar la lectura de nuestros resultados desde [este post](../explorando_popularidad/). También podés [volver al inicio :house:](/).
 
 [^1]: Que, a su vez, se vale de [funciones definidas anteriormente](../preparacion_funciones/)
 [^2]: Con la función `determinarTuitsCampaña()` que presentamos en [este post](../preparacion_funciones)
