@@ -48,7 +48,11 @@ datos_base %&gt;%
     subtitle = &quot;TuitsArg2019&quot;) %&gt;% 
   gt::tab_style(
     style=  cell_fill(color = &quot;#00BFFF&quot;, alpha = 0.5),
-    locations = cells_title(groups = c(&quot;title&quot;, &quot;subtitle&quot;))) %&gt;% 
+    locations = cells_title(groups = c(&quot;title&quot;, &quot;subtitle&quot;)))  %&gt;% 
+  gt::tab_style(
+    style= cell_text(
+      align = &quot;center&quot;),
+      locations = cells_stubhead()) %&gt;%  
   gt::tab_style(cell_fill(color = &quot;#C0EEFF&quot;, alpha = 0.5),
     locations = cells_body()) %&gt;% 
   gt::tab_style(
@@ -62,7 +66,7 @@ datos_base %&gt;%
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#cruaxvnuwi .gt_table {
+#mafsrtgtax .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -87,7 +91,7 @@ datos_base %&gt;%
   border-left-color: #D3D3D3;
 }
 
-#cruaxvnuwi .gt_heading {
+#mafsrtgtax .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -99,7 +103,7 @@ datos_base %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#cruaxvnuwi .gt_title {
+#mafsrtgtax .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -109,7 +113,7 @@ datos_base %&gt;%
   border-bottom-width: 0;
 }
 
-#cruaxvnuwi .gt_subtitle {
+#mafsrtgtax .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -119,13 +123,13 @@ datos_base %&gt;%
   border-top-width: 0;
 }
 
-#cruaxvnuwi .gt_bottom_border {
+#mafsrtgtax .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#cruaxvnuwi .gt_col_headings {
+#mafsrtgtax .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -140,7 +144,7 @@ datos_base %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#cruaxvnuwi .gt_col_heading {
+#mafsrtgtax .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -160,7 +164,7 @@ datos_base %&gt;%
   overflow-x: hidden;
 }
 
-#cruaxvnuwi .gt_column_spanner_outer {
+#mafsrtgtax .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -172,15 +176,15 @@ datos_base %&gt;%
   padding-right: 4px;
 }
 
-#cruaxvnuwi .gt_column_spanner_outer:first-child {
+#mafsrtgtax .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#cruaxvnuwi .gt_column_spanner_outer:last-child {
+#mafsrtgtax .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#cruaxvnuwi .gt_column_spanner {
+#mafsrtgtax .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -192,7 +196,7 @@ datos_base %&gt;%
   width: 100%;
 }
 
-#cruaxvnuwi .gt_group_heading {
+#mafsrtgtax .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -214,7 +218,7 @@ datos_base %&gt;%
   vertical-align: middle;
 }
 
-#cruaxvnuwi .gt_empty_group_heading {
+#mafsrtgtax .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -229,15 +233,15 @@ datos_base %&gt;%
   vertical-align: middle;
 }
 
-#cruaxvnuwi .gt_from_md > :first-child {
+#mafsrtgtax .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#cruaxvnuwi .gt_from_md > :last-child {
+#mafsrtgtax .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#cruaxvnuwi .gt_row {
+#mafsrtgtax .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -256,7 +260,7 @@ datos_base %&gt;%
   overflow-x: hidden;
 }
 
-#cruaxvnuwi .gt_stub {
+#mafsrtgtax .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -268,7 +272,7 @@ datos_base %&gt;%
   padding-left: 12px;
 }
 
-#cruaxvnuwi .gt_summary_row {
+#mafsrtgtax .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -278,7 +282,7 @@ datos_base %&gt;%
   padding-right: 5px;
 }
 
-#cruaxvnuwi .gt_first_summary_row {
+#mafsrtgtax .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -288,7 +292,7 @@ datos_base %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#cruaxvnuwi .gt_grand_summary_row {
+#mafsrtgtax .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -298,7 +302,7 @@ datos_base %&gt;%
   padding-right: 5px;
 }
 
-#cruaxvnuwi .gt_first_grand_summary_row {
+#mafsrtgtax .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -308,11 +312,11 @@ datos_base %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#cruaxvnuwi .gt_striped {
+#mafsrtgtax .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#cruaxvnuwi .gt_table_body {
+#mafsrtgtax .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -321,7 +325,7 @@ datos_base %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#cruaxvnuwi .gt_footnotes {
+#mafsrtgtax .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -335,13 +339,13 @@ datos_base %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#cruaxvnuwi .gt_footnote {
+#mafsrtgtax .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#cruaxvnuwi .gt_sourcenotes {
+#mafsrtgtax .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -355,46 +359,46 @@ datos_base %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#cruaxvnuwi .gt_sourcenote {
+#mafsrtgtax .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#cruaxvnuwi .gt_left {
+#mafsrtgtax .gt_left {
   text-align: left;
 }
 
-#cruaxvnuwi .gt_center {
+#mafsrtgtax .gt_center {
   text-align: center;
 }
 
-#cruaxvnuwi .gt_right {
+#mafsrtgtax .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#cruaxvnuwi .gt_font_normal {
+#mafsrtgtax .gt_font_normal {
   font-weight: normal;
 }
 
-#cruaxvnuwi .gt_font_bold {
+#mafsrtgtax .gt_font_bold {
   font-weight: bold;
 }
 
-#cruaxvnuwi .gt_font_italic {
+#mafsrtgtax .gt_font_italic {
   font-style: italic;
 }
 
-#cruaxvnuwi .gt_super {
+#mafsrtgtax .gt_super {
   font-size: 65%;
 }
 
-#cruaxvnuwi .gt_footnote_marks {
+#mafsrtgtax .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="cruaxvnuwi" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="mafsrtgtax" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="5" class="gt_heading gt_title gt_font_normal" style="background-color: rgba(0,191,255,0.5);">Datos Utilizados</th>
@@ -575,12 +579,11 @@ datos_base %&gt;%
 <div id="datos-electorales" class="section level2">
 <h2>Datos Electorales</h2>
 <p>Para “explorar la popularidad” de los candidatos (como veremos en la <a href="../explorando_popularidad/">sección correspondiente</a>), debimos colectar datos sobre los resultados electorales.</p>
-<p>Para eso desarrollamos <a href="https://github.com/CVFH/Tuits_arg_2019/blob/master/preparacion_datos_electorales.R">este script</a> que explicamos en <a href="../../post/preparacion_electorales/">este post</a>. El código define una función que parte de enlaces de wikipedia y/o de la Dirección Nacional Electoral argentina, y devuelve una tabla de datos <em>tidy</em><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
+<p>Para eso desarrollamos <a href="https://github.com/CVFH/Tuits_arg_2019/blob/master/preparacion_datos_electorales.R">este script</a> que explicamos en <a href="../../post/preparacion_electorales/">este post</a>. El código define una función que parte de enlaces de Wikipedia y/o de la Dirección Nacional Electoral argentina, y devuelve una tabla de datos <em>tidy</em><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
 <p>Por ejemplo, partimos del enlace:
 <a href="https://es.wikipedia.org/wiki/Elecciones_presidenciales_de_Argentina_de_2019">https://es.wikipedia.org/wiki/Elecciones_presidenciales_de_Argentina_de_2019</a></p>
 <p>…que contiene la siguiente tabla:</p>
-<p><img src="tabla.JPG" />
-<img src="tabla.JPG" width="300"></p>
+<p><img src="tabla.JPG" /></p>
 <p>Extrajimos de esta manera los datos:</p>
 <pre class="r"><code># Primero, llamamos al script que diseñamos
 
@@ -600,7 +603,11 @@ votos_presid %&gt;%
     subtitle = &quot;Resultados&quot;) %&gt;% 
   gt::tab_style(
     style=  cell_fill(color = &quot;#00BFFF&quot;, alpha = 0.5),
-    locations = cells_title(groups = c(&quot;title&quot;, &quot;subtitle&quot;))) %&gt;% 
+    locations = cells_title(groups = c(&quot;title&quot;, &quot;subtitle&quot;)))  %&gt;% 
+  gt::tab_style(
+    style= cell_text(
+      align = &quot;center&quot;),
+      locations = cells_stubhead()) %&gt;%  
   gt::tab_style(
     style=  cell_fill(color = &quot;#E9EDF1&quot;, alpha = 0.5),
     locations = cells_body()) %&gt;% 
@@ -615,7 +622,7 @@ votos_presid %&gt;%
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#nkmywaaleb .gt_table {
+#xcpctahvyn .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -640,7 +647,7 @@ votos_presid %&gt;%
   border-left-color: #D3D3D3;
 }
 
-#nkmywaaleb .gt_heading {
+#xcpctahvyn .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -652,7 +659,7 @@ votos_presid %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#nkmywaaleb .gt_title {
+#xcpctahvyn .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -662,7 +669,7 @@ votos_presid %&gt;%
   border-bottom-width: 0;
 }
 
-#nkmywaaleb .gt_subtitle {
+#xcpctahvyn .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -672,13 +679,13 @@ votos_presid %&gt;%
   border-top-width: 0;
 }
 
-#nkmywaaleb .gt_bottom_border {
+#xcpctahvyn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#nkmywaaleb .gt_col_headings {
+#xcpctahvyn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -693,7 +700,7 @@ votos_presid %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#nkmywaaleb .gt_col_heading {
+#xcpctahvyn .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -713,7 +720,7 @@ votos_presid %&gt;%
   overflow-x: hidden;
 }
 
-#nkmywaaleb .gt_column_spanner_outer {
+#xcpctahvyn .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -725,15 +732,15 @@ votos_presid %&gt;%
   padding-right: 4px;
 }
 
-#nkmywaaleb .gt_column_spanner_outer:first-child {
+#xcpctahvyn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#nkmywaaleb .gt_column_spanner_outer:last-child {
+#xcpctahvyn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#nkmywaaleb .gt_column_spanner {
+#xcpctahvyn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -745,7 +752,7 @@ votos_presid %&gt;%
   width: 100%;
 }
 
-#nkmywaaleb .gt_group_heading {
+#xcpctahvyn .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -767,7 +774,7 @@ votos_presid %&gt;%
   vertical-align: middle;
 }
 
-#nkmywaaleb .gt_empty_group_heading {
+#xcpctahvyn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -782,15 +789,15 @@ votos_presid %&gt;%
   vertical-align: middle;
 }
 
-#nkmywaaleb .gt_from_md > :first-child {
+#xcpctahvyn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#nkmywaaleb .gt_from_md > :last-child {
+#xcpctahvyn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#nkmywaaleb .gt_row {
+#xcpctahvyn .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -809,7 +816,7 @@ votos_presid %&gt;%
   overflow-x: hidden;
 }
 
-#nkmywaaleb .gt_stub {
+#xcpctahvyn .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -821,7 +828,7 @@ votos_presid %&gt;%
   padding-left: 12px;
 }
 
-#nkmywaaleb .gt_summary_row {
+#xcpctahvyn .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -831,7 +838,7 @@ votos_presid %&gt;%
   padding-right: 5px;
 }
 
-#nkmywaaleb .gt_first_summary_row {
+#xcpctahvyn .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -841,7 +848,7 @@ votos_presid %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#nkmywaaleb .gt_grand_summary_row {
+#xcpctahvyn .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -851,7 +858,7 @@ votos_presid %&gt;%
   padding-right: 5px;
 }
 
-#nkmywaaleb .gt_first_grand_summary_row {
+#xcpctahvyn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -861,11 +868,11 @@ votos_presid %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#nkmywaaleb .gt_striped {
+#xcpctahvyn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#nkmywaaleb .gt_table_body {
+#xcpctahvyn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -874,7 +881,7 @@ votos_presid %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#nkmywaaleb .gt_footnotes {
+#xcpctahvyn .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -888,13 +895,13 @@ votos_presid %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#nkmywaaleb .gt_footnote {
+#xcpctahvyn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#nkmywaaleb .gt_sourcenotes {
+#xcpctahvyn .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -908,46 +915,46 @@ votos_presid %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#nkmywaaleb .gt_sourcenote {
+#xcpctahvyn .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#nkmywaaleb .gt_left {
+#xcpctahvyn .gt_left {
   text-align: left;
 }
 
-#nkmywaaleb .gt_center {
+#xcpctahvyn .gt_center {
   text-align: center;
 }
 
-#nkmywaaleb .gt_right {
+#xcpctahvyn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#nkmywaaleb .gt_font_normal {
+#xcpctahvyn .gt_font_normal {
   font-weight: normal;
 }
 
-#nkmywaaleb .gt_font_bold {
+#xcpctahvyn .gt_font_bold {
   font-weight: bold;
 }
 
-#nkmywaaleb .gt_font_italic {
+#xcpctahvyn .gt_font_italic {
   font-style: italic;
 }
 
-#nkmywaaleb .gt_super {
+#xcpctahvyn .gt_super {
   font-size: 65%;
 }
 
-#nkmywaaleb .gt_footnote_marks {
+#xcpctahvyn .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="nkmywaaleb" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="xcpctahvyn" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="10" class="gt_heading gt_title gt_font_normal" style="background-color: rgba(0,191,255,0.5);">Elecciones presidenciales Argentina 2019</th>
@@ -1054,116 +1061,22 @@ votos_presid %&gt;%
 <p>Por ejemplo, para @<a href="https://twitter.com/Kicillofok">Kicillofok</a>, utilizamos el comando:</p>
 <p><code>tuits_Kicillofok &lt;- get_timeline("Kicillofok")</code></p>
 <p>Con esto, obtenemos una tabla (aprox) como la siguiente:</p>
-<pre class="r"><code>str(tuits_Kicillofok)</code></pre>
-<pre><code>## tibble [2,485 x 28] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
-##  $ created_at             : POSIXct[1:2485], format: &quot;2020-07-16 00:39:36&quot; &quot;2020-07-15 20:54:53&quot; ...
-##  $ text                   : chr [1:2485] &quot;Nos reunimos con referentes sindicales para conversar sobre las necesidades de cada sector para la pospandemia.&quot;| __truncated__ &quot;Con el gobernador @jmcapitanich intercambiamos experiencias y analizamos la implementación de las distintas fas&quot;| __truncated__ &quot;Estamos haciendo grandes esfuerzos y los resultados están a la vista. Gracias a la solidaridad podemos ayudar a&quot;| __truncated__ &quot;Visitamos el Centro de Monitoreo de Malvinas Argentinas donde entregamos nuevos respiradores al intendente @Nar&quot;| __truncated__ ...
-##  $ rts                    : num [1:2485] 184 204 118 243 323 109 268 318 178 471 ...
-##  $ fav_count              : num [1:2485] 698 968 267 745 1253 ...
-##  $ tweet_id               : num [1:2485] 1.28e+18 1.28e+18 1.28e+18 1.28e+18 1.28e+18 ...
-##  $ link                   : chr [1:2485] &quot;https://twitter.com/Kicillofok/status/1283561887574249472&quot; &quot;https://twitter.com/Kicillofok/status/1283505338390634496&quot; &quot;https://twitter.com/Kicillofok/status/1283461690479255552&quot; &quot;https://twitter.com/Kicillofok/status/1283461679888596992&quot; ...
-##  $ screen_name            : chr [1:2485] &quot;Kicillofok&quot; &quot;Kicillofok&quot; &quot;Kicillofok&quot; &quot;Kicillofok&quot; ...
-##  $ location               : logi [1:2485] NA NA NA NA NA NA ...
-##  $ in_reply_to_screen_name: chr [1:2485] NA NA &quot;Kicillofok&quot; NA ...
-##  $ in_reply_to_status_id  : num [1:2485] NA NA 1.28e+18 NA NA ...
-##  $ in_reply_to_user_id    : num [1:2485] NA NA 2.95e+09 NA NA ...
-##  $ latitude               : logi [1:2485] NA NA NA NA NA NA ...
-##  $ longitude              : logi [1:2485] NA NA NA NA NA NA ...
-##  $ mention_ids            : chr [1:2485] &quot;(u&#39;&#39;,)&quot; &quot;(u&#39;143852870&#39;,)&quot; &quot;(u&#39;&#39;,)&quot; &quot;(u&#39;178840402&#39;,)&quot; ...
-##  $ mention_screen_names   : chr [1:2485] NA &quot;jmcapitanich&quot; NA &quot;Nardini_Leo&quot; ...
-##  $ place_latitude         : num [1:2485] NA NA NA NA NA NA NA NA NA NA ...
-##  $ place_longitude        : num [1:2485] NA NA NA NA NA NA NA NA NA NA ...
-##  $ user_id                : num [1:2485] 2.95e+09 2.95e+09 2.95e+09 2.95e+09 2.95e+09 ...
-##  $ created_at_user        : POSIXct[1:2485], format: &quot;2014-12-31 23:38:55&quot; &quot;2014-12-31 23:38:55&quot; ...
-##  $ description            : chr [1:2485] &quot;Gobernador de la Provincia de Buenos Aires.&quot; &quot;Gobernador de la Provincia de Buenos Aires.&quot; &quot;Gobernador de la Provincia de Buenos Aires.&quot; &quot;Gobernador de la Provincia de Buenos Aires.&quot; ...
-##  $ favourites_count       : num [1:2485] 4044 4044 4044 4044 4044 ...
-##  $ followers_count        : num [1:2485] 1185178 1185178 1185178 1185178 1185178 ...
-##  $ friends_count          : num [1:2485] 307 307 307 307 307 307 307 307 307 307 ...
-##  $ geo_enabled            : logi [1:2485] TRUE TRUE TRUE TRUE TRUE TRUE ...
-##  $ name                   : chr [1:2485] &quot;Axel Kicillof&quot; &quot;Axel Kicillof&quot; &quot;Axel Kicillof&quot; &quot;Axel Kicillof&quot; ...
-##  $ statuses_count         : num [1:2485] 4247 4247 4247 4247 4247 ...
-##  $ time_zone              : logi [1:2485] NA NA NA NA NA NA ...
-##  $ verified               : logi [1:2485] TRUE TRUE TRUE TRUE TRUE TRUE ...
-##  - attr(*, &quot;spec&quot;)=
-##   .. cols(
-##   ..   created_at = col_datetime(format = &quot;&quot;),
-##   ..   text = col_character(),
-##   ..   rts = col_double(),
-##   ..   fav_count = col_double(),
-##   ..   tweet_id = col_double(),
-##   ..   link = col_character(),
-##   ..   screen_name = col_character(),
-##   ..   location = col_logical(),
-##   ..   in_reply_to_screen_name = col_character(),
-##   ..   in_reply_to_status_id = col_double(),
-##   ..   in_reply_to_user_id = col_double(),
-##   ..   latitude = col_logical(),
-##   ..   longitude = col_logical(),
-##   ..   mention_ids = col_character(),
-##   ..   mention_screen_names = col_character(),
-##   ..   place_latitude = col_double(),
-##   ..   place_longitude = col_double(),
-##   ..   user_id = col_double(),
-##   ..   created_at_user = col_datetime(format = &quot;&quot;),
-##   ..   description = col_character(),
-##   ..   favourites_count = col_double(),
-##   ..   followers_count = col_double(),
-##   ..   friends_count = col_double(),
-##   ..   geo_enabled = col_logical(),
-##   ..   name = col_character(),
-##   ..   statuses_count = col_double(),
-##   ..   time_zone = col_logical(),
-##   ..   verified = col_logical()
-##   .. )</code></pre>
-<p>El default de <code>get_timeline</code> trae los últimos 100 tuits. Como máximo, las normas de Twitter permiten extraer 3.200 tuits. Dado que este límite implica que la fecha de los tuits que obtenemos con el llamado va cambiando con el tiempo, nosotros optamos por guardar estas bases de datos en archivos .csv, a los que se puede acceder desde <a href="https://github.com/CVFH/Tuits_arg_2019/tree/master/Data">este enlace a nuestro repositorio de Git</a>.</p>
-<p>Por este mismo motivo es que desarrollamos una funcion que agrega y emprolija estos datos en <a href="https://github.com/CVFH/Tuits_arg_2019/blob/master/preparacion_datos_tuits.R">este script</a> que explicamos en <a href="../preparacion_tuits/">este post</a>, de manera similar a como hicimos con los datos electorales.</p>
-<p>El resultado de aplicar estas operaciones es una tabla como la siguiente:</p>
-<pre class="r"><code>joined_candidatos &lt;- traerDatosTuits(&quot;tot&quot;)
-
-str(joined_candidatos)</code></pre>
-<pre><code>## &#39;data.frame&#39;:    47755 obs. of  15 variables:
-##  $ created_at             : Factor w/ 46256 levels &quot;2016-05-09 13:20:14-03:00&quot;,..: 2385 2384 2383 2382 2381 2380 2379 2378 2378 2377 ...
-##  $ text                   : Factor w/ 47690 levels &quot;- AHORA desde Chivilcoy #ProvinciaEnMarcha https://t.co/MAdRW1ZIRB&quot;,..: 2001 808 1284 2443 1261 464 1555 1625 1352 1991 ...
-##  $ rts                    : int  184 204 118 243 323 109 268 318 178 471 ...
-##  $ fav_count              : int  698 968 267 745 1253 359 819 889 425 1209 ...
-##  $ tweet_id               : num  1.28e+18 1.28e+18 1.28e+18 1.28e+18 1.28e+18 ...
-##  $ link                   : Factor w/ 47755 levels &quot;https://twitter.com/Kicillofok/status/1001850437585264640&quot;,..: 1436 1435 1434 1433 1432 1431 1430 1428 1429 1427 ...
-##  $ screen_name            : Factor w/ 21 levels &quot;Kicillofok&quot;,&quot;mariuvidal&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
-##  $ user_id                : num  2.95e+09 2.95e+09 2.95e+09 2.95e+09 2.95e+09 ...
-##  $ description            : Factor w/ 21 levels &quot;Gobernador de la Provincia de Buenos Aires.&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
-##  $ location               : Factor w/ 14 levels &quot;Buenos Aires&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
-##  $ mention_screen_names   : Factor w/ 5807 levels &quot;&quot;,&quot;0223comar, brunonperrone, FrenteDeTodos&quot;,..: 1 297 1 426 1 1 474 321 1 15 ...
-##  $ in_reply_to_screen_name: Factor w/ 1291 levels &quot;&quot;,&quot;alfonsopratgay&quot;,..: 1 1 6 1 1 6 1 1 6 1 ...
-##  $ followers_count        : int  1185178 1185178 1185178 1185178 1185178 1185178 1185178 1185178 1185178 1185178 ...
-##  $ friends_count          : int  307 307 307 307 307 307 307 307 307 307 ...
-##  $ Campaña                : num  0 0 0 0 0 0 0 0 0 0 ...</code></pre>
-</div>
-<div id="comentarios-adicionales-desafíos-y-límites-de-la-muestra-seleccionada" class="section level2">
-<h2>Comentarios adicionales: desafíos y límites de la muestra seleccionada</h2>
-<p>Quizás convenga, antes de continuar, hacer un par de aclaraciones respecto de los datos con los que trabajamos.</p>
-<p>En primer lugar, vale explicitar una importante decisión. Para responder a nuestras preguntas, debimos identificar los tutis emitidos por los candidatos <em>durante la campaña</em>. Siendo que la red social permite un flujo permanente de una multiplicidad de mensajes (personales, laborales, etc), aquí es justo preguntarnos: ¿cuáles de ellos hacen a dicha “campaña”?</p>
-<p>La alternativa que hallamos menos ambigua fue recortar nuestra base de datos conforme a la fecha de emisión del tuit: pocas dudas caben de que la campaña <em>termina</em> el día de los comicios. Pero aún resta tomar ciertas decisiones, sobre todo: ¿cuándo empieza?</p>
-<p>Aquí nos basamos en la Ley Electoral nacional para ofrecer, de nuevo, la respuesta que consideramos menos arbitraria. En el país se realizan elecciones “primarias abiertas, simultáneas y obligatorias”, “PASO”. Sólo entonces se define con seguirdad “la cancha” en la que se jugará la partida política de cara a las elecciones generales.</p>
-<p>El período comprendido entre estas dos fechas, entonces: las PASO y las elecciones, podría ser justamente definido como de campaña.</p>
-<p>Ahora bien, la estructura federal de la Argentina nos impuso un desafío adicional: recordemos que las provincias tienen margen para ajustar el calendario electoral a sus preferencias. Para complicar aún más las cosas, no todas las provincias llevan a cabo elecciones primarias.</p>
-<p>Como dijimos más atrás, nuestros datos deliberadamente contenían tuits emitidos por los candidatos a la cartera ejecutiva nacional, y a 4 provincias que oficiaron elecciones simultáneas, y 4 que lo hicieron de manera “desdoblada”, pero en una misma fecha.</p>
-<p>Nuestra solución entonces fue la siguiente. Como fin de la campaña, consideramos la fecha de las respectivas votaciones: 16 de junio para las cuatro provincias que desdoblaron y adelantaron el día, 27 de octubre para la nación y el resto de las provincias. Y, si bien no todas las provincias celebraron primarias, como inicio consideramos la fecha en la que se realizaran en el resto de los distritos del mismo “grupo”: 28 de abril para las provincias que modificaron su calendario respecto al nacional, con base en las primarias de Santa Fe, 11 de agosto para el resto, de los cuales sólo Tierra del Fuego no llevó adelante esta primera instancia electoral.</p>
-<p>Sintetizamos el resultado de este recorte en la tabla a continuación:</p>
-<pre class="r"><code>tabla_fechas &lt;- read_csv(&quot;muestra_fechas.csv&quot;)
-
-tabla_fechas %&gt;% gt() %&gt;% 
+<pre class="r"><code>head(tuits_Kicillofok)  %&gt;% 
+  gt() %&gt;% 
   gt::tab_header(
-    title = &quot;Recorte de &#39;la campaña&#39;&quot;,
-    subtitle = &quot;muestra resultante por provincia&quot;) %&gt;% 
+    title = &quot;Base cruda - ejemplo&quot;) %&gt;% 
   gt::tab_style(
     style=  cell_fill(color = &quot;#00BFFF&quot;, alpha = 0.5),
-    locations = cells_title(groups = c(&quot;title&quot;, &quot;subtitle&quot;))) %&gt;% 
-  gt::tab_style(
-    style=  cell_fill(color = &quot;#E9EDF1&quot;, alpha = 0.5),
-    locations = cells_body()) %&gt;% 
+    locations = cells_title())  %&gt;% 
   gt::tab_style(
     style= cell_text(
-  color = &quot;#050505&quot;,
+      align = &quot;center&quot;),
+      locations = cells_stubhead()) %&gt;%  
+  gt::tab_style(cell_fill(color = &quot;#C0EEFF&quot;, alpha = 0.5),
+    locations = cells_stubhead()) %&gt;% 
+  gt::tab_style(
+  style= cell_text(
+  color = &quot;#0B0B0B&quot;,
   align = &quot;center&quot;,
   v_align = &quot;middle&quot;,
   weight = &quot;lighter&quot;),
@@ -1172,7 +1085,7 @@ tabla_fechas %&gt;% gt() %&gt;%
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#jejrsgssaw .gt_table {
+#vqwcgofrty .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1197,7 +1110,7 @@ tabla_fechas %&gt;% gt() %&gt;%
   border-left-color: #D3D3D3;
 }
 
-#jejrsgssaw .gt_heading {
+#vqwcgofrty .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1209,7 +1122,7 @@ tabla_fechas %&gt;% gt() %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#jejrsgssaw .gt_title {
+#vqwcgofrty .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1219,7 +1132,7 @@ tabla_fechas %&gt;% gt() %&gt;%
   border-bottom-width: 0;
 }
 
-#jejrsgssaw .gt_subtitle {
+#vqwcgofrty .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1229,13 +1142,13 @@ tabla_fechas %&gt;% gt() %&gt;%
   border-top-width: 0;
 }
 
-#jejrsgssaw .gt_bottom_border {
+#vqwcgofrty .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jejrsgssaw .gt_col_headings {
+#vqwcgofrty .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1250,7 +1163,7 @@ tabla_fechas %&gt;% gt() %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#jejrsgssaw .gt_col_heading {
+#vqwcgofrty .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1270,7 +1183,7 @@ tabla_fechas %&gt;% gt() %&gt;%
   overflow-x: hidden;
 }
 
-#jejrsgssaw .gt_column_spanner_outer {
+#vqwcgofrty .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1282,15 +1195,15 @@ tabla_fechas %&gt;% gt() %&gt;%
   padding-right: 4px;
 }
 
-#jejrsgssaw .gt_column_spanner_outer:first-child {
+#vqwcgofrty .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jejrsgssaw .gt_column_spanner_outer:last-child {
+#vqwcgofrty .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jejrsgssaw .gt_column_spanner {
+#vqwcgofrty .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1302,7 +1215,7 @@ tabla_fechas %&gt;% gt() %&gt;%
   width: 100%;
 }
 
-#jejrsgssaw .gt_group_heading {
+#vqwcgofrty .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1324,7 +1237,7 @@ tabla_fechas %&gt;% gt() %&gt;%
   vertical-align: middle;
 }
 
-#jejrsgssaw .gt_empty_group_heading {
+#vqwcgofrty .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1339,15 +1252,15 @@ tabla_fechas %&gt;% gt() %&gt;%
   vertical-align: middle;
 }
 
-#jejrsgssaw .gt_from_md > :first-child {
+#vqwcgofrty .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jejrsgssaw .gt_from_md > :last-child {
+#vqwcgofrty .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jejrsgssaw .gt_row {
+#vqwcgofrty .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1366,7 +1279,7 @@ tabla_fechas %&gt;% gt() %&gt;%
   overflow-x: hidden;
 }
 
-#jejrsgssaw .gt_stub {
+#vqwcgofrty .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1378,7 +1291,7 @@ tabla_fechas %&gt;% gt() %&gt;%
   padding-left: 12px;
 }
 
-#jejrsgssaw .gt_summary_row {
+#vqwcgofrty .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1388,7 +1301,7 @@ tabla_fechas %&gt;% gt() %&gt;%
   padding-right: 5px;
 }
 
-#jejrsgssaw .gt_first_summary_row {
+#vqwcgofrty .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1398,7 +1311,7 @@ tabla_fechas %&gt;% gt() %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#jejrsgssaw .gt_grand_summary_row {
+#vqwcgofrty .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1408,7 +1321,7 @@ tabla_fechas %&gt;% gt() %&gt;%
   padding-right: 5px;
 }
 
-#jejrsgssaw .gt_first_grand_summary_row {
+#vqwcgofrty .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1418,11 +1331,11 @@ tabla_fechas %&gt;% gt() %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#jejrsgssaw .gt_striped {
+#vqwcgofrty .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jejrsgssaw .gt_table_body {
+#vqwcgofrty .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1431,7 +1344,7 @@ tabla_fechas %&gt;% gt() %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#jejrsgssaw .gt_footnotes {
+#vqwcgofrty .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1445,13 +1358,13 @@ tabla_fechas %&gt;% gt() %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#jejrsgssaw .gt_footnote {
+#vqwcgofrty .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#jejrsgssaw .gt_sourcenotes {
+#vqwcgofrty .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1465,86 +1378,1231 @@ tabla_fechas %&gt;% gt() %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#jejrsgssaw .gt_sourcenote {
+#vqwcgofrty .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#jejrsgssaw .gt_left {
+#vqwcgofrty .gt_left {
   text-align: left;
 }
 
-#jejrsgssaw .gt_center {
+#vqwcgofrty .gt_center {
   text-align: center;
 }
 
-#jejrsgssaw .gt_right {
+#vqwcgofrty .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jejrsgssaw .gt_font_normal {
+#vqwcgofrty .gt_font_normal {
   font-weight: normal;
 }
 
-#jejrsgssaw .gt_font_bold {
+#vqwcgofrty .gt_font_bold {
   font-weight: bold;
 }
 
-#jejrsgssaw .gt_font_italic {
+#vqwcgofrty .gt_font_italic {
   font-style: italic;
 }
 
-#jejrsgssaw .gt_super {
+#vqwcgofrty .gt_super {
   font-size: 65%;
 }
 
-#jejrsgssaw .gt_footnote_marks {
+#vqwcgofrty .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="jejrsgssaw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="vqwcgofrty" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
-      <th colspan="1" class="gt_heading gt_title gt_font_normal" style="background-color: rgba(0,191,255,0.5);">Recorte de 'la campaña'</th>
+      <th colspan="28" class="gt_heading gt_title gt_font_normal" style="background-color: rgba(0,191,255,0.5);">Base cruda - ejemplo</th>
     </tr>
     <tr>
-      <th colspan="1" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>muestra resultante por provincia</th>
+      <th colspan="28" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style></th>
     </tr>
   </thead>
   <thead class="gt_col_headings">
     <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Distrito;Tipo de elección;¿Hubo Paso?;Fecha de inicio;Fecha de cierre</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">created_at</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">text</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">rts</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">fav_count</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">tweet_id</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">link</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">screen_name</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">location</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">in_reply_to_screen_name</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">in_reply_to_status_id</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">in_reply_to_user_id</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">latitude</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">longitude</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">mention_ids</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">mention_screen_names</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">place_latitude</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">place_longitude</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">user_id</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">created_at_user</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">description</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">favourites_count</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">followers_count</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">friends_count</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">geo_enabled</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">name</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">statuses_count</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">time_zone</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">verified</th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
     <tr>
-      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Formosa;Desdoblada;No;28-abr;16-jun</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2020-07-16 00:39:36</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Nos reunimos con referentes sindicales para conversar sobre las necesidades de cada sector para la pospandemia.
+
+Seguimos trabajando para mitigar los efectos económicos de la pandemia sobre los trabajadores. Agradezco la participación de los representantes en la mesa de diálogo. https://t.co/BS7xp8md0a</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">184</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">698</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1.283562e+18</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">https://twitter.com/Kicillofok/status/1283561887574249472</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Kicillofok</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">(u'',)</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2953955753</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2014-12-31 23:38:55</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador de la Provincia de Buenos Aires.</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">4044</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1185178</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">307</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">TRUE</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Axel Kicillof</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">4247</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">TRUE</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">San Luis;Desdoblada;No;28-abr;16-jun</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2020-07-15 20:54:53</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Con el gobernador @jmcapitanich intercambiamos experiencias y analizamos la implementación de las distintas fases del aislamiento obligatorio en nuestras provincias. https://t.co/EgcRPzQVQh</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">204</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">968</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1.283505e+18</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">https://twitter.com/Kicillofok/status/1283505338390634496</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Kicillofok</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">(u'143852870',)</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">jmcapitanich</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2953955753</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2014-12-31 23:38:55</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador de la Provincia de Buenos Aires.</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">4044</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1185178</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">307</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">TRUE</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Axel Kicillof</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">4247</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">TRUE</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Santa Fe;Desdoblada;Sí;28-abr;16-jun</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2020-07-15 18:01:27</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Estamos haciendo grandes esfuerzos y los resultados están a la vista. Gracias a la solidaridad podemos ayudar a más personas a recuperarse.
+
+Si tuviste coronavirus, #DonáPlasma 📞0800-222-0101 https://t.co/rrLmZRpur2</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">118</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">267</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1.283462e+18</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">https://twitter.com/Kicillofok/status/1283461690479255552</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Kicillofok</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Kicillofok</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1.283462e+18</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2953955753</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">(u'',)</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2953955753</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2014-12-31 23:38:55</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador de la Provincia de Buenos Aires.</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">4044</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1185178</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">307</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">TRUE</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Axel Kicillof</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">4247</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">TRUE</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Tierra del Fuego;Desdoblada;No;28-abr;16-jun</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2020-07-15 18:01:24</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Visitamos el Centro de Monitoreo de Malvinas Argentinas donde entregamos nuevos respiradores al intendente @Nardini_Leo, que se sumarán al sistema sanitario local.
+
+También nos reunimos con pacientes recuperados de COVID-19 que fueron tratados con plasma. https://t.co/wvsu3QThNz</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">243</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">745</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1.283462e+18</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">https://twitter.com/Kicillofok/status/1283461679888596992</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Kicillofok</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">(u'178840402',)</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Nardini_Leo</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2953955753</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2014-12-31 23:38:55</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador de la Provincia de Buenos Aires.</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">4044</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1185178</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">307</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">TRUE</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Axel Kicillof</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">4247</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">TRUE</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Buenos Aires;Simultánea;Sí;11-ago;27-oct</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2020-07-14 23:08:21</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Esta tarde mantuvimos una videoconferencia con los intendentes del AMBA para realizar un balance del aislamiento en la región y consensuar los pasos a seguir en la siguiente fase. https://t.co/gpicsDWmRB</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">323</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1253</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1.283177e+18</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">https://twitter.com/Kicillofok/status/1283176539669041158</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Kicillofok</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">(u'',)</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2953955753</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2014-12-31 23:38:55</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador de la Provincia de Buenos Aires.</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">4044</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1185178</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">307</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">TRUE</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Axel Kicillof</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">4247</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">TRUE</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">CABA;Simultánea;Sí;11-ago;27-oct</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2020-07-14 21:36:22</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">A partir de ahora podemos contar con más herramientas sanitarias para el distrito, que se materializan en nuevos derechos para sus habitantes. https://t.co/YGdxAabyvC</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">109</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">359</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1.283153e+18</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">https://twitter.com/Kicillofok/status/1283153388629303298</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Kicillofok</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Kicillofok</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1.283153e+18</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2953955753</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">(u'',)</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2953955753</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2014-12-31 23:38:55</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador de la Provincia de Buenos Aires.</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">4044</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1185178</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">307</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">TRUE</td>
+      <td class="gt_row gt_left" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Axel Kicillof</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">4247</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">TRUE</td>
+    </tr>
+  </tbody>
+  
+  
+</table></div>
+<p>El default de <code>get_timeline</code> trae los últimos 100 tuits. Como máximo, las normas de Twitter permiten extraer 3.200 tuits. Dado que este límite implica que la fecha de los tuits que obtenemos con el llamado va cambiando con el tiempo, nosotros optamos por guardar estas bases de datos en archivos .csv, a los que se puede acceder desde <a href="https://github.com/CVFH/Tuits_arg_2019/tree/master/Data">este enlace a nuestro repositorio de Git</a>.</p>
+<p>Por este mismo motivo, desarrollamos una función que agrega y emprolija estos datos, de manera similar a como hicimos con los datos electorales. Pueden verla en <a href="https://github.com/CVFH/Tuits_arg_2019/blob/master/preparacion_datos_tuits.R">este script</a>, que explicamos en <a href="../preparacion_tuits/">este post</a>.</p>
+<p>El resultado de aplicar estas operaciones es una tabla como la siguiente:</p>
+<pre class="r"><code>joined_candidatos &lt;- traerDatosTuits(&quot;tot&quot;)
+
+head(joined_candidatos) %&gt;% 
+  gt() %&gt;% 
+  gt::tab_header(
+    title = &quot;Base transformada - ejemplo &quot;) %&gt;% 
+  gt::tab_style(
+    style=  cell_fill(color = &quot;#00BFFF&quot;, alpha = 0.5),
+    locations = cells_title())  %&gt;% 
+  gt::tab_style(
+    style= cell_text(
+      align = &quot;center&quot;),
+      locations = cells_stubhead()) %&gt;%  
+  gt::tab_style(cell_fill(color = &quot;#C0EEFF&quot;, alpha = 0.5),
+    locations = cells_stubhead()) %&gt;% 
+  gt::tab_style(
+  style= cell_text(
+  color = &quot;#0B0B0B&quot;,
+  align = &quot;center&quot;,
+  v_align = &quot;middle&quot;,
+  weight = &quot;lighter&quot;),
+  locations = cells_body())</code></pre>
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#lxdqeqnzaf .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#lxdqeqnzaf .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#lxdqeqnzaf .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#lxdqeqnzaf .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#lxdqeqnzaf .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lxdqeqnzaf .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#lxdqeqnzaf .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#lxdqeqnzaf .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#lxdqeqnzaf .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#lxdqeqnzaf .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#lxdqeqnzaf .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#lxdqeqnzaf .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#lxdqeqnzaf .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#lxdqeqnzaf .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#lxdqeqnzaf .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#lxdqeqnzaf .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#lxdqeqnzaf .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#lxdqeqnzaf .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lxdqeqnzaf .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#lxdqeqnzaf .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lxdqeqnzaf .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#lxdqeqnzaf .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#lxdqeqnzaf .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lxdqeqnzaf .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#lxdqeqnzaf .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#lxdqeqnzaf .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#lxdqeqnzaf .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#lxdqeqnzaf .gt_left {
+  text-align: left;
+}
+
+#lxdqeqnzaf .gt_center {
+  text-align: center;
+}
+
+#lxdqeqnzaf .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#lxdqeqnzaf .gt_font_normal {
+  font-weight: normal;
+}
+
+#lxdqeqnzaf .gt_font_bold {
+  font-weight: bold;
+}
+
+#lxdqeqnzaf .gt_font_italic {
+  font-style: italic;
+}
+
+#lxdqeqnzaf .gt_super {
+  font-size: 65%;
+}
+
+#lxdqeqnzaf .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="lxdqeqnzaf" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  <thead class="gt_header">
+    <tr>
+      <th colspan="15" class="gt_heading gt_title gt_font_normal" style="background-color: rgba(0,191,255,0.5);">Base transformada - ejemplo </th>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Catamarca;Simultánea;Sí;11-ago;27-oct</td>
+      <th colspan="15" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style></th>
+    </tr>
+  </thead>
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">created_at</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">text</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">rts</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">fav_count</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">tweet_id</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">link</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">screen_name</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">user_id</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">description</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">location</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">mention_screen_names</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">in_reply_to_screen_name</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">followers_count</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">friends_count</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">Campaña</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2020-07-15 21:39:36-03:00</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Nos reunimos con referentes sindicales para conversar sobre las necesidades de cada sector para la pospandemia.
+
+Seguimos trabajando para mitigar los efectos económicos de la pandemia sobre los trabajadores. Agradezco la participación de los representantes en la mesa de diálogo. https://t.co/BS7xp8md0a</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">184</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">698</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1.283562e+18</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">https://twitter.com/Kicillofok/status/1283561887574249472</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Kicillofok</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2953955753</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador de la Provincia de Buenos Aires.</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;"></td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;"></td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1185178</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">307</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">0</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">La Rioja;Simultánea;No;11-ago;27-oct</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2020-07-15 17:54:53-03:00</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Con el gobernador @jmcapitanich intercambiamos experiencias y analizamos la implementación de las distintas fases del aislamiento obligatorio en nuestras provincias. https://t.co/EgcRPzQVQh</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">204</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">968</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1.283505e+18</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">https://twitter.com/Kicillofok/status/1283505338390634496</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Kicillofok</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2953955753</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador de la Provincia de Buenos Aires.</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">jmcapitanich</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;"></td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1185178</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">307</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">0</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Nacion;Simultánea;Sí;11-ago;27-oct</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2020-07-15 15:01:27-03:00</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Estamos haciendo grandes esfuerzos y los resultados están a la vista. Gracias a la solidaridad podemos ayudar a más personas a recuperarse.
+
+Si tuviste coronavirus, #DonáPlasma 📞0800-222-0101 https://t.co/rrLmZRpur2</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">118</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">267</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1.283462e+18</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">https://twitter.com/Kicillofok/status/1283461690479255552</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Kicillofok</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2953955753</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador de la Provincia de Buenos Aires.</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;"></td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Kicillofok</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1185178</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">307</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">0</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2020-07-15 15:01:24-03:00</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Visitamos el Centro de Monitoreo de Malvinas Argentinas donde entregamos nuevos respiradores al intendente @Nardini_Leo, que se sumarán al sistema sanitario local.
+
+También nos reunimos con pacientes recuperados de COVID-19 que fueron tratados con plasma. https://t.co/wvsu3QThNz</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">243</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">745</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1.283462e+18</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">https://twitter.com/Kicillofok/status/1283461679888596992</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Kicillofok</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2953955753</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador de la Provincia de Buenos Aires.</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Nardini_Leo</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;"></td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1185178</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">307</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">0</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2020-07-14 20:08:21-03:00</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Esta tarde mantuvimos una videoconferencia con los intendentes del AMBA para realizar un balance del aislamiento en la región y consensuar los pasos a seguir en la siguiente fase. https://t.co/gpicsDWmRB</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">323</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1253</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1.283177e+18</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">https://twitter.com/Kicillofok/status/1283176539669041158</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Kicillofok</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2953955753</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador de la Provincia de Buenos Aires.</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;"></td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;"></td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1185178</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">307</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">0</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2020-07-14 18:36:22-03:00</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">A partir de ahora podemos contar con más herramientas sanitarias para el distrito, que se materializan en nuevos derechos para sus habitantes. https://t.co/YGdxAabyvC</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">109</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">359</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1.283153e+18</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">https://twitter.com/Kicillofok/status/1283153388629303298</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Kicillofok</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">2953955753</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador de la Provincia de Buenos Aires.</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;"></td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Kicillofok</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">1185178</td>
+      <td class="gt_row gt_center" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">307</td>
+      <td class="gt_row gt_right" style="color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">0</td>
+    </tr>
+  </tbody>
+  
+  
+</table></div>
+</div>
+<div id="comentarios-adicionales-desafíos-y-límites-de-la-muestra-seleccionada" class="section level2">
+<h2>Comentarios adicionales: desafíos y límites de la muestra seleccionada</h2>
+<p>Quizás convenga, antes de continuar, hacer un par de aclaraciones respecto de los datos con los que trabajamos.</p>
+<p>En primer lugar, vale explicitar una importante decisión. Para responder a nuestras preguntas, debimos identificar los tutis emitidos por los candidatos <em>durante la campaña</em>. Siendo que la red social permite un flujo permanente de una multiplicidad de mensajes (personales, laborales, etc), aquí es justo preguntarnos: ¿cuáles de ellos hacen a dicha “campaña”?</p>
+<p>La alternativa que hallamos menos ambigua fue recortar nuestra base de datos conforme a la fecha de emisión del tuit: pocas dudas caben de que la campaña <em>termina</em> el día de los comicios. Pero todavía pende la pregunta: ¿cuándo empieza?</p>
+<p>Aquí nos basamos en la Ley Electoral nacional para ofrecer, de nuevo, la respuesta que consideramos menos arbitraria. En el país se realizan elecciones “primarias abiertas, simultáneas y obligatorias”, “PASO”. Sólo entonces se define con seguirdad “la cancha” en la que se jugará la partida política de cara a las elecciones generales.</p>
+<p>El período comprendido entre estas dos fechas, entonces: las PASO y las elecciones, podría ser justamente definido como de campaña.</p>
+<p>Ahora bien, la estructura federal de la Argentina nos impuso un desafío adicional: recordemos que las provincias tienen margen para ajustar el calendario electoral a sus preferencias. Para complicar aún más las cosas, no todas las provincias llevan a cabo elecciones primarias.</p>
+<p>Como dijimos más atrás, nuestros datos deliberadamente contenían tuits emitidos por los candidatos a la cartera ejecutiva nacional, y a 4 provincias que oficiaron elecciones simultáneas, y 4 que lo hicieron de manera “desdoblada”, pero en una misma fecha.</p>
+<p>Nuestra solución entonces fue la siguiente. Como fin de la campaña, consideramos la fecha de las respectivas votaciones: 16 de junio para las cuatro provincias que desdoblaron y adelantaron el día, 27 de octubre para la nación y el resto de las provincias. Y, si bien no todas las provincias celebraron primarias, como inicio consideramos la fecha en la que se realizaran en el resto de los distritos del mismo “grupo”: 28 de abril para las provincias que modificaron su calendario respecto al nacional, con base en las primarias de Santa Fe, 11 de agosto para el resto, de los cuales sólo La Rioja no llevó adelante esta primera instancia electoral.</p>
+<p>Sintetizamos el resultado de este recorte en la tabla a continuación:</p>
+<pre class="r"><code>tabla_fechas &lt;- read_csv(&quot;muestra_fechas.csv&quot;)
+
+tabla_fechas %&gt;% gt() %&gt;% 
+  gt::tab_header(
+    title = &quot;Recorte de &#39;la campaña&#39;&quot;,
+    subtitle = &quot;muestra resultante por provincia&quot;) %&gt;% 
+  gt::tab_style(
+    style=  cell_fill(color = &quot;#00BFFF&quot;, alpha = 0.5),
+    locations = cells_title(groups = c(&quot;title&quot;, &quot;subtitle&quot;)))  %&gt;% 
+  gt::tab_style(
+    style= cell_text(
+      align = &quot;center&quot;),
+      locations = cells_stubhead()) %&gt;%  
+  gt::tab_style(
+    style=  cell_fill(color = &quot;#E9EDF1&quot;, alpha = 0.5),
+    locations = cells_body()) %&gt;% 
+  gt::tab_style(
+    style= cell_text(
+  color = &quot;#050505&quot;,
+  align = &quot;center&quot;,
+  v_align = &quot;middle&quot;,
+  weight = &quot;lighter&quot;),
+  locations = cells_body())</code></pre>
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#ilimopbifx .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#ilimopbifx .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ilimopbifx .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#ilimopbifx .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#ilimopbifx .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ilimopbifx .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ilimopbifx .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#ilimopbifx .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#ilimopbifx .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#ilimopbifx .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#ilimopbifx .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#ilimopbifx .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#ilimopbifx .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#ilimopbifx .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#ilimopbifx .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#ilimopbifx .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#ilimopbifx .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#ilimopbifx .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ilimopbifx .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#ilimopbifx .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ilimopbifx .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#ilimopbifx .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#ilimopbifx .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ilimopbifx .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ilimopbifx .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#ilimopbifx .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ilimopbifx .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#ilimopbifx .gt_left {
+  text-align: left;
+}
+
+#ilimopbifx .gt_center {
+  text-align: center;
+}
+
+#ilimopbifx .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#ilimopbifx .gt_font_normal {
+  font-weight: normal;
+}
+
+#ilimopbifx .gt_font_bold {
+  font-weight: bold;
+}
+
+#ilimopbifx .gt_font_italic {
+  font-style: italic;
+}
+
+#ilimopbifx .gt_super {
+  font-size: 65%;
+}
+
+#ilimopbifx .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="ilimopbifx" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  <thead class="gt_header">
+    <tr>
+      <th colspan="5" class="gt_heading gt_title gt_font_normal" style="background-color: rgba(0,191,255,0.5);">Recorte de 'la campaña'</th>
+    </tr>
+    <tr>
+      <th colspan="5" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>muestra resultante por provincia</th>
+    </tr>
+  </thead>
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Distrito</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Tipo de elección</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">¿Hubo Paso?</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Fecha de inicio</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Fecha de cierre</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Formosa</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Desdoblada</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">No</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">28-abr</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">16-jun</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">San Luis</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Desdoblada</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">No</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">28-abr</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">16-jun</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Santa Fe</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Desdoblada</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Sí</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">28-abr</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">16-jun</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Tierra del Fuego</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Desdoblada</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">No</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">28-abr</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">16-jun</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Buenos Aires</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Simultánea</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Sí</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">11-ago</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">27-oct</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">CABA</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Simultánea</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Sí</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">11-ago</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">27-oct</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Catamarca</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Simultánea</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Sí</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">11-ago</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">27-oct</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">La Rioja</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Simultánea</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">No</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">11-ago</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">27-oct</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Nacion</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Simultánea</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Sí</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">11-ago</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">27-oct</td>
     </tr>
   </tbody>
   
@@ -1564,10 +2622,14 @@ fechas_tuits &lt;- joined_candidatos %&gt;%
 fechas_tuits %&gt;% gt() %&gt;% 
   gt::tab_header(
     title = &quot;Recorte temporal de la base de datos de tuits&quot;,
-    subtitle = &quot;mpor candidato&quot;) %&gt;% 
+    subtitle = &quot;por candidato&quot;) %&gt;% 
   gt::tab_style(
     style=  cell_fill(color = &quot;#00BFFF&quot;, alpha = 0.5),
     locations = cells_title(groups = c(&quot;title&quot;, &quot;subtitle&quot;))) %&gt;% 
+  gt::tab_style(
+    style= cell_text(
+      align = &quot;center&quot;),
+      locations = cells_stubhead()) %&gt;% 
   gt::tab_style(
     style=  cell_fill(color = &quot;#E9EDF1&quot;, alpha = 0.5),
     locations = cells_body()) %&gt;% 
@@ -1582,7 +2644,7 @@ fechas_tuits %&gt;% gt() %&gt;%
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#vkmhftjafe .gt_table {
+#ewkyizjdzm .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1607,7 +2669,7 @@ fechas_tuits %&gt;% gt() %&gt;%
   border-left-color: #D3D3D3;
 }
 
-#vkmhftjafe .gt_heading {
+#ewkyizjdzm .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1619,7 +2681,7 @@ fechas_tuits %&gt;% gt() %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#vkmhftjafe .gt_title {
+#ewkyizjdzm .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1629,7 +2691,7 @@ fechas_tuits %&gt;% gt() %&gt;%
   border-bottom-width: 0;
 }
 
-#vkmhftjafe .gt_subtitle {
+#ewkyizjdzm .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1639,13 +2701,13 @@ fechas_tuits %&gt;% gt() %&gt;%
   border-top-width: 0;
 }
 
-#vkmhftjafe .gt_bottom_border {
+#ewkyizjdzm .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#vkmhftjafe .gt_col_headings {
+#ewkyizjdzm .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1660,7 +2722,7 @@ fechas_tuits %&gt;% gt() %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#vkmhftjafe .gt_col_heading {
+#ewkyizjdzm .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1680,7 +2742,7 @@ fechas_tuits %&gt;% gt() %&gt;%
   overflow-x: hidden;
 }
 
-#vkmhftjafe .gt_column_spanner_outer {
+#ewkyizjdzm .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1692,15 +2754,15 @@ fechas_tuits %&gt;% gt() %&gt;%
   padding-right: 4px;
 }
 
-#vkmhftjafe .gt_column_spanner_outer:first-child {
+#ewkyizjdzm .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#vkmhftjafe .gt_column_spanner_outer:last-child {
+#ewkyizjdzm .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#vkmhftjafe .gt_column_spanner {
+#ewkyizjdzm .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1712,7 +2774,7 @@ fechas_tuits %&gt;% gt() %&gt;%
   width: 100%;
 }
 
-#vkmhftjafe .gt_group_heading {
+#ewkyizjdzm .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1734,7 +2796,7 @@ fechas_tuits %&gt;% gt() %&gt;%
   vertical-align: middle;
 }
 
-#vkmhftjafe .gt_empty_group_heading {
+#ewkyizjdzm .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1749,15 +2811,15 @@ fechas_tuits %&gt;% gt() %&gt;%
   vertical-align: middle;
 }
 
-#vkmhftjafe .gt_from_md > :first-child {
+#ewkyizjdzm .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#vkmhftjafe .gt_from_md > :last-child {
+#ewkyizjdzm .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#vkmhftjafe .gt_row {
+#ewkyizjdzm .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1776,7 +2838,7 @@ fechas_tuits %&gt;% gt() %&gt;%
   overflow-x: hidden;
 }
 
-#vkmhftjafe .gt_stub {
+#ewkyizjdzm .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1788,7 +2850,7 @@ fechas_tuits %&gt;% gt() %&gt;%
   padding-left: 12px;
 }
 
-#vkmhftjafe .gt_summary_row {
+#ewkyizjdzm .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1798,7 +2860,7 @@ fechas_tuits %&gt;% gt() %&gt;%
   padding-right: 5px;
 }
 
-#vkmhftjafe .gt_first_summary_row {
+#ewkyizjdzm .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1808,7 +2870,7 @@ fechas_tuits %&gt;% gt() %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#vkmhftjafe .gt_grand_summary_row {
+#ewkyizjdzm .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1818,7 +2880,7 @@ fechas_tuits %&gt;% gt() %&gt;%
   padding-right: 5px;
 }
 
-#vkmhftjafe .gt_first_grand_summary_row {
+#ewkyizjdzm .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1828,11 +2890,11 @@ fechas_tuits %&gt;% gt() %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#vkmhftjafe .gt_striped {
+#ewkyizjdzm .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#vkmhftjafe .gt_table_body {
+#ewkyizjdzm .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1841,7 +2903,7 @@ fechas_tuits %&gt;% gt() %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#vkmhftjafe .gt_footnotes {
+#ewkyizjdzm .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1855,13 +2917,13 @@ fechas_tuits %&gt;% gt() %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#vkmhftjafe .gt_footnote {
+#ewkyizjdzm .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#vkmhftjafe .gt_sourcenotes {
+#ewkyizjdzm .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1875,52 +2937,52 @@ fechas_tuits %&gt;% gt() %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#vkmhftjafe .gt_sourcenote {
+#ewkyizjdzm .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#vkmhftjafe .gt_left {
+#ewkyizjdzm .gt_left {
   text-align: left;
 }
 
-#vkmhftjafe .gt_center {
+#ewkyizjdzm .gt_center {
   text-align: center;
 }
 
-#vkmhftjafe .gt_right {
+#ewkyizjdzm .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vkmhftjafe .gt_font_normal {
+#ewkyizjdzm .gt_font_normal {
   font-weight: normal;
 }
 
-#vkmhftjafe .gt_font_bold {
+#ewkyizjdzm .gt_font_bold {
   font-weight: bold;
 }
 
-#vkmhftjafe .gt_font_italic {
+#ewkyizjdzm .gt_font_italic {
   font-style: italic;
 }
 
-#vkmhftjafe .gt_super {
+#ewkyizjdzm .gt_super {
   font-size: 65%;
 }
 
-#vkmhftjafe .gt_footnote_marks {
+#ewkyizjdzm .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="vkmhftjafe" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="ewkyizjdzm" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="4" class="gt_heading gt_title gt_font_normal" style="background-color: rgba(0,191,255,0.5);">Recorte temporal de la base de datos de tuits</th>
     </tr>
     <tr>
-      <th colspan="4" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>mpor candidato</th>
+      <th colspan="4" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>por candidato</th>
     </tr>
   </thead>
   <thead class="gt_col_headings">
@@ -2065,7 +3127,7 @@ fechas_tuits %&gt;% gt() %&gt;%
 </div>
 <div id="a-trabajar" class="section level2">
 <h2>A trabajar!</h2>
-<p>Una vez obtenidas nuestras tablas electorales y los datos de Twitter, podemos jugar, explorar, ensayar un análisis, algo que <a href="../tags/análisis/">haremos en los posts que siguen</a>.</p>
+<p>Una vez obtenidas nuestras tablas electorales y los datos de Twitter, podemos jugar, explorar, ensayar un análisis, algo que haremos en los posts que siguen.</p>
 </div>
 <div class="footnotes">
 <hr />

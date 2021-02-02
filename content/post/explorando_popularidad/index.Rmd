@@ -26,7 +26,6 @@ Otra vez trabajaremos con paquetes oficiales (¡y conocidos!) y las funciones qu
 #paquetes
 
 require(tidyverse)
-require(readxl)
 require(ggplot2) # para graficar
 library(patchwork) # para unir graficos
 
@@ -174,7 +173,7 @@ candidatos_rts_votos <- plotPoint(candidatos_popu_ranking,
                                   log(Votos), 
         # utilizamos el log ya que hay mucha diferencia entre distritos
                                   colour= Distrito)) +
-  theme_clean()  + 
+  theme_minimal()  + 
       labs(title = " ", 
          x = "Log de rts totales obtenidos", 
          y = "Log de votos obtenidos") + 

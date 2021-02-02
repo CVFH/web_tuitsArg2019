@@ -106,7 +106,7 @@ Para leer datos de la web:
 * `limpiarTokens`: recibe un df con tuits "tokenizados" y ofrece distintas opciones para "limpiarlos": extraer ciertas palabras muy utilizadas e "insignificantes" (para lo que nos valemos del paquete [stopwords](https://www.rdocumentation.org/packages/stopwords)), y deshacernos de palabras demasiado cortas, enlaces, mentions y/o hasthags.
 {{< /ticks >}}
 
-{{< expandable label="¿Cómo fueron hechas? "  level="2"  >}}
+{{< expandable label="¿Cómo funcionan? "  level="2"  >}}
 Para conocer el detalle de estas funciones :mag:, seguir [:arrow_right: este enlace](https://github.com/CVFH/Tuits_arg_2019/blob/master/Modules/tuitsCandidatos.R).
 {{< /expandable >}}
 

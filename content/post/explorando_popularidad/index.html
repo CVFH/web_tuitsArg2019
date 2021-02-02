@@ -25,7 +25,6 @@ weight: 5
 #paquetes
 
 require(tidyverse)
-require(readxl)
 require(ggplot2) # para graficar
 library(patchwork) # para unir graficos
 
@@ -160,7 +159,7 @@ candidatos_rts_votos &lt;- plotPoint(candidatos_popu_ranking,
                                   log(Votos), 
         # utilizamos el log ya que hay mucha diferencia entre distritos
                                   colour= Distrito)) +
-  theme_clean()  + 
+  theme_minimal()  + 
       labs(title = &quot; &quot;, 
          x = &quot;Log de rts totales obtenidos&quot;, 
          y = &quot;Log de votos obtenidos&quot;) + 

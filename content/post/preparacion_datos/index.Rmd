@@ -50,7 +50,11 @@ datos_base %>%
     subtitle = "TuitsArg2019") %>% 
   gt::tab_style(
     style=  cell_fill(color = "#00BFFF", alpha = 0.5),
-    locations = cells_title(groups = c("title", "subtitle"))) %>% 
+    locations = cells_title(groups = c("title", "subtitle")))  %>% 
+  gt::tab_style(
+    style= cell_text(
+      align = "center"),
+      locations = cells_stubhead()) %>%  
   gt::tab_style(cell_fill(color = "#C0EEFF", alpha = 0.5),
     locations = cells_body()) %>% 
   gt::tab_style(
@@ -67,7 +71,7 @@ datos_base %>%
 
 Para "explorar la popularidad" de los candidatos (como veremos en la [sección correspondiente](../explorando_popularidad/)), debimos colectar datos sobre los resultados electorales. 
 
-Para eso desarrollamos [este script](https://github.com/CVFH/Tuits_arg_2019/blob/master/preparacion_datos_electorales.R) que explicamos en [este post](../../post/preparacion_electorales/). El código define una función que parte de enlaces de wikipedia y/o de la Dirección Nacional Electoral argentina, y devuelve una tabla de datos _tidy_[^1].
+Para eso desarrollamos [este script](https://github.com/CVFH/Tuits_arg_2019/blob/master/preparacion_datos_electorales.R) que explicamos en [este post](../../post/preparacion_electorales/). El código define una función que parte de enlaces de Wikipedia y/o de la Dirección Nacional Electoral argentina, y devuelve una tabla de datos _tidy_[^1].
 
 Por ejemplo, partimos del enlace: 
 [https://es.wikipedia.org/wiki/Elecciones_presidenciales_de_Argentina_de_2019](https://es.wikipedia.org/wiki/Elecciones_presidenciales_de_Argentina_de_2019)
@@ -75,7 +79,6 @@ Por ejemplo, partimos del enlace:
 ...que contiene la siguiente tabla:
 
 ![](tabla.JPG)
-<img src="tabla.JPG" width="300">
 
 Extrajimos de esta manera los datos:
 
@@ -99,7 +102,11 @@ votos_presid %>%
     subtitle = "Resultados") %>% 
   gt::tab_style(
     style=  cell_fill(color = "#00BFFF", alpha = 0.5),
-    locations = cells_title(groups = c("title", "subtitle"))) %>% 
+    locations = cells_title(groups = c("title", "subtitle")))  %>% 
+  gt::tab_style(
+    style= cell_text(
+      align = "center"),
+      locations = cells_stubhead()) %>%  
   gt::tab_style(
     style=  cell_fill(color = "#E9EDF1", alpha = 0.5),
     locations = cells_body()) %>% 
@@ -130,20 +137,58 @@ tuits_Kicillofok <- read_csv("https://raw.githubusercontent.com/CVFH/Tuits_arg_2
 
 ```{r, message=FALSE, warning=FALSE}
 
-str(tuits_Kicillofok)
+head(tuits_Kicillofok)  %>% 
+  gt() %>% 
+  gt::tab_header(
+    title = "Base cruda - ejemplo") %>% 
+  gt::tab_style(
+    style=  cell_fill(color = "#00BFFF", alpha = 0.5),
+    locations = cells_title())  %>% 
+  gt::tab_style(
+    style= cell_text(
+      align = "center"),
+      locations = cells_stubhead()) %>%  
+  gt::tab_style(cell_fill(color = "#C0EEFF", alpha = 0.5),
+    locations = cells_stubhead()) %>% 
+  gt::tab_style(
+  style= cell_text(
+  color = "#0B0B0B",
+  align = "center",
+  v_align = "middle",
+  weight = "lighter"),
+  locations = cells_body())
 
 ```
 
 El default de `get_timeline` trae los últimos 100 tuits. Como máximo, las normas de Twitter permiten extraer 3.200 tuits. Dado que este límite implica que la fecha de los tuits que obtenemos con el llamado va cambiando con el tiempo, nosotros optamos por guardar estas bases de datos en archivos .csv, a los que se puede acceder desde [este enlace a nuestro repositorio de Git](https://github.com/CVFH/Tuits_arg_2019/tree/master/Data).
 
-Por este mismo motivo es que desarrollamos una funcion que agrega y emprolija estos datos en [este script](https://github.com/CVFH/Tuits_arg_2019/blob/master/preparacion_datos_tuits.R) que explicamos en [este post](../preparacion_tuits/), de manera similar a como hicimos con los datos electorales.
+Por este mismo motivo, desarrollamos una función que agrega y emprolija estos datos, de manera similar a como hicimos con los datos electorales. Pueden verla en [este script](https://github.com/CVFH/Tuits_arg_2019/blob/master/preparacion_datos_tuits.R), que explicamos en [este post](../preparacion_tuits/).
 
 El resultado de aplicar estas operaciones es una tabla como la siguiente:
 
 ```{r muestra_datos_tuits, warning=FALSE, message=FALSE}
 joined_candidatos <- traerDatosTuits("tot")
 
-str(joined_candidatos)
+head(joined_candidatos) %>% 
+  gt() %>% 
+  gt::tab_header(
+    title = "Base transformada - ejemplo ") %>% 
+  gt::tab_style(
+    style=  cell_fill(color = "#00BFFF", alpha = 0.5),
+    locations = cells_title())  %>% 
+  gt::tab_style(
+    style= cell_text(
+      align = "center"),
+      locations = cells_stubhead()) %>%  
+  gt::tab_style(cell_fill(color = "#C0EEFF", alpha = 0.5),
+    locations = cells_stubhead()) %>% 
+  gt::tab_style(
+  style= cell_text(
+  color = "#0B0B0B",
+  align = "center",
+  v_align = "middle",
+  weight = "lighter"),
+  locations = cells_body())
 ```
 
 ## Comentarios adicionales: desafíos y límites de la muestra seleccionada
@@ -152,7 +197,7 @@ Quizás convenga, antes de continuar, hacer un par de aclaraciones respecto de l
 
 En primer lugar, vale explicitar una importante decisión. Para responder a nuestras preguntas, debimos identificar los tutis emitidos por los candidatos _durante la campaña_. Siendo que la red social permite un flujo permanente de una multiplicidad de mensajes (personales, laborales, etc), aquí es justo preguntarnos: ¿cuáles de ellos hacen a dicha "campaña"?
 
-La alternativa que hallamos menos ambigua fue recortar nuestra base de datos conforme a la fecha de emisión del tuit: pocas dudas caben de que la campaña _termina_ el día de los comicios. Pero aún resta tomar ciertas decisiones, sobre todo: ¿cuándo empieza?
+La alternativa que hallamos menos ambigua fue recortar nuestra base de datos conforme a la fecha de emisión del tuit: pocas dudas caben de que la campaña _termina_ el día de los comicios. Pero todavía pende la pregunta: ¿cuándo empieza?
 
 Aquí nos basamos en la Ley Electoral nacional para ofrecer, de nuevo, la respuesta que consideramos menos arbitraria. En el país se realizan elecciones "primarias abiertas, simultáneas y obligatorias", "PASO". Sólo entonces se define con seguirdad "la cancha" en la que se jugará la partida política de cara a las elecciones generales. 
 
@@ -162,7 +207,7 @@ Ahora bien, la estructura federal de la Argentina nos impuso un desafío adicion
 
 Como dijimos más atrás, nuestros datos deliberadamente contenían tuits emitidos por los candidatos a la cartera ejecutiva nacional, y a 4 provincias que oficiaron elecciones simultáneas, y 4 que lo hicieron de manera "desdoblada", pero en una misma fecha. 
 
-Nuestra solución entonces fue la siguiente. Como fin de la campaña, consideramos la fecha de las respectivas votaciones: 16 de junio para las cuatro provincias que desdoblaron y adelantaron el día, 27 de octubre para la nación y el resto de las provincias. Y, si bien no todas las provincias celebraron primarias, como inicio consideramos la fecha en la que se realizaran en el resto de los distritos del mismo "grupo": 28 de abril para las provincias que modificaron su calendario respecto al nacional, con base en las primarias de Santa Fe, 11 de agosto para el resto, de los cuales sólo Tierra del Fuego no llevó adelante esta primera instancia electoral. 
+Nuestra solución entonces fue la siguiente. Como fin de la campaña, consideramos la fecha de las respectivas votaciones: 16 de junio para las cuatro provincias que desdoblaron y adelantaron el día, 27 de octubre para la nación y el resto de las provincias. Y, si bien no todas las provincias celebraron primarias, como inicio consideramos la fecha en la que se realizaran en el resto de los distritos del mismo "grupo": 28 de abril para las provincias que modificaron su calendario respecto al nacional, con base en las primarias de Santa Fe, 11 de agosto para el resto, de los cuales sólo La Rioja no llevó adelante esta primera instancia electoral. 
 
 Sintetizamos el resultado de este recorte en la tabla a continuación:
 
@@ -175,7 +220,11 @@ tabla_fechas %>% gt() %>%
     subtitle = "muestra resultante por provincia") %>% 
   gt::tab_style(
     style=  cell_fill(color = "#00BFFF", alpha = 0.5),
-    locations = cells_title(groups = c("title", "subtitle"))) %>% 
+    locations = cells_title(groups = c("title", "subtitle")))  %>% 
+  gt::tab_style(
+    style= cell_text(
+      align = "center"),
+      locations = cells_stubhead()) %>%  
   gt::tab_style(
     style=  cell_fill(color = "#E9EDF1", alpha = 0.5),
     locations = cells_body()) %>% 
@@ -207,10 +256,14 @@ fechas_tuits <- joined_candidatos %>%
 fechas_tuits %>% gt() %>% 
   gt::tab_header(
     title = "Recorte temporal de la base de datos de tuits",
-    subtitle = "mpor candidato") %>% 
+    subtitle = "por candidato") %>% 
   gt::tab_style(
     style=  cell_fill(color = "#00BFFF", alpha = 0.5),
     locations = cells_title(groups = c("title", "subtitle"))) %>% 
+  gt::tab_style(
+    style= cell_text(
+      align = "center"),
+      locations = cells_stubhead()) %>% 
   gt::tab_style(
     style=  cell_fill(color = "#E9EDF1", alpha = 0.5),
     locations = cells_body()) %>% 
@@ -227,6 +280,6 @@ fechas_tuits %>% gt() %>%
 
 ## A trabajar!
 
-Una vez obtenidas nuestras tablas electorales y los datos de Twitter, podemos jugar, explorar, ensayar un análisis, algo que [haremos en los posts que siguen](../tags/análisis/).
+Una vez obtenidas nuestras tablas electorales y los datos de Twitter, podemos jugar, explorar, ensayar un análisis, algo que haremos en los posts que siguen.
 
 [^1]: En el proyecto original, trabajamos con versiones locales de todas estas piezas de código, que, por motivos de espacio y "portabilidad", decidimos consignar en archivos separados. Para su exposición en este post, y los que siguen en el camino propuesto, hemos transitado a su versión "online", es decir, convocamos directamente al código almacenado en [nuestro repositorio de Git](https://github.com/CVFH/Tuits_arg_2019). El fin es que lo expuesto sea reproducible por quien así lo desee. Sin embargo, nos ha significado una importante pérdida en términos de agilidad de procesamiento. Pretendemos experimentar a futuro con alternativas más "económicas".

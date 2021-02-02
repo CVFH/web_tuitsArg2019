@@ -1,10 +1,10 @@
-﻿Distrito;Tipo de elección;¿Hubo Paso?;Fecha de inicio;Fecha de cierre
-Formosa;Desdoblada;No;28-abr;16-jun
-San Luis;Desdoblada;No;28-abr;16-jun
-Santa Fe;Desdoblada;Sí;28-abr;16-jun
-Tierra del Fuego;Desdoblada;No;28-abr;16-jun
-Buenos Aires;Simultánea;Sí;11-ago;27-oct
-CABA;Simultánea;Sí;11-ago;27-oct
-Catamarca;Simultánea;Sí;11-ago;27-oct
-La Rioja;Simultánea;No;11-ago;27-oct
-Nacion;Simultánea;Sí;11-ago;27-oct
+﻿Distrito,Tipo de elección,¿Hubo Paso?,Fecha de inicio,Fecha de cierre
+Formosa,Desdoblada,No,28-abr,16-jun
+San Luis,Desdoblada,No,28-abr,16-jun
+Santa Fe,Desdoblada,Sí,28-abr,16-jun
+Tierra del Fuego,Desdoblada,No,28-abr,16-jun
+Buenos Aires,Simultánea,Sí,11-ago,27-oct
+CABA,Simultánea,Sí,11-ago,27-oct
+Catamarca,Simultánea,Sí,11-ago,27-oct
+La Rioja,Simultánea,No,11-ago,27-oct
+Nacion,Simultánea,Sí,11-ago,27-oct
