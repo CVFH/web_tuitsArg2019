@@ -43,11 +43,11 @@ library(pander)
 library(tidyverse)
 library(ggforce) # para graficos de sets paralelos
 library(twitterwidget) # para incluir tuits en Rmd 
-library(gt) # para formateo de tablas
 
 #propias
 
-source(&quot;https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/tuitsCandidatos.R&quot;, encoding = &quot;UTF-8&quot;) # para trabajar con bases de tuits</code></pre>
+source(&quot;https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/tuitsCandidatos.R&quot;, encoding = &quot;UTF-8&quot;) # para trabajar con bases de tuits
+source(&quot;https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/funcionesGraficos.R&quot;, encoding = &quot;UTF-8&quot;) # para formateo de tablas</code></pre>
 </div>
 <div id="importación-de-datos" class="section level4">
 <h4>Importación de datos</h4>
@@ -207,29 +207,14 @@ temas_populares &lt;- fct_count(ncoincidencias_tema_tweets$temas) %&gt;%
   dplyr::rename(Tema = &quot;f&quot;, &quot;Cantidad de tuits&quot; = &quot;n&quot;) %&gt;% 
   na.omit()
 
-head(temas_populares, 10) %&gt;% 
-  gt::gt() %&gt;% 
-  gt::tab_header(
-    title = &quot;Temas más populares entre los candidatos&quot;,
-    subtitle = &quot;(conteo manual)&quot;) %&gt;% 
-  gt::tab_style(
-    style=  cell_fill(color = &quot;#00BFFF&quot;, alpha = 0.5),
-    locations = cells_title(groups = c(&quot;title&quot;, &quot;subtitle&quot;))) %&gt;% 
-  gt::tab_style(
-    style=  cell_fill(color = &quot;#E9EDF1&quot;, alpha = 0.5),
-    locations = cells_body()) %&gt;% 
-  gt::tab_style(
-    style= cell_text(
-      color = &quot;#050505&quot;,
-      align = &quot;center&quot;,
-      v_align = &quot;middle&quot;,
-      weight = &quot;lighter&quot;),
-    locations = cells_body())</code></pre>
+head(temas_populares, 10) %&gt;% formatoTabla(
+  titulo = &quot;Temas más populares entre los candidatos&quot;,
+   subtitulo = &quot;(conteo manual)&quot;)</code></pre>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#lnkdcqeobm .gt_table {
+#tvylukkaab .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -254,7 +239,7 @@ head(temas_populares, 10) %&gt;%
   border-left-color: #D3D3D3;
 }
 
-#lnkdcqeobm .gt_heading {
+#tvylukkaab .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -266,7 +251,7 @@ head(temas_populares, 10) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#lnkdcqeobm .gt_title {
+#tvylukkaab .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -276,7 +261,7 @@ head(temas_populares, 10) %&gt;%
   border-bottom-width: 0;
 }
 
-#lnkdcqeobm .gt_subtitle {
+#tvylukkaab .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -286,13 +271,13 @@ head(temas_populares, 10) %&gt;%
   border-top-width: 0;
 }
 
-#lnkdcqeobm .gt_bottom_border {
+#tvylukkaab .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#lnkdcqeobm .gt_col_headings {
+#tvylukkaab .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -307,7 +292,7 @@ head(temas_populares, 10) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#lnkdcqeobm .gt_col_heading {
+#tvylukkaab .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -327,7 +312,7 @@ head(temas_populares, 10) %&gt;%
   overflow-x: hidden;
 }
 
-#lnkdcqeobm .gt_column_spanner_outer {
+#tvylukkaab .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -339,15 +324,15 @@ head(temas_populares, 10) %&gt;%
   padding-right: 4px;
 }
 
-#lnkdcqeobm .gt_column_spanner_outer:first-child {
+#tvylukkaab .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#lnkdcqeobm .gt_column_spanner_outer:last-child {
+#tvylukkaab .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#lnkdcqeobm .gt_column_spanner {
+#tvylukkaab .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -359,7 +344,7 @@ head(temas_populares, 10) %&gt;%
   width: 100%;
 }
 
-#lnkdcqeobm .gt_group_heading {
+#tvylukkaab .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -381,7 +366,7 @@ head(temas_populares, 10) %&gt;%
   vertical-align: middle;
 }
 
-#lnkdcqeobm .gt_empty_group_heading {
+#tvylukkaab .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -396,15 +381,15 @@ head(temas_populares, 10) %&gt;%
   vertical-align: middle;
 }
 
-#lnkdcqeobm .gt_from_md > :first-child {
+#tvylukkaab .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#lnkdcqeobm .gt_from_md > :last-child {
+#tvylukkaab .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#lnkdcqeobm .gt_row {
+#tvylukkaab .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -423,7 +408,7 @@ head(temas_populares, 10) %&gt;%
   overflow-x: hidden;
 }
 
-#lnkdcqeobm .gt_stub {
+#tvylukkaab .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -435,7 +420,7 @@ head(temas_populares, 10) %&gt;%
   padding-left: 12px;
 }
 
-#lnkdcqeobm .gt_summary_row {
+#tvylukkaab .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -445,7 +430,7 @@ head(temas_populares, 10) %&gt;%
   padding-right: 5px;
 }
 
-#lnkdcqeobm .gt_first_summary_row {
+#tvylukkaab .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -455,7 +440,7 @@ head(temas_populares, 10) %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#lnkdcqeobm .gt_grand_summary_row {
+#tvylukkaab .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -465,7 +450,7 @@ head(temas_populares, 10) %&gt;%
   padding-right: 5px;
 }
 
-#lnkdcqeobm .gt_first_grand_summary_row {
+#tvylukkaab .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -475,11 +460,11 @@ head(temas_populares, 10) %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#lnkdcqeobm .gt_striped {
+#tvylukkaab .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#lnkdcqeobm .gt_table_body {
+#tvylukkaab .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -488,7 +473,7 @@ head(temas_populares, 10) %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#lnkdcqeobm .gt_footnotes {
+#tvylukkaab .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -502,13 +487,13 @@ head(temas_populares, 10) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#lnkdcqeobm .gt_footnote {
+#tvylukkaab .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#lnkdcqeobm .gt_sourcenotes {
+#tvylukkaab .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -522,46 +507,46 @@ head(temas_populares, 10) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#lnkdcqeobm .gt_sourcenote {
+#tvylukkaab .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#lnkdcqeobm .gt_left {
+#tvylukkaab .gt_left {
   text-align: left;
 }
 
-#lnkdcqeobm .gt_center {
+#tvylukkaab .gt_center {
   text-align: center;
 }
 
-#lnkdcqeobm .gt_right {
+#tvylukkaab .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#lnkdcqeobm .gt_font_normal {
+#tvylukkaab .gt_font_normal {
   font-weight: normal;
 }
 
-#lnkdcqeobm .gt_font_bold {
+#tvylukkaab .gt_font_bold {
   font-weight: bold;
 }
 
-#lnkdcqeobm .gt_font_italic {
+#tvylukkaab .gt_font_italic {
   font-style: italic;
 }
 
-#lnkdcqeobm .gt_super {
+#tvylukkaab .gt_super {
   font-size: 65%;
 }
 
-#lnkdcqeobm .gt_footnote_marks {
+#tvylukkaab .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="lnkdcqeobm" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="tvylukkaab" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="2" class="gt_heading gt_title gt_font_normal" style="background-color: rgba(0,191,255,0.5);">Temas más populares entre los candidatos</th>
@@ -578,44 +563,44 @@ head(temas_populares, 10) %&gt;%
   </thead>
   <tbody class="gt_table_body">
     <tr>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">educación</td>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">277</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">educación</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">277</td>
     </tr>
     <tr>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">obra_pública</td>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">258</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">obra_pública</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">258</td>
     </tr>
     <tr>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">electoral</td>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">196</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">electoral</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">196</td>
     </tr>
     <tr>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">vivienda</td>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">174</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">vivienda</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">174</td>
     </tr>
     <tr>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">salud</td>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">164</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">salud</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">164</td>
     </tr>
     <tr>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">gobierno_abierto</td>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">142</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">gobierno_abierto</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">142</td>
     </tr>
     <tr>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">seguridad</td>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">113</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">seguridad</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">113</td>
     </tr>
     <tr>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">caminos</td>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">112</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">caminos</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">112</td>
     </tr>
     <tr>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">cultura</td>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">112</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">cultura</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">112</td>
     </tr>
     <tr>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">deporte</td>
-      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">88</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">deporte</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">88</td>
     </tr>
   </tbody>
   
@@ -691,10 +676,10 @@ plot_temas_candidatos_absolutos &lt;- temas_candidatos_absolutos %&gt;%
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
         legend.position = &quot;none&quot;) +
   labs(x = &quot;&quot;, y = &quot;&quot;)</code></pre>
-<p>En el gráfico a continuación, la cantidad de tuits emitidos por cada candidato sobre cada tema está dado por el tamaño del círculo :black_circle:.</p>
+<p>En el gráfico a continuación, la cantidad de tuits emitidos por cada candidato sobre cada tema está dado por el tamaño del círculo :black_circle:. De esta manera, puede observarse la distribución de las referencias a los asuntos más populares, que consignamos en la tabla anterior.</p>
 <pre class="r"><code>plot_temas_candidatos_absolutos</code></pre>
 <p><img src="index_files/figure-html/plot_temas_candidatos_absolutos-1.png" width="672" /></p>
-<p>Quizás sea más claro graficar y calcular el peso relativo de cada tema para cada candidato. Lo hacemos a partir del código a continuación.</p>
+<p>De todos modos, nótese que algunos candidatos, como sea A. Bogado, parecpronunciarse escasamente sobre muy pocos temas. En realidad, lo que ocurre es que emitieron menos tuits que los demás. Por eso, quizás sea más claro graficar y calcular el peso relativo de cada tema para cada candidato. Lo hacemos a partir del código a continuación.</p>
 <pre class="r"><code># cuenta relativa
 # ¿qué proporción de los tuits emitidos por i candidato fueron a x tema?
 
@@ -728,6 +713,9 @@ plot_temas_candidatos_relativos &lt;- temas_candidatos_relativos %&gt;%
 <p>En el gráfico que sigue, chequeamos qué proporción de los tuits emitidos por cada candidato corresponde a cada tema, según nuestras estimaciones. El “espacio en blanco” arriba de las barras indica cuántos tuits de los emitidos por cada candidato no fueron asignados a ninguna temática en particular.</p>
 <pre class="r"><code>plot_temas_candidatos_relativos</code></pre>
 <p><img src="index_files/figure-html/plot%20temas%20relativos-1.png" width="672" /></p>
+<blockquote>
+<p><em>Notará el lector que hemos identificado una gran cantidad de temas. Esta fue una decisión deliberada, a los fines de iluminar con algo de detalle las diferentes agendas de los candidatos. Esto ha implicado un precio en términos de parsimonia. En <a href="https://github.com/CVFH/Tuits_arg_2019/blob/master/exploracion_discursos.R">este script</a> hemos ensayado una racionalización de esta serie de temas; esto es, hemos reducido las categorías. Replicamos <a href="https://github.com/CVFH/Tuits_arg_2019/blob/master/images/plot_temas_absolutos_reducido.png">el gráfico sobre la cantidad absoluta de temas enunciada por cada candidato</a> y el de <a href="https://github.com/CVFH/Tuits_arg_2019/blob/master/images/plot_temas_relativos_reducido.png">la cantidad relativa</a>.</em></p>
+</blockquote>
 <p>Finalmente, un último ejercicio que puede resultar interesante consiste en identificar, de la lista de términos previamente provista, cuáles fueron las palabras más mencionadas por tema.</p>
 <p>Ensayamos el siguiente gráfico para la temática “vivienda”, una de las más mencionadas por nuestros candidatos.</p>
 <pre class="r"><code># y de hacer matches por palabras
@@ -968,8 +956,8 @@ pca_res$x %&gt;%
   theme_clean() + 
   theme(legend.position=&quot;none&quot;) </code></pre>
 <p><img src="index_files/figure-html/pca1-1.png" width="672" /></p>
-<p>El gráfico muestra la posición de nuestros documentos (los candidatos) respecto de los dos primeros componentes que resultaron de las estimaciones. ¿Qué ha ocurrido? Sencillamente, cada candidato en sí mismo explica un componente. Es decir, la variabilidad en nuestros datos estaría explicada por la idiosincrasia de cada uno de los documentos imputados en el cálculo.</p>
-<p>Veamos ahora qué ocurre si calificamos a cada tuit único como un documento único.
+<p>El gráfico muestra la posición de nuestros documentos (los candidatos) respecto de los dos primeros componentes que resultaron de las estimaciones. ¿Qué ha ocurrido? Sencillamente, cada candidato en sí mismo explica un componente. Es decir, la variabilidad en nuestros datos estaría explicada por la idiosincrasia de cada uno de los documentos imputados en el cálculo. En este caso, un componente explica la variabilidad en los tuits de M. Macri y el otro la de los de J. J. Gómez Centurión.</p>
+<p>Veamos ahora qué ocurre si calificamos a cada tuit único como un documento en sí mismo.
 Para proceder, haríamos algo como el código que sigue:</p>
 <pre class="r"><code>candidatos_tokentweet_dtmv2 &lt;- candidatos_tokentweets %&gt;% 
   limpiarTokens() %&gt;% 

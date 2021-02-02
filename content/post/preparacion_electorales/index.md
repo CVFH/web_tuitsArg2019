@@ -208,11 +208,11 @@ traerDatosElectorales <- function(tipo_dato){
 }
 {{< /code >}}
 
-Así, llamado a `traerDatosElectorales()`, obtenemos la información de nuestro interés, tal como ilustramos en [el post anterior](../preparacion_datos)
+Así, llamado a `traerDatosElectorales()`, obtenemos la información de nuestro interés, tal como ilustramos en [el post anterior](../preparacion_datos).
 
-Volver a [Home :house:](/)
+Volver a [Home :house:](/).
 
-:fast_forward: Seguir leyendo sobre [la preparación de los datos de Twitter](../preparacion_tuits)
+:fast_forward: Seguir leyendo sobre [la preparación de los datos de Twitter](../preparacion_tuits).
 
 [^1]: La identificación de estos nodos fue hecha manualmente, dado nuestra inspección de la web correspondiente.
 [^2]: Una alternativa interesante en este caso hubiera sido utilizar la función `get_election_data()` del paquete [polAr](https://cran.r-project.org/web/packages/polAr/index.html)

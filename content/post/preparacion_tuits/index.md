@@ -201,7 +201,7 @@ traerDatosTuits <- function(tipo_dato){
 3. Para cada distrito, definimos la ruta del archivo correspondiente[^3]
 4. Agregamos los nombres de los archivos en un vector...
 5. ...a los fines de trabajar simultáneamente sobre todos ellos, valiéndonos de la función `map()` de `purrr`, para
-6. leer los .csv
+6. leer los .csv y para 
 7. identificar los tuits emitidos durante la campaña
 8. Cuando correspondía, luego, agregamos las bases (por ejemplo, de provincias que hicieron elecciones desdobladas y en simultáneo).
 9. Nos quedamos con las columnas que nos interesan, definidas previamente
@@ -209,6 +209,8 @@ traerDatosTuits <- function(tipo_dato){
 11.  _Note el lector que, nuevamente, para la opción que pide la totalidad de los tuits emitidos por los candidatos, utilizamos un esquema recursivo._
 
 :tada: :tada: :tada: listos para su análisis!!! :tada: :tada: :tada:
+
+Te invitamos a comenzar la lectura de nuestros resultados desde [este post[(../explorando_popularidad/). También podés [volver al inicio :house:)(/).
 
 [^1]: Que, a su vez, se vale de [funciones definidas anteriormente](../preparacion_funciones/)
 [^2]: Con la función `determinarTuitsCampaña()` que presentamos en [este post](../preparacion_funciones)

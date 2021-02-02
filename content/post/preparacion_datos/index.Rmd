@@ -14,7 +14,8 @@ Antes de comenzar, abrimos algunas librerías.
 
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse) # trabajaremos en el paradigma "tidy"
-library(gt) # para formatear tablas
+
+source("https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/funcionesGraficos.R", encoding = "UTF-8") # script propio, para formatear tablas
 ```
 
 
@@ -43,27 +44,9 @@ datos_base <- traerDatosTuits("base")
 
 # visualizamos 
 
-datos_base %>% 
-  gt() %>% 
-  gt::tab_header(
-    title = "Datos Utilizados",
-    subtitle = "TuitsArg2019") %>% 
-  gt::tab_style(
-    style=  cell_fill(color = "#00BFFF", alpha = 0.5),
-    locations = cells_title(groups = c("title", "subtitle")))  %>% 
-  gt::tab_style(
-    style= cell_text(
-      align = "center"),
-      locations = cells_stubhead()) %>%  
-  gt::tab_style(cell_fill(color = "#C0EEFF", alpha = 0.5),
-    locations = cells_body()) %>% 
-  gt::tab_style(
-  style= cell_text(
-  color = "#0B0B0B",
-  align = "center",
-  v_align = "middle",
-  weight = "lighter"),
-  locations = cells_body())
+datos_base %>% formatoTabla(
+        titulo = "Datos Utilizados",
+      subtitulo = "TuitsArg2019")
 ```
 
 
@@ -95,28 +78,9 @@ votos_presid <- traerDatosElectorales("presid")
 
 # Tenemos nuestros datos!
 
-votos_presid %>% 
-  gt() %>% 
-  gt::tab_header(
-    title = "Elecciones presidenciales Argentina 2019",
-    subtitle = "Resultados") %>% 
-  gt::tab_style(
-    style=  cell_fill(color = "#00BFFF", alpha = 0.5),
-    locations = cells_title(groups = c("title", "subtitle")))  %>% 
-  gt::tab_style(
-    style= cell_text(
-      align = "center"),
-      locations = cells_stubhead()) %>%  
-  gt::tab_style(
-    style=  cell_fill(color = "#E9EDF1", alpha = 0.5),
-    locations = cells_body()) %>% 
-  gt::tab_style(
-    style= cell_text(
-  color = "#050505",
-  align = "center",
-  v_align = "middle",
-  weight = "lighter"),
-  locations = cells_body())
+votos_presid %>% formatoTabla(
+        titulo = "Elecciones presidenciales -  Argentina 2019",
+      subtitulo = "Resultados")
 
 ```
 
@@ -137,26 +101,10 @@ tuits_Kicillofok <- read_csv("https://raw.githubusercontent.com/CVFH/Tuits_arg_2
 
 ```{r, message=FALSE, warning=FALSE}
 
-head(tuits_Kicillofok)  %>% 
-  gt() %>% 
-  gt::tab_header(
-    title = "Base cruda - ejemplo") %>% 
-  gt::tab_style(
-    style=  cell_fill(color = "#00BFFF", alpha = 0.5),
-    locations = cells_title())  %>% 
-  gt::tab_style(
-    style= cell_text(
-      align = "center"),
-      locations = cells_stubhead()) %>%  
-  gt::tab_style(cell_fill(color = "#C0EEFF", alpha = 0.5),
-    locations = cells_stubhead()) %>% 
-  gt::tab_style(
-  style= cell_text(
-  color = "#0B0B0B",
-  align = "center",
-  v_align = "middle",
-  weight = "lighter"),
-  locations = cells_body())
+head(tuits_Kicillofok, 6) %>% formatoTabla(
+        titulo = "Base cruda",
+      subtitulo = "muestra de ejemplo",
+      back_color = "#C0EEFF")
 
 ```
 
@@ -167,28 +115,19 @@ Por este mismo motivo, desarrollamos una función que agrega y emprolija estos d
 El resultado de aplicar estas operaciones es una tabla como la siguiente:
 
 ```{r muestra_datos_tuits, warning=FALSE, message=FALSE}
-joined_candidatos <- traerDatosTuits("tot")
+joined_candidatos <- traerDatosTuits("tot") %>% 
+  arrange(desc(rts))
 
-head(joined_candidatos) %>% 
-  gt() %>% 
-  gt::tab_header(
-    title = "Base transformada - ejemplo ") %>% 
-  gt::tab_style(
-    style=  cell_fill(color = "#00BFFF", alpha = 0.5),
-    locations = cells_title())  %>% 
-  gt::tab_style(
-    style= cell_text(
-      align = "center"),
-      locations = cells_stubhead()) %>%  
-  gt::tab_style(cell_fill(color = "#C0EEFF", alpha = 0.5),
-    locations = cells_stubhead()) %>% 
-  gt::tab_style(
-  style= cell_text(
-  color = "#0B0B0B",
-  align = "center",
-  v_align = "middle",
-  weight = "lighter"),
-  locations = cells_body())
+# dimensiones de esta base
+
+dim(joined_candidatos)
+
+# pequeña muestra
+
+head(joined_candidatos, 6) %>% formatoTabla(
+        titulo = "Base transformada",
+      subtitulo = "muestra de ejemplo",
+      back_color = "#C0EEFF")
 ```
 
 ## Comentarios adicionales: desafíos y límites de la muestra seleccionada
@@ -214,27 +153,9 @@ Sintetizamos el resultado de este recorte en la tabla a continuación:
 ```{r muestrafechas, warning=FALSE, message=FALSE}
 tabla_fechas <- read_csv("muestra_fechas.csv")
 
-tabla_fechas %>% gt() %>% 
-  gt::tab_header(
-    title = "Recorte de 'la campaña'",
-    subtitle = "muestra resultante por provincia") %>% 
-  gt::tab_style(
-    style=  cell_fill(color = "#00BFFF", alpha = 0.5),
-    locations = cells_title(groups = c("title", "subtitle")))  %>% 
-  gt::tab_style(
-    style= cell_text(
-      align = "center"),
-      locations = cells_stubhead()) %>%  
-  gt::tab_style(
-    style=  cell_fill(color = "#E9EDF1", alpha = 0.5),
-    locations = cells_body()) %>% 
-  gt::tab_style(
-    style= cell_text(
-  color = "#050505",
-  align = "center",
-  v_align = "middle",
-  weight = "lighter"),
-  locations = cells_body())
+tabla_fechas %>%  formatoTabla(
+        titulo = "Recorte de 'la campaña'",
+      subtitulo = "muestra resultante por provincia")
   
 ```
 
@@ -253,33 +174,20 @@ fechas_tuits <- joined_candidatos %>%
             primero = min(as.Date(created_at)),
             cantidad_tuits = n())
 
-fechas_tuits %>% gt() %>% 
-  gt::tab_header(
-    title = "Recorte temporal de la base de datos de tuits",
-    subtitle = "por candidato") %>% 
-  gt::tab_style(
-    style=  cell_fill(color = "#00BFFF", alpha = 0.5),
-    locations = cells_title(groups = c("title", "subtitle"))) %>% 
-  gt::tab_style(
-    style= cell_text(
-      align = "center"),
-      locations = cells_stubhead()) %>% 
-  gt::tab_style(
-    style=  cell_fill(color = "#E9EDF1", alpha = 0.5),
-    locations = cells_body()) %>% 
-  gt::tab_style(
-    style= cell_text(
-  color = "#050505",
-  align = "center",
-  v_align = "middle",
-  weight = "lighter"),
-  locations = cells_body())
+fechas_tuits %>% formatoTabla(
+        titulo = "Recorte temporal de la base de datos de tuits",
+      subtitulo = "por candidato")
   
 
 ```
 
+##### Más?
+
+Si querés interiorizarte mejor con la manera en que manipulamos los datos, te recomendamos la lectura del [post que explica la función para formatear datos electorales](../../post/preparacion_electorales/), y [el que hace lo propio con los datos de Twitter](../preparacion_tuits/).
+
 ## A trabajar!
 
-Una vez obtenidas nuestras tablas electorales y los datos de Twitter, podemos jugar, explorar, ensayar un análisis, algo que haremos en los posts que siguen.
+Una vez obtenidas nuestras tablas electorales y los datos de Twitter, podemos jugar, explorar, ensayar un análisis, algo que haremos en los posts que siguen. Recomendamos el camino de lectura propuesto en [el inicio de este blog :house:](/).
+
 
 [^1]: En el proyecto original, trabajamos con versiones locales de todas estas piezas de código, que, por motivos de espacio y "portabilidad", decidimos consignar en archivos separados. Para su exposición en este post, y los que siguen en el camino propuesto, hemos transitado a su versión "online", es decir, convocamos directamente al código almacenado en [nuestro repositorio de Git](https://github.com/CVFH/Tuits_arg_2019). El fin es que lo expuesto sea reproducible por quien así lo desee. Sin embargo, nos ha significado una importante pérdida en términos de agilidad de procesamiento. Pretendemos experimentar a futuro con alternativas más "económicas".

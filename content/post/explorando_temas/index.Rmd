@@ -43,11 +43,11 @@ library(pander)
 library(tidyverse)
 library(ggforce) # para graficos de sets paralelos
 library(twitterwidget) # para incluir tuits en Rmd 
-library(gt) # para formateo de tablas
 
 #propias
 
 source("https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/tuitsCandidatos.R", encoding = "UTF-8") # para trabajar con bases de tuits
+source("https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/funcionesGraficos.R", encoding = "UTF-8") # para formateo de tablas
 ```
 
 #### Importación de datos
@@ -195,24 +195,10 @@ temas_populares <- fct_count(ncoincidencias_tema_tweets$temas) %>%
   dplyr::rename(Tema = "f", "Cantidad de tuits" = "n") %>% 
   na.omit()
 
-head(temas_populares, 10) %>% 
-  gt::gt() %>% 
-  gt::tab_header(
-    title = "Temas más populares entre los candidatos",
-    subtitle = "(conteo manual)") %>% 
-  gt::tab_style(
-    style=  cell_fill(color = "#00BFFF", alpha = 0.5),
-    locations = cells_title(groups = c("title", "subtitle"))) %>% 
-  gt::tab_style(
-    style=  cell_fill(color = "#E9EDF1", alpha = 0.5),
-    locations = cells_body()) %>% 
-  gt::tab_style(
-    style= cell_text(
-      color = "#050505",
-      align = "center",
-      v_align = "middle",
-      weight = "lighter"),
-    locations = cells_body())
+head(temas_populares, 10) %>% formatoTabla(
+  titulo = "Temas más populares entre los candidatos",
+   subtitulo = "(conteo manual)")
+
 ```
 
 Sigamos con algunos cálculos más relevantes a nuestros fines. Dada la anterior advertencia, y el origen de nuestros datos, encontramos más provechoso trabajar con los _tuits_ antes que con las palabras dispersas.
@@ -308,13 +294,13 @@ plot_temas_candidatos_absolutos <- temas_candidatos_absolutos %>%
 
 ```
 
-En el gráfico a continuación, la cantidad de tuits emitidos por cada candidato sobre cada tema está dado por el tamaño del círculo :black_circle:.
+En el gráfico a continuación, la cantidad de tuits emitidos por cada candidato sobre cada tema está dado por el tamaño del círculo :black_circle:. De esta manera, puede observarse la distribución de las referencias a los asuntos más populares, que consignamos en la tabla anterior. 
 
 ```{r plot_temas_candidatos_absolutos, warning= FALSE, message= FALSE}
 plot_temas_candidatos_absolutos
 ```
 
-Quizás sea más claro graficar y calcular el peso relativo de cada tema para cada candidato. Lo hacemos a partir del código a continuación.
+De todos modos, nótese que algunos candidatos, como sea A. Bogado, parecpronunciarse escasamente sobre muy pocos temas. En realidad, lo que ocurre es que emitieron menos tuits que los demás. Por eso, quizás sea más claro graficar y calcular el peso relativo de cada tema para cada candidato. Lo hacemos a partir del código a continuación.
 
 ```{r temas_relativos, warning= FALSE, message= FALSE}
 # cuenta relativa
@@ -355,6 +341,8 @@ En el gráfico que sigue, chequeamos qué proporción de los tuits emitidos por 
 ```{r plot temas relativos, warning= FALSE, message= FALSE}
 plot_temas_candidatos_relativos
 ```
+
+> _Notará el lector que hemos identificado una gran cantidad de temas. Esta fue una decisión deliberada, a los fines de iluminar con algo de detalle las diferentes agendas de los candidatos. Esto ha implicado un precio en términos de parsimonia. En [este script](https://github.com/CVFH/Tuits_arg_2019/blob/master/exploracion_discursos.R) hemos ensayado una racionalización de esta serie de temas; esto es, hemos reducido las categorías. Replicamos [el gráfico sobre la cantidad absoluta de temas enunciada por cada candidato](https://github.com/CVFH/Tuits_arg_2019/blob/master/images/plot_temas_absolutos_reducido.png) y el de [la cantidad relativa](https://github.com/CVFH/Tuits_arg_2019/blob/master/images/plot_temas_relativos_reducido.png)._
 
 Finalmente, un último ejercicio que puede resultar interesante consiste en identificar, de la lista de términos previamente provista, cuáles fueron las palabras más mencionadas por tema. 
 
@@ -649,9 +637,9 @@ pca_res$x %>%
 
 ```
 
-El gráfico muestra la posición de nuestros documentos (los candidatos) respecto de los dos primeros componentes que resultaron de las estimaciones. ¿Qué ha ocurrido? Sencillamente, cada candidato en sí mismo explica un componente. Es decir, la variabilidad en nuestros datos estaría explicada por la idiosincrasia de cada uno de los documentos imputados en el cálculo. 
+El gráfico muestra la posición de nuestros documentos (los candidatos) respecto de los dos primeros componentes que resultaron de las estimaciones. ¿Qué ha ocurrido? Sencillamente, cada candidato en sí mismo explica un componente. Es decir, la variabilidad en nuestros datos estaría explicada por la idiosincrasia de cada uno de los documentos imputados en el cálculo. En este caso, un componente explica la variabilidad en los tuits de M. Macri y el otro la de los de J. J. Gómez Centurión.
 
-Veamos ahora qué ocurre si calificamos a cada tuit único como un documento único. 
+Veamos ahora qué ocurre si calificamos a cada tuit único como un documento en sí mismo. 
 Para proceder, haríamos algo como el código que sigue: 
 
 ```{r pca2, eval=FALSE, warning= FALSE, message= FALSE}
