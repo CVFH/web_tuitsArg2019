@@ -34,12 +34,10 @@ A los fines de preservar claridad en la lectura, nombraremos y describiremos bre
 
 La primera parte de nuestro análisis, la _["exploración de la popularidad"](../explorando_popularidad/)_, requería asir los resultados de las elecciones argentinas de 2019, a nivel tanto nacional, como provincial. A la fecha de ejecución de nuestro proyecto, el modo más accesible y sistemático de obtener estos datos era a través de Wikipedia. Sin embargo, la presentación de estos datos no era idónea, más precisamente, no era _tidy_.
 
-{{< note >}}
-Decimos que una base de datos está ordenada o es _tidy_ cuando[^2]:
+>Decimos que una base de datos está ordenada o es _tidy_ cuando[^2]:
 :bulb: Cada variable tiene su propia columna.
 :bulb: Cada observación tiene su propia fila.
 :bulb: Cada valor ocupa su propia celda.
-{{< /note >}}
 
 Por este motivo, desarrollamos una serie de funciones para _scrappear_ y formatear la información contenida en las páginas respectivas de cada distrito. Luego pudimos aplicarlas a la extracción del mismo tipo de datos (resultados electorales) de la [página oficial del goberno argentino, la  Dirección Nacional Electoral](https://www.argentina.gob.ar/interior/dine/resultados-y-estadisticas/elecciones-2019).
 
@@ -80,7 +78,7 @@ Sobre la base de las anteriores, armamos dos funciones para la extracción y sis
 {{< /ticks >}}
 
 {{< expandable label="¿Querés saber cómo fueron hechas? "  level="2"  >}}
-Para conocer el detalle de estas funciones, dejamos aquí el  [:arrow_right: script](https://github.com/CVFH/Tuits_arg_2019/blob/master/Modules/tablasElectorales.R) correspondiente.
+Para conocer el detalle de estas funciones, dejamos aquí el [:arrow_right: script](https://github.com/CVFH/Tuits_arg_2019/blob/master/Modules/tablasElectorales.R) correspondiente.
 {{< /expandable >}}
 
 ## Funciones para trabajar con bases de datos de tuits
