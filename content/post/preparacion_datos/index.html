@@ -15,8 +15,6 @@ weight: 2
 <p>En este post mostraremos los datos que utilizamos, e introduciremos dos subsecciones que permiten seguir los pasos que hicimos para obtenerlos.</p>
 <p>Antes de comenzar, abrimos algunas librerías.</p>
 <pre class="r"><code>library(tidyverse) # trabajaremos en el paradigma &quot;tidy&quot;
-#library(rtweet) # para leer datos desde Twitter
-library(readxl) # para leer datos desde excel
 library(gt) # para formatear tablas</code></pre>
 <div id="nuestra-base" class="section level2">
 <h2>Nuestra base</h2>
@@ -32,7 +30,16 @@ En este marco, y dado nuestro fin experimental y exploratorio, decidimos quedarn
 </ul></li>
 </ol>
 <p>Nuestra base quedó conformada de la siguiente manera:</p>
-<pre class="r"><code>datos_base &lt;- read_xlsx(&quot;datos_base.xlsx&quot;)
+<pre class="r"><code># Llamamos al script que agrega y procesa datos. 
+# Nos extenderemos sobre este punto enseguida
+
+source(&quot;https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/preparacion_datos_tuits.R&quot;, encoding = &quot;UTF-8&quot;)
+
+# Solicitamos datos
+
+datos_base &lt;- traerDatosTuits(&quot;base&quot;)
+
+# visualizamos 
 
 datos_base %&gt;% 
   gt() %&gt;% 
@@ -55,7 +62,7 @@ datos_base %&gt;%
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#aacwckfnbx .gt_table {
+#cruaxvnuwi .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -80,7 +87,7 @@ datos_base %&gt;%
   border-left-color: #D3D3D3;
 }
 
-#aacwckfnbx .gt_heading {
+#cruaxvnuwi .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -92,7 +99,7 @@ datos_base %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#aacwckfnbx .gt_title {
+#cruaxvnuwi .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -102,7 +109,7 @@ datos_base %&gt;%
   border-bottom-width: 0;
 }
 
-#aacwckfnbx .gt_subtitle {
+#cruaxvnuwi .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -112,13 +119,13 @@ datos_base %&gt;%
   border-top-width: 0;
 }
 
-#aacwckfnbx .gt_bottom_border {
+#cruaxvnuwi .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#aacwckfnbx .gt_col_headings {
+#cruaxvnuwi .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -133,7 +140,7 @@ datos_base %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#aacwckfnbx .gt_col_heading {
+#cruaxvnuwi .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -153,7 +160,7 @@ datos_base %&gt;%
   overflow-x: hidden;
 }
 
-#aacwckfnbx .gt_column_spanner_outer {
+#cruaxvnuwi .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -165,15 +172,15 @@ datos_base %&gt;%
   padding-right: 4px;
 }
 
-#aacwckfnbx .gt_column_spanner_outer:first-child {
+#cruaxvnuwi .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#aacwckfnbx .gt_column_spanner_outer:last-child {
+#cruaxvnuwi .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#aacwckfnbx .gt_column_spanner {
+#cruaxvnuwi .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -185,7 +192,7 @@ datos_base %&gt;%
   width: 100%;
 }
 
-#aacwckfnbx .gt_group_heading {
+#cruaxvnuwi .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -207,7 +214,7 @@ datos_base %&gt;%
   vertical-align: middle;
 }
 
-#aacwckfnbx .gt_empty_group_heading {
+#cruaxvnuwi .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -222,15 +229,15 @@ datos_base %&gt;%
   vertical-align: middle;
 }
 
-#aacwckfnbx .gt_from_md > :first-child {
+#cruaxvnuwi .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#aacwckfnbx .gt_from_md > :last-child {
+#cruaxvnuwi .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#aacwckfnbx .gt_row {
+#cruaxvnuwi .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -249,7 +256,7 @@ datos_base %&gt;%
   overflow-x: hidden;
 }
 
-#aacwckfnbx .gt_stub {
+#cruaxvnuwi .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -261,7 +268,7 @@ datos_base %&gt;%
   padding-left: 12px;
 }
 
-#aacwckfnbx .gt_summary_row {
+#cruaxvnuwi .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -271,7 +278,7 @@ datos_base %&gt;%
   padding-right: 5px;
 }
 
-#aacwckfnbx .gt_first_summary_row {
+#cruaxvnuwi .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -281,7 +288,7 @@ datos_base %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#aacwckfnbx .gt_grand_summary_row {
+#cruaxvnuwi .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -291,7 +298,7 @@ datos_base %&gt;%
   padding-right: 5px;
 }
 
-#aacwckfnbx .gt_first_grand_summary_row {
+#cruaxvnuwi .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -301,11 +308,11 @@ datos_base %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#aacwckfnbx .gt_striped {
+#cruaxvnuwi .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#aacwckfnbx .gt_table_body {
+#cruaxvnuwi .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -314,7 +321,7 @@ datos_base %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#aacwckfnbx .gt_footnotes {
+#cruaxvnuwi .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -328,13 +335,13 @@ datos_base %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#aacwckfnbx .gt_footnote {
+#cruaxvnuwi .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#aacwckfnbx .gt_sourcenotes {
+#cruaxvnuwi .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -348,46 +355,46 @@ datos_base %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#aacwckfnbx .gt_sourcenote {
+#cruaxvnuwi .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#aacwckfnbx .gt_left {
+#cruaxvnuwi .gt_left {
   text-align: left;
 }
 
-#aacwckfnbx .gt_center {
+#cruaxvnuwi .gt_center {
   text-align: center;
 }
 
-#aacwckfnbx .gt_right {
+#cruaxvnuwi .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#aacwckfnbx .gt_font_normal {
+#cruaxvnuwi .gt_font_normal {
   font-weight: normal;
 }
 
-#aacwckfnbx .gt_font_bold {
+#cruaxvnuwi .gt_font_bold {
   font-weight: bold;
 }
 
-#aacwckfnbx .gt_font_italic {
+#cruaxvnuwi .gt_font_italic {
   font-style: italic;
 }
 
-#aacwckfnbx .gt_super {
+#cruaxvnuwi .gt_super {
   font-size: 65%;
 }
 
-#aacwckfnbx .gt_footnote_marks {
+#cruaxvnuwi .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="aacwckfnbx" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="cruaxvnuwi" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="5" class="gt_heading gt_title gt_font_normal" style="background-color: rgba(0,191,255,0.5);">Datos Utilizados</th>
@@ -541,7 +548,7 @@ datos_base %&gt;%
     </tr>
     <tr>
       <td class="gt_row gt_left" style="background-color: rgba(192,238,255,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Roberto Gómez</td>
-      <td class="gt_row gt_left" style="background-color: rgba(192,238,255,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">NA</td>
+      <td class="gt_row gt_left" style="background-color: rgba(192,238,255,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;"></td>
       <td class="gt_row gt_left" style="background-color: rgba(192,238,255,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Catamarca</td>
       <td class="gt_row gt_left" style="background-color: rgba(192,238,255,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Simultanea</td>
       <td class="gt_row gt_left" style="background-color: rgba(192,238,255,0.5); color: #0B0B0B; text-align: center; vertical-align: middle; font-weight: lighter;">Gobernador</td>
@@ -568,7 +575,7 @@ datos_base %&gt;%
 <div id="datos-electorales" class="section level2">
 <h2>Datos Electorales</h2>
 <p>Para “explorar la popularidad” de los candidatos (como veremos en la <a href="../explorando_popularidad/">sección correspondiente</a>), debimos colectar datos sobre los resultados electorales.</p>
-<p>Para eso desarrollamos <a href="https://github.com/CVFH/Tuits_arg_2019/blob/master/preparacion_datos_electorales.R">este script</a> que explicamos en <a href="../../post/preparacion_electorales/">este post</a>. El código define una función que parte de enlaces de wikipedia y/o de la Dirección Nacional Electoral argentina, y devuelve una tabla de datos <em>tidy</em>.</p>
+<p>Para eso desarrollamos <a href="https://github.com/CVFH/Tuits_arg_2019/blob/master/preparacion_datos_electorales.R">este script</a> que explicamos en <a href="../../post/preparacion_electorales/">este post</a>. El código define una función que parte de enlaces de wikipedia y/o de la Dirección Nacional Electoral argentina, y devuelve una tabla de datos <em>tidy</em><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
 <p>Por ejemplo, partimos del enlace:
 <a href="https://es.wikipedia.org/wiki/Elecciones_presidenciales_de_Argentina_de_2019">https://es.wikipedia.org/wiki/Elecciones_presidenciales_de_Argentina_de_2019</a></p>
 <p>…que contiene la siguiente tabla:</p>
@@ -576,10 +583,12 @@ datos_base %&gt;%
 <img src="tabla.JPG" width="300"></p>
 <p>Extrajimos de esta manera los datos:</p>
 <pre class="r"><code># Primero, llamamos al script que diseñamos
-source(&quot;preparacion_datos_electorales.R&quot;, encoding = &quot;UTF-8&quot;)
+
+source(&quot;https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/preparacion_datos_electorales.R&quot;, encoding = &quot;UTF-8&quot;)
 
 # Llamamos a una función para obtener los datos presidenciales, 
 # asignando el parámetro correspondiente (&quot;presid&quot;)
+
 votos_presid &lt;- traerDatosElectorales(&quot;presid&quot;)
 
 # Tenemos nuestros datos!
@@ -606,7 +615,7 @@ votos_presid %&gt;%
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#ovlcbzocma .gt_table {
+#nkmywaaleb .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -631,7 +640,7 @@ votos_presid %&gt;%
   border-left-color: #D3D3D3;
 }
 
-#ovlcbzocma .gt_heading {
+#nkmywaaleb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -643,7 +652,7 @@ votos_presid %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#ovlcbzocma .gt_title {
+#nkmywaaleb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -653,7 +662,7 @@ votos_presid %&gt;%
   border-bottom-width: 0;
 }
 
-#ovlcbzocma .gt_subtitle {
+#nkmywaaleb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -663,13 +672,13 @@ votos_presid %&gt;%
   border-top-width: 0;
 }
 
-#ovlcbzocma .gt_bottom_border {
+#nkmywaaleb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ovlcbzocma .gt_col_headings {
+#nkmywaaleb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -684,7 +693,7 @@ votos_presid %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#ovlcbzocma .gt_col_heading {
+#nkmywaaleb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -704,7 +713,7 @@ votos_presid %&gt;%
   overflow-x: hidden;
 }
 
-#ovlcbzocma .gt_column_spanner_outer {
+#nkmywaaleb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -716,15 +725,15 @@ votos_presid %&gt;%
   padding-right: 4px;
 }
 
-#ovlcbzocma .gt_column_spanner_outer:first-child {
+#nkmywaaleb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ovlcbzocma .gt_column_spanner_outer:last-child {
+#nkmywaaleb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ovlcbzocma .gt_column_spanner {
+#nkmywaaleb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -736,7 +745,7 @@ votos_presid %&gt;%
   width: 100%;
 }
 
-#ovlcbzocma .gt_group_heading {
+#nkmywaaleb .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -758,7 +767,7 @@ votos_presid %&gt;%
   vertical-align: middle;
 }
 
-#ovlcbzocma .gt_empty_group_heading {
+#nkmywaaleb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -773,15 +782,15 @@ votos_presid %&gt;%
   vertical-align: middle;
 }
 
-#ovlcbzocma .gt_from_md > :first-child {
+#nkmywaaleb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ovlcbzocma .gt_from_md > :last-child {
+#nkmywaaleb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ovlcbzocma .gt_row {
+#nkmywaaleb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -800,7 +809,7 @@ votos_presid %&gt;%
   overflow-x: hidden;
 }
 
-#ovlcbzocma .gt_stub {
+#nkmywaaleb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -812,7 +821,7 @@ votos_presid %&gt;%
   padding-left: 12px;
 }
 
-#ovlcbzocma .gt_summary_row {
+#nkmywaaleb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -822,7 +831,7 @@ votos_presid %&gt;%
   padding-right: 5px;
 }
 
-#ovlcbzocma .gt_first_summary_row {
+#nkmywaaleb .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -832,7 +841,7 @@ votos_presid %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#ovlcbzocma .gt_grand_summary_row {
+#nkmywaaleb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -842,7 +851,7 @@ votos_presid %&gt;%
   padding-right: 5px;
 }
 
-#ovlcbzocma .gt_first_grand_summary_row {
+#nkmywaaleb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -852,11 +861,11 @@ votos_presid %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#ovlcbzocma .gt_striped {
+#nkmywaaleb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ovlcbzocma .gt_table_body {
+#nkmywaaleb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -865,7 +874,7 @@ votos_presid %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#ovlcbzocma .gt_footnotes {
+#nkmywaaleb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -879,13 +888,13 @@ votos_presid %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#ovlcbzocma .gt_footnote {
+#nkmywaaleb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#ovlcbzocma .gt_sourcenotes {
+#nkmywaaleb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -899,46 +908,46 @@ votos_presid %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#ovlcbzocma .gt_sourcenote {
+#nkmywaaleb .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#ovlcbzocma .gt_left {
+#nkmywaaleb .gt_left {
   text-align: left;
 }
 
-#ovlcbzocma .gt_center {
+#nkmywaaleb .gt_center {
   text-align: center;
 }
 
-#ovlcbzocma .gt_right {
+#nkmywaaleb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ovlcbzocma .gt_font_normal {
+#nkmywaaleb .gt_font_normal {
   font-weight: normal;
 }
 
-#ovlcbzocma .gt_font_bold {
+#nkmywaaleb .gt_font_bold {
   font-weight: bold;
 }
 
-#ovlcbzocma .gt_font_italic {
+#nkmywaaleb .gt_font_italic {
   font-style: italic;
 }
 
-#ovlcbzocma .gt_super {
+#nkmywaaleb .gt_super {
   font-size: 65%;
 }
 
-#ovlcbzocma .gt_footnote_marks {
+#nkmywaaleb .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="ovlcbzocma" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="nkmywaaleb" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="10" class="gt_heading gt_title gt_font_normal" style="background-color: rgba(0,191,255,0.5);">Elecciones presidenciales Argentina 2019</th>
@@ -1042,30 +1051,1025 @@ votos_presid %&gt;%
 <div id="datos-de-tuiter" class="section level2">
 <h2>Datos de tuiter</h2>
 <p>Una vez identificadas las cuentas de nuestro interés, nos ocupamos de traer los datos de los tuits emitidos con <em>rtweet</em>.</p>
-<p>Por ejemplo, para @<a href="https://twitter.com/Kicillofok">Kicillofok</a>, utilizamos el comando</p>
+<p>Por ejemplo, para @<a href="https://twitter.com/Kicillofok">Kicillofok</a>, utilizamos el comando:</p>
 <p><code>tuits_Kicillofok &lt;- get_timeline("Kicillofok")</code></p>
 <p>Con esto, obtenemos una tabla (aprox) como la siguiente:</p>
-<pre class="r"><code>head(tuits_Kicillofok)</code></pre>
-<pre><code>## # A tibble: 6 x 28
-##   created_at          text    rts fav_count tweet_id link  screen_name location
-##   &lt;dttm&gt;              &lt;chr&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;       &lt;lgl&gt;   
-## 1 2020-07-16 00:39:36 &quot;Nos~   184       698  1.28e18 http~ Kicillofok  NA      
-## 2 2020-07-15 20:54:53 &quot;Con~   204       968  1.28e18 http~ Kicillofok  NA      
-## 3 2020-07-15 18:01:27 &quot;Est~   118       267  1.28e18 http~ Kicillofok  NA      
-## 4 2020-07-15 18:01:24 &quot;Vis~   243       745  1.28e18 http~ Kicillofok  NA      
-## 5 2020-07-14 23:08:21 &quot;Est~   323      1253  1.28e18 http~ Kicillofok  NA      
-## 6 2020-07-14 21:36:22 &quot;A p~   109       359  1.28e18 http~ Kicillofok  NA      
-## # ... with 20 more variables: in_reply_to_screen_name &lt;chr&gt;,
-## #   in_reply_to_status_id &lt;dbl&gt;, in_reply_to_user_id &lt;dbl&gt;, latitude &lt;lgl&gt;,
-## #   longitude &lt;lgl&gt;, mention_ids &lt;chr&gt;, mention_screen_names &lt;chr&gt;,
-## #   place_latitude &lt;dbl&gt;, place_longitude &lt;dbl&gt;, user_id &lt;dbl&gt;,
-## #   created_at_user &lt;dttm&gt;, description &lt;chr&gt;, favourites_count &lt;dbl&gt;,
-## #   followers_count &lt;dbl&gt;, friends_count &lt;dbl&gt;, geo_enabled &lt;lgl&gt;, name &lt;chr&gt;,
-## #   statuses_count &lt;dbl&gt;, time_zone &lt;lgl&gt;, verified &lt;lgl&gt;</code></pre>
+<pre class="r"><code>str(tuits_Kicillofok)</code></pre>
+<pre><code>## tibble [2,485 x 28] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ created_at             : POSIXct[1:2485], format: &quot;2020-07-16 00:39:36&quot; &quot;2020-07-15 20:54:53&quot; ...
+##  $ text                   : chr [1:2485] &quot;Nos reunimos con referentes sindicales para conversar sobre las necesidades de cada sector para la pospandemia.&quot;| __truncated__ &quot;Con el gobernador @jmcapitanich intercambiamos experiencias y analizamos la implementación de las distintas fas&quot;| __truncated__ &quot;Estamos haciendo grandes esfuerzos y los resultados están a la vista. Gracias a la solidaridad podemos ayudar a&quot;| __truncated__ &quot;Visitamos el Centro de Monitoreo de Malvinas Argentinas donde entregamos nuevos respiradores al intendente @Nar&quot;| __truncated__ ...
+##  $ rts                    : num [1:2485] 184 204 118 243 323 109 268 318 178 471 ...
+##  $ fav_count              : num [1:2485] 698 968 267 745 1253 ...
+##  $ tweet_id               : num [1:2485] 1.28e+18 1.28e+18 1.28e+18 1.28e+18 1.28e+18 ...
+##  $ link                   : chr [1:2485] &quot;https://twitter.com/Kicillofok/status/1283561887574249472&quot; &quot;https://twitter.com/Kicillofok/status/1283505338390634496&quot; &quot;https://twitter.com/Kicillofok/status/1283461690479255552&quot; &quot;https://twitter.com/Kicillofok/status/1283461679888596992&quot; ...
+##  $ screen_name            : chr [1:2485] &quot;Kicillofok&quot; &quot;Kicillofok&quot; &quot;Kicillofok&quot; &quot;Kicillofok&quot; ...
+##  $ location               : logi [1:2485] NA NA NA NA NA NA ...
+##  $ in_reply_to_screen_name: chr [1:2485] NA NA &quot;Kicillofok&quot; NA ...
+##  $ in_reply_to_status_id  : num [1:2485] NA NA 1.28e+18 NA NA ...
+##  $ in_reply_to_user_id    : num [1:2485] NA NA 2.95e+09 NA NA ...
+##  $ latitude               : logi [1:2485] NA NA NA NA NA NA ...
+##  $ longitude              : logi [1:2485] NA NA NA NA NA NA ...
+##  $ mention_ids            : chr [1:2485] &quot;(u&#39;&#39;,)&quot; &quot;(u&#39;143852870&#39;,)&quot; &quot;(u&#39;&#39;,)&quot; &quot;(u&#39;178840402&#39;,)&quot; ...
+##  $ mention_screen_names   : chr [1:2485] NA &quot;jmcapitanich&quot; NA &quot;Nardini_Leo&quot; ...
+##  $ place_latitude         : num [1:2485] NA NA NA NA NA NA NA NA NA NA ...
+##  $ place_longitude        : num [1:2485] NA NA NA NA NA NA NA NA NA NA ...
+##  $ user_id                : num [1:2485] 2.95e+09 2.95e+09 2.95e+09 2.95e+09 2.95e+09 ...
+##  $ created_at_user        : POSIXct[1:2485], format: &quot;2014-12-31 23:38:55&quot; &quot;2014-12-31 23:38:55&quot; ...
+##  $ description            : chr [1:2485] &quot;Gobernador de la Provincia de Buenos Aires.&quot; &quot;Gobernador de la Provincia de Buenos Aires.&quot; &quot;Gobernador de la Provincia de Buenos Aires.&quot; &quot;Gobernador de la Provincia de Buenos Aires.&quot; ...
+##  $ favourites_count       : num [1:2485] 4044 4044 4044 4044 4044 ...
+##  $ followers_count        : num [1:2485] 1185178 1185178 1185178 1185178 1185178 ...
+##  $ friends_count          : num [1:2485] 307 307 307 307 307 307 307 307 307 307 ...
+##  $ geo_enabled            : logi [1:2485] TRUE TRUE TRUE TRUE TRUE TRUE ...
+##  $ name                   : chr [1:2485] &quot;Axel Kicillof&quot; &quot;Axel Kicillof&quot; &quot;Axel Kicillof&quot; &quot;Axel Kicillof&quot; ...
+##  $ statuses_count         : num [1:2485] 4247 4247 4247 4247 4247 ...
+##  $ time_zone              : logi [1:2485] NA NA NA NA NA NA ...
+##  $ verified               : logi [1:2485] TRUE TRUE TRUE TRUE TRUE TRUE ...
+##  - attr(*, &quot;spec&quot;)=
+##   .. cols(
+##   ..   created_at = col_datetime(format = &quot;&quot;),
+##   ..   text = col_character(),
+##   ..   rts = col_double(),
+##   ..   fav_count = col_double(),
+##   ..   tweet_id = col_double(),
+##   ..   link = col_character(),
+##   ..   screen_name = col_character(),
+##   ..   location = col_logical(),
+##   ..   in_reply_to_screen_name = col_character(),
+##   ..   in_reply_to_status_id = col_double(),
+##   ..   in_reply_to_user_id = col_double(),
+##   ..   latitude = col_logical(),
+##   ..   longitude = col_logical(),
+##   ..   mention_ids = col_character(),
+##   ..   mention_screen_names = col_character(),
+##   ..   place_latitude = col_double(),
+##   ..   place_longitude = col_double(),
+##   ..   user_id = col_double(),
+##   ..   created_at_user = col_datetime(format = &quot;&quot;),
+##   ..   description = col_character(),
+##   ..   favourites_count = col_double(),
+##   ..   followers_count = col_double(),
+##   ..   friends_count = col_double(),
+##   ..   geo_enabled = col_logical(),
+##   ..   name = col_character(),
+##   ..   statuses_count = col_double(),
+##   ..   time_zone = col_logical(),
+##   ..   verified = col_logical()
+##   .. )</code></pre>
 <p>El default de <code>get_timeline</code> trae los últimos 100 tuits. Como máximo, las normas de Twitter permiten extraer 3.200 tuits. Dado que este límite implica que la fecha de los tuits que obtenemos con el llamado va cambiando con el tiempo, nosotros optamos por guardar estas bases de datos en archivos .csv, a los que se puede acceder desde <a href="https://github.com/CVFH/Tuits_arg_2019/tree/master/Data">este enlace a nuestro repositorio de Git</a>.</p>
 <p>Por este mismo motivo es que desarrollamos una funcion que agrega y emprolija estos datos en <a href="https://github.com/CVFH/Tuits_arg_2019/blob/master/preparacion_datos_tuits.R">este script</a> que explicamos en <a href="../preparacion_tuits/">este post</a>, de manera similar a como hicimos con los datos electorales.</p>
+<p>El resultado de aplicar estas operaciones es una tabla como la siguiente:</p>
+<pre class="r"><code>joined_candidatos &lt;- traerDatosTuits(&quot;tot&quot;)
+
+str(joined_candidatos)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    47755 obs. of  15 variables:
+##  $ created_at             : Factor w/ 46256 levels &quot;2016-05-09 13:20:14-03:00&quot;,..: 2385 2384 2383 2382 2381 2380 2379 2378 2378 2377 ...
+##  $ text                   : Factor w/ 47690 levels &quot;- AHORA desde Chivilcoy #ProvinciaEnMarcha https://t.co/MAdRW1ZIRB&quot;,..: 2001 808 1284 2443 1261 464 1555 1625 1352 1991 ...
+##  $ rts                    : int  184 204 118 243 323 109 268 318 178 471 ...
+##  $ fav_count              : int  698 968 267 745 1253 359 819 889 425 1209 ...
+##  $ tweet_id               : num  1.28e+18 1.28e+18 1.28e+18 1.28e+18 1.28e+18 ...
+##  $ link                   : Factor w/ 47755 levels &quot;https://twitter.com/Kicillofok/status/1001850437585264640&quot;,..: 1436 1435 1434 1433 1432 1431 1430 1428 1429 1427 ...
+##  $ screen_name            : Factor w/ 21 levels &quot;Kicillofok&quot;,&quot;mariuvidal&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ user_id                : num  2.95e+09 2.95e+09 2.95e+09 2.95e+09 2.95e+09 ...
+##  $ description            : Factor w/ 21 levels &quot;Gobernador de la Provincia de Buenos Aires.&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ location               : Factor w/ 14 levels &quot;Buenos Aires&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
+##  $ mention_screen_names   : Factor w/ 5807 levels &quot;&quot;,&quot;0223comar, brunonperrone, FrenteDeTodos&quot;,..: 1 297 1 426 1 1 474 321 1 15 ...
+##  $ in_reply_to_screen_name: Factor w/ 1291 levels &quot;&quot;,&quot;alfonsopratgay&quot;,..: 1 1 6 1 1 6 1 1 6 1 ...
+##  $ followers_count        : int  1185178 1185178 1185178 1185178 1185178 1185178 1185178 1185178 1185178 1185178 ...
+##  $ friends_count          : int  307 307 307 307 307 307 307 307 307 307 ...
+##  $ Campaña                : num  0 0 0 0 0 0 0 0 0 0 ...</code></pre>
+</div>
+<div id="comentarios-adicionales-desafíos-y-límites-de-la-muestra-seleccionada" class="section level2">
+<h2>Comentarios adicionales: desafíos y límites de la muestra seleccionada</h2>
+<p>Quizás convenga, antes de continuar, hacer un par de aclaraciones respecto de los datos con los que trabajamos.</p>
+<p>En primer lugar, vale explicitar una importante decisión. Para responder a nuestras preguntas, debimos identificar los tutis emitidos por los candidatos <em>durante la campaña</em>. Siendo que la red social permite un flujo permanente de una multiplicidad de mensajes (personales, laborales, etc), aquí es justo preguntarnos: ¿cuáles de ellos hacen a dicha “campaña”?</p>
+<p>La alternativa que hallamos menos ambigua fue recortar nuestra base de datos conforme a la fecha de emisión del tuit: pocas dudas caben de que la campaña <em>termina</em> el día de los comicios. Pero aún resta tomar ciertas decisiones, sobre todo: ¿cuándo empieza?</p>
+<p>Aquí nos basamos en la Ley Electoral nacional para ofrecer, de nuevo, la respuesta que consideramos menos arbitraria. En el país se realizan elecciones “primarias abiertas, simultáneas y obligatorias”, “PASO”. Sólo entonces se define con seguirdad “la cancha” en la que se jugará la partida política de cara a las elecciones generales.</p>
+<p>El período comprendido entre estas dos fechas, entonces: las PASO y las elecciones, podría ser justamente definido como de campaña.</p>
+<p>Ahora bien, la estructura federal de la Argentina nos impuso un desafío adicional: recordemos que las provincias tienen margen para ajustar el calendario electoral a sus preferencias. Para complicar aún más las cosas, no todas las provincias llevan a cabo elecciones primarias.</p>
+<p>Como dijimos más atrás, nuestros datos deliberadamente contenían tuits emitidos por los candidatos a la cartera ejecutiva nacional, y a 4 provincias que oficiaron elecciones simultáneas, y 4 que lo hicieron de manera “desdoblada”, pero en una misma fecha.</p>
+<p>Nuestra solución entonces fue la siguiente. Como fin de la campaña, consideramos la fecha de las respectivas votaciones: 16 de junio para las cuatro provincias que desdoblaron y adelantaron el día, 27 de octubre para la nación y el resto de las provincias. Y, si bien no todas las provincias celebraron primarias, como inicio consideramos la fecha en la que se realizaran en el resto de los distritos del mismo “grupo”: 28 de abril para las provincias que modificaron su calendario respecto al nacional, con base en las primarias de Santa Fe, 11 de agosto para el resto, de los cuales sólo Tierra del Fuego no llevó adelante esta primera instancia electoral.</p>
+<p>Sintetizamos el resultado de este recorte en la tabla a continuación:</p>
+<pre class="r"><code>tabla_fechas &lt;- read_csv(&quot;muestra_fechas.csv&quot;)
+
+tabla_fechas %&gt;% gt() %&gt;% 
+  gt::tab_header(
+    title = &quot;Recorte de &#39;la campaña&#39;&quot;,
+    subtitle = &quot;muestra resultante por provincia&quot;) %&gt;% 
+  gt::tab_style(
+    style=  cell_fill(color = &quot;#00BFFF&quot;, alpha = 0.5),
+    locations = cells_title(groups = c(&quot;title&quot;, &quot;subtitle&quot;))) %&gt;% 
+  gt::tab_style(
+    style=  cell_fill(color = &quot;#E9EDF1&quot;, alpha = 0.5),
+    locations = cells_body()) %&gt;% 
+  gt::tab_style(
+    style= cell_text(
+  color = &quot;#050505&quot;,
+  align = &quot;center&quot;,
+  v_align = &quot;middle&quot;,
+  weight = &quot;lighter&quot;),
+  locations = cells_body())</code></pre>
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#jejrsgssaw .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#jejrsgssaw .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#jejrsgssaw .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#jejrsgssaw .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#jejrsgssaw .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#jejrsgssaw .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#jejrsgssaw .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#jejrsgssaw .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#jejrsgssaw .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#jejrsgssaw .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#jejrsgssaw .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#jejrsgssaw .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#jejrsgssaw .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#jejrsgssaw .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#jejrsgssaw .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#jejrsgssaw .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#jejrsgssaw .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#jejrsgssaw .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#jejrsgssaw .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#jejrsgssaw .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#jejrsgssaw .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#jejrsgssaw .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#jejrsgssaw .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#jejrsgssaw .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#jejrsgssaw .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#jejrsgssaw .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#jejrsgssaw .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#jejrsgssaw .gt_left {
+  text-align: left;
+}
+
+#jejrsgssaw .gt_center {
+  text-align: center;
+}
+
+#jejrsgssaw .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#jejrsgssaw .gt_font_normal {
+  font-weight: normal;
+}
+
+#jejrsgssaw .gt_font_bold {
+  font-weight: bold;
+}
+
+#jejrsgssaw .gt_font_italic {
+  font-style: italic;
+}
+
+#jejrsgssaw .gt_super {
+  font-size: 65%;
+}
+
+#jejrsgssaw .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="jejrsgssaw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  <thead class="gt_header">
+    <tr>
+      <th colspan="1" class="gt_heading gt_title gt_font_normal" style="background-color: rgba(0,191,255,0.5);">Recorte de 'la campaña'</th>
+    </tr>
+    <tr>
+      <th colspan="1" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>muestra resultante por provincia</th>
+    </tr>
+  </thead>
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Distrito;Tipo de elección;¿Hubo Paso?;Fecha de inicio;Fecha de cierre</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Formosa;Desdoblada;No;28-abr;16-jun</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">San Luis;Desdoblada;No;28-abr;16-jun</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Santa Fe;Desdoblada;Sí;28-abr;16-jun</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Tierra del Fuego;Desdoblada;No;28-abr;16-jun</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Buenos Aires;Simultánea;Sí;11-ago;27-oct</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">CABA;Simultánea;Sí;11-ago;27-oct</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Catamarca;Simultánea;Sí;11-ago;27-oct</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">La Rioja;Simultánea;No;11-ago;27-oct</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Nacion;Simultánea;Sí;11-ago;27-oct</td>
+    </tr>
+  </tbody>
+  
+  
+</table></div>
+<p>Finalizamos con una última pero no menos importante aclaración. Como hemos dicho unas líneas más atrás, <em>Twitter</em> tiene un límite para la descarga de datos de la <em>línea del tiempo</em> de cada usuario: 3.200 tuits. Esto constriñe “qué tan atrás” podemos recabar información. Lamentablemente, no hemos obtenido los datos que hubiéramos querido para todos los candidatos. En nuestro análisis, hemos hecho la vista gorda a semejante falta. Una investigación más sería deberá (o debería) considerar un tratamiento más sistemático de estos <em>missings</em>.</p>
+<p>Para información del lector, anotamos aquí el primer y último tuit que hemos logrado asir para cada candidato. Agregamos una columna que indica la cantidad de tuits totales disponibles.</p>
+<pre class="r"><code>joined_candidatos &lt;- joined_candidatos %&gt;% 
+  left_join(datos_base)
+
+fechas_tuits &lt;- joined_candidatos %&gt;% 
+  group_by(screen_name) %&gt;% 
+  summarize(ultimo = max(as.Date(created_at)),
+            primero = min(as.Date(created_at)),
+            cantidad_tuits = n())
+
+fechas_tuits %&gt;% gt() %&gt;% 
+  gt::tab_header(
+    title = &quot;Recorte temporal de la base de datos de tuits&quot;,
+    subtitle = &quot;mpor candidato&quot;) %&gt;% 
+  gt::tab_style(
+    style=  cell_fill(color = &quot;#00BFFF&quot;, alpha = 0.5),
+    locations = cells_title(groups = c(&quot;title&quot;, &quot;subtitle&quot;))) %&gt;% 
+  gt::tab_style(
+    style=  cell_fill(color = &quot;#E9EDF1&quot;, alpha = 0.5),
+    locations = cells_body()) %&gt;% 
+  gt::tab_style(
+    style= cell_text(
+  color = &quot;#050505&quot;,
+  align = &quot;center&quot;,
+  v_align = &quot;middle&quot;,
+  weight = &quot;lighter&quot;),
+  locations = cells_body())</code></pre>
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#vkmhftjafe .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#vkmhftjafe .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#vkmhftjafe .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#vkmhftjafe .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#vkmhftjafe .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vkmhftjafe .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#vkmhftjafe .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#vkmhftjafe .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#vkmhftjafe .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#vkmhftjafe .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#vkmhftjafe .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#vkmhftjafe .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#vkmhftjafe .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#vkmhftjafe .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#vkmhftjafe .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#vkmhftjafe .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#vkmhftjafe .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#vkmhftjafe .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vkmhftjafe .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#vkmhftjafe .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vkmhftjafe .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#vkmhftjafe .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#vkmhftjafe .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vkmhftjafe .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#vkmhftjafe .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#vkmhftjafe .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#vkmhftjafe .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#vkmhftjafe .gt_left {
+  text-align: left;
+}
+
+#vkmhftjafe .gt_center {
+  text-align: center;
+}
+
+#vkmhftjafe .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#vkmhftjafe .gt_font_normal {
+  font-weight: normal;
+}
+
+#vkmhftjafe .gt_font_bold {
+  font-weight: bold;
+}
+
+#vkmhftjafe .gt_font_italic {
+  font-style: italic;
+}
+
+#vkmhftjafe .gt_super {
+  font-size: 65%;
+}
+
+#vkmhftjafe .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="vkmhftjafe" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  <thead class="gt_header">
+    <tr>
+      <th colspan="4" class="gt_heading gt_title gt_font_normal" style="background-color: rgba(0,191,255,0.5);">Recorte temporal de la base de datos de tuits</th>
+    </tr>
+    <tr>
+      <th colspan="4" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>mpor candidato</th>
+    </tr>
+  </thead>
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">screen_name</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">ultimo</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">primero</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">cantidad_tuits</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">adrianbogadoOK</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2020-07-29</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2010-11-13</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">1295</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">alberto_rsaa</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2021-01-11</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2018-02-28</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2917</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">alferdez</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2020-05-17</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2018-12-24</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">1976</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">AntonioBonfatti</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2020-07-18</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2011-03-15</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">1785</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">claudiojpoggi</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2020-08-02</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2015-05-10</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2457</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">gustavomelella</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2020-07-28</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2015-03-18</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2708</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">horaciorlarreta</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2020-08-18</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2017-06-08</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">3033</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">insfran_gildo</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2020-08-01</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2016-09-25</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">1739</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">jlespert</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2020-08-02</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2019-07-17</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2106</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">juanjomalvinas</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2020-07-29</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2019-02-18</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">1912</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">JulioMartinezLR</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2020-08-01</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2015-08-24</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2903</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">Kicillofok</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2020-07-15</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2016-05-09</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2485</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">mariuvidal</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2020-07-18</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2013-12-28</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">3200</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">MatiasLammens</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2020-07-29</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2011-01-11</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">1392</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">mauriciomacri</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2020-07-17</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2015-12-10</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">3135</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">NicolasdelCano</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2020-08-02</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2019-05-09</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">1442</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">omarperotti</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2020-08-01</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2010-06-09</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2692</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">QuintelaRicardo</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2020-07-31</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2018-08-12</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2160</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">RaulJalil_ok</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2020-08-02</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2016-03-22</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2087</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">RLavagna</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2020-07-29</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2009-03-19</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">1340</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">RosanaBertone</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2020-07-31</td>
+      <td class="gt_row gt_left" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2016-06-15</td>
+      <td class="gt_row gt_center" style="background-color: rgba(233,237,241,0.5); color: #050505; text-align: center; vertical-align: middle; font-weight: lighter;">2991</td>
+    </tr>
+  </tbody>
+  
+  
+</table></div>
 </div>
 <div id="a-trabajar" class="section level2">
 <h2>A trabajar!</h2>
-<p>Una vez obtenidas nuestras tablas electorales y los datos de Twitter, podemos jugar, explorar, ensayar un análisis, algo que haremos en los posts que siguen.</p>
+<p>Una vez obtenidas nuestras tablas electorales y los datos de Twitter, podemos jugar, explorar, ensayar un análisis, algo que <a href="../tags/análisis/">haremos en los posts que siguen</a>.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>En el proyecto original, trabajamos con versiones locales de todas estas piezas de código, que, por motivos de espacio y “portabilidad”, decidimos consignar en archivos separados. Para su exposición en este post, y los que siguen en el camino propuesto, hemos transitado a su versión “online”, es decir, convocamos directamente al código almacenado en <a href="https://github.com/CVFH/Tuits_arg_2019">nuestro repositorio de Git</a>. El fin es que lo expuesto sea reproducible por quien así lo desee. Sin embargo, nos ha significado una importante pérdida en términos de agilidad de procesamiento. Pretendemos experimentar a futuro con alternativas más “económicas”.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
 </div>

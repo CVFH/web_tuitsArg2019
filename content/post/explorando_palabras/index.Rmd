@@ -33,7 +33,6 @@ library(ggforce) # para graficos de sets paralelos
 #propias
 
 source("https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/tuitsCandidatos.R", encoding = "UTF-8") # para trabajar con bases de tuits
-source("https://raw.githubusercontent.com/CVFH/Tuits_arg_2019/master/Modules/funcionesGraficos.R", encoding = "UTF-8") # para graficar
 
 ```
 
@@ -178,16 +177,18 @@ plot_promediopalabras_cantidadtuits <- ggplot(candidatos_sintesis,
                                                   size= palabras_totales_emitidas)) +
   geom_point(alpha = 0.8) +
   geom_text(aes(label= screen_name),
-            hjust = 0, vjust = 1, size = 3, colour="black") 
+            hjust = 0.2, vjust = 1, size = 3, colour="black") 
 
 # un poquito de formato para nuestro gráfico
 
-plot_promediopalabras_cantidadtuits <- plot_promediopalabras_cantidadtuits %>% 
-  formatPlot(plottitle = "Elocuencia de los candiatos",
-             plotsubtitle = "durante la campaña de 2019",
-             xlabel = "Tuits emitidos",
-             ylabel = "Palabras promedio por tuit",
-             plotcaption = "Fuente: elaboración propia") 
+plot_promediopalabras_cantidadtuits <- plot_promediopalabras_cantidadtuits +
+    theme_clean() +
+    labs(title ="Elocuencia de los candiatos", 
+         caption = "Fuente: elaboración propia",
+         subtitle = "durante la campaña de 2019",
+         x = "Tuits emitidos",
+        y = "Palabras promedio por tuit") +
+    theme(legend.position = "none") 
 
 # resultado: 
 plot_promediopalabras_cantidadtuits

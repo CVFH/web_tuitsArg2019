@@ -30,7 +30,3 @@ Proponemos el siguiente recorrido:
 {{< expandable label="Leer más" level="2" >}}
 Para leer un poquito más sobre este proyecto y su autora :information_desk_person:, visitar la sección [_Acerca de_](/about/).
 {{< /expandable >}}
-
-{{<warning>}}
-AVISO: ESTE SITIO ESTA EN CONSTRUCCION
-{{< /warning >}}
